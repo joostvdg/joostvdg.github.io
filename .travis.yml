@@ -1,0 +1,23 @@
+sudo: required
+language: python
+python:
+- '2.7'
+services:
+- docker
+before_install:
+- docker pull caladreas/mkdocs-docker-build-container
+- docker run -d --name buildcont -v ${TRAVIS_BUILD_DIR}:/usr/src/app caladreas/mkdocs-docker-build-container
+  /bin/sh -c "mkdocs gh-deploy -b master"
+- docker logs buildcont
+script: pytest -h
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhook.atomist.com/travis
+    on_success: always
+    on_failure: always
+    on_start: always
+    on_cancel: always
+    on_error: always
+
