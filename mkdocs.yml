@@ -28,8 +28,8 @@ theme: 'material'
 # Extra Options
 extra:
   palette:
-    primary: 'blue grey'
-    accent: 'deep purple'
+    primary: 'orange'
+    accent: 'red'
   font:
       text: 'Ubuntu'
       code: 'Ubuntu Mono'
