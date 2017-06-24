@@ -1,0 +1,55 @@
+# Meta
+site_name: Joostvdg's Jenkins Page
+site_url: https://joostvdg.github.io
+# Copyright
+copyright: 'Copyright &copy; 2017 Joost van der Griendt'
+repo_name: 'joostvdg/joostvdg.github.io'
+repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
+
+# Pages
+pages:
+- Home: index.md
+- Jenkins: jenkins/index.md
+- Jenkins Job Management:
+    - JobDSL: jenkins-jobs/jobdsl.md
+    - JenkinsJobsBuilder: jenkins-jobs/jenkins-jobs-builder.md
+- Jenkins Pipelines:
+    - Pipeline (declarative): jenkins-pipeline/declarative-pipeline.md
+    - Groovy DSL Pipeline: jenkins-pipeline/groovy-pipeline.md
+    - Pipeline Libraries: jenkins-pipeline/global-shared-library.md
+    - DSL IDE Integration: jenkins-pipeline/ide-integration-pipeline-dsl.md
+    - Parallel: jenkins-pipeline/jenkins-parallel-pipeline.md
+    - Input: jenkins-pipeline/input.md
+
+# Theme
+theme: 'material'
+
+# Extra Options
+extra:
+  palette:
+    primary: 'blue grey'
+    accent: 'deep purple'
+  font:
+      text: 'Ubuntu'
+      code: 'Ubuntu Mono'
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite(guess_lang=false)
+  - footnotes
+  - meta
+  - toc(permalink=true)
+  - pymdownx.arithmatex
+  - pymdownx.betterem(smart_enable=all)
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist(custom_checkbox=true)
+  - pymdownx.tilde
