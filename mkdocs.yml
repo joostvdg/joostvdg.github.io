@@ -14,6 +14,7 @@ pages:
     - JobDSL: jenkins-jobs/jobdsl.md
     - JenkinsJobsBuilder: jenkins-jobs/jenkins-jobs-builder.md
 - Jenkins Pipelines:
+    - Core Concepts: jenkins-pipeline/core-concepts.md
     - Pipeline (declarative): jenkins-pipeline/declarative-pipeline.md
     - Groovy DSL Pipeline: jenkins-pipeline/groovy-pipeline.md
     - Pipeline Libraries: jenkins-pipeline/global-shared-library.md
