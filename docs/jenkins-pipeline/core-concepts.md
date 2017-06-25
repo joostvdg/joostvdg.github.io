@@ -2,6 +2,7 @@
 
 Below are some core concepts to understand before building pipelines in Jenkins.
 
+* Pipeline as Code
 * Step
 * Master vs Nodes
 * Workspace
@@ -10,13 +11,17 @@ Below are some core concepts to understand before building pipelines in Jenkins.
 * Java vs. Groovy
 * Env (object)
 * Stash & archive
+* Credentials
 * Tools
+* Pipeline Syntax Page
 
 ## Terminology
 
 The terminology used in this page is based upon the terms used by Cloudbees as related to Jenkins.
 
 If in doubt, please consult the [Jenkins Glossary](https://jenkins.io/doc/book/glossary/). 
+
+## Pipeline as Code
 
 ## Step
 
@@ -128,10 +133,101 @@ node {
 
 ## Sandbox and Script Security
 
+In Jenkins some plugins - such as the pipeline plugin - allow you to write groovy code that gets executed on the master.
+
+This means you could run code on the master that accesses the host machine with the same rights as Jenkins.
+As is unsafe, Jenkins has some guards against this in the form the **sandbox mode** and the **script security**.
+ 
+When you create a pipeline job, you get a inline code editor by default. 
+If you're an administrator you get the option to turn the "sandbox" mode of.
+
+If you use a pipeline from SCM or any of the higher abstraction pipeline job types (Multibranch Pipeline, BitBucket Team) you are always running in sandbox mode.
+
+When you're in sandbox mode, your script will run past the script security. 
+This uses a whitelisting technique to block dangerous or undesired methods, but is does so in a very restrictive manner.
+
+It could be you're doing something that is safe but still gets blocked.
+An administrator can then go to the script approval page (under Jenkins Administration) and approve your script.
+
+For more details, please consult [Script Security plugin](https://wiki.jenkins-ci.org/display/jenkins/script+security+plugin) page.
+
+### Example error
+
+```java
+org.jenkinsci.plugins.scriptsecurity.sandbox.RejectedAccessException: unclassified staticMethod org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory create org.tmatesoft.svn.core.SVNURL
+    at org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SandboxInterceptor.onStaticCall(SandboxInterceptor.java:138)
+    at org.kohsuke.groovy.sandbox.impl.Checker$2.call(Checker.java:180)
+    at org.kohsuke.groovy.sandbox.impl.Checker.checkedStaticCall(Checker.java:177)
+    at org.kohsuke.groovy.sandbox.impl.Checker.checkedCall(Checker.java:91)
+    at com.cloudbees.groovy.cps.sandbox.SandboxInvoker.methodCall(SandboxInvoker.java:16)
+    at WorkflowScript.run(WorkflowScript:12)
+    at ___cps.transform___(Native Method)
+```
+
+There are two ways
+
 ## Java vs. Groovy
+
+The pipeline code has to be written in groovy and therefor can also use java code.
+
+Unfortunately, due to the way the Pipeline code is processed, many of the groovy features don't work or don't work as expected.
+
+Things like the lambda's and for-each loops don't work well and are best avoided.
+In these situations, it is best to keep to the standard syntax of Java.
+
+For more information on how the groovy is being processed, it is best to read the [technical-design](https://github.com/jenkinsci/workflow-cps-plugin/#technical-design).
 
 ## Env (object)
 
+The env object is an object that is available to use in any pipeline script.
+
+The env object allows you to store objects and variables to be used anywhere during the script.
+So things can be shared between nodes, the master and nodes and code blocks.
+
+Why would you want to use it? As in general, global variables are a bad practice.
+But if you need to have variables to be available through the execution on different machines (master, nodes) it is good to use this.
+ 
+Also the env object contains context variables, such as BRANCH_NAME, JOB_NAME and so one.
+For a complete overview, view the pipeline syntax page.
+
+Don't use the env object in functions, always feed them the parameters directly.
+Only use it in the "pipeline flow" and use it for the parameters of the methods.  
+
 ## Stash & archive
 
+If you need to store files for keeping for later, there are two options available **stash** and **archive**.
+
+Both should be avoided as they cause heavy I/O traffic, usually between the Node and Master.
+
+For more specific information, please consult the Pipeline Syntax Page.
+
+### Stash
+
+Stash allows you to copy files from the current workspace to a temp folder in the workspace in the master.
+If you're currently on a different machine it will copy them one by one over the network, keep this in mind.
+
+The files can only be retrieved during the pipeline execution and you can do so via the *unstash* command.
+
+```groovy
+```
+
+### Archive
+
+With archive you can store a file semi-permanently in your job. Semi as the files will be overridden by the latest build.
+ 
+The files you archive will be stored in the Job folder on the master. 
+
+```groovy
+```
+
+## Credentials
+
+```groovy
+```
+
 ## Tools
+
+```groovy
+```
+
+## Pipeline Syntax Page
