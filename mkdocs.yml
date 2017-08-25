@@ -21,6 +21,15 @@ pages:
     - DSL IDE Integration: jenkins-pipeline/ide-integration-pipeline-dsl.md
     - Parallel: jenkins-pipeline/jenkins-parallel-pipeline.md
     - Input: jenkins-pipeline/input.md
+- Jenkins Pipeline Examples:
+    - Index: jenkins-pipeline-examples/index.md
+    - Maven:
+        - Maven Groovy DSL: jenkins-pipeline-examples/maven-groovy-dsl.md
+        - Maven Declarative: jenkins-pipeline-examples/maven-declarative.md
+        - Maven Shared Library: jenkins-pipeline-examples/maven-shared-library.md
+    - Other:
+        - Docker Declarative: jenkins-pipeline-examples/docker-declarative.md
+
 
 # Theme
 theme: 'material'
@@ -37,7 +46,7 @@ extra:
 # Extensions
 markdown_extensions:
   - admonition
-  - codehilite(guess_lang=false)
+  - codehilite(guess_lang=false,linenums=true)
   - footnotes
   - meta
   - toc(permalink=true)
