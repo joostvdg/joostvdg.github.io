@@ -1,14 +1,45 @@
 # Meta
-site_name: Joostvdg's Jenkins Page
+site_name: Joostvdg's Software Engineering Page
 site_url: https://joostvdg.github.io
 # Copyright
-copyright: 'Copyright &copy; 2017 Joost van der Griendt'
+copyright: 'Copyright &copy; 2018 Joost van der Griendt'
 repo_name: 'joostvdg/joostvdg.github.io'
 repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
+
+docs_dir: 'docs'
 
 # Pages
 pages:
 - Home: index.md
+- Java:
+  - General: java/index.md
+  - Spring Boot: java/spring/boot.md
+  - Java 9: java/java9.md
+  - Java Ecosystem: java/ecosystem.md
+  - Java Networking: java/networking.md
+  - Java Streams: java/streams.md
+  - Java Concurrency: java/concurrency.md
+
+- Docker:
+  - Multi-Stage Builds: docker/multi-stage-builds.md
+  - Graceful shutdown: docker/graceful-shutdown.md
+  - Swarm (mode): docker/swarm.md
+  - Kubernetes: docker/kubernetes.md
+
+- Software Engineering:
+  - Naming: swe/naming.md
+  - Domain Driven Design: swe/ddd.md
+  - Microservices: swe/microservices.md
+  - Algorithms: swe/algorithms.md
+  - Others: swe/others.md
+
+- Productivity:
+  - General: productivity/index.md
+  - Tools: productivity/tools.md
+  - Intelli J: productivity/intellij.md
+  - Paradigms: productivity/paradigms.md
+  - Studies: productivity/studies.md
+
 - Jenkins: jenkins/index.md
 - Jenkins Job Management:
     - JobDSL: jenkins-jobs/jobdsl.md
@@ -30,36 +61,48 @@ pages:
     - Other:
         - Docker Declarative: jenkins-pipeline-examples/docker-declarative.md
 
-
 # Theme
-theme: 'material'
-
-# Extra Options
-extra:
+# Configuration
+theme:
+  name: 'material'
+  language: 'en'
   palette:
     primary: 'orange'
     accent: 'red'
   font:
-      text: 'Ubuntu'
-      code: 'Ubuntu Mono'
+    text: 'Roboto'
+    code: 'Roboto Mono'
+
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/joostvdg'
+    - type: 'twitter'
+      link: 'https://twitter.com/joost_vdg'
+    - type: 'linkedin'
+      link: 'https://linkedin.com/in/joostvdg'
 
 # Extensions
 markdown_extensions:
   - admonition
-  - codehilite(guess_lang=false,linenums=true)
+  - codehilite:
+      linenums: true
+      guess_lang: false
   - footnotes
   - meta
-  - toc(permalink=true)
+  - toc:
+      permalink: true
   - pymdownx.arithmatex
-  - pymdownx.betterem(smart_enable=all)
+  - pymdownx.betterem:
+      smart_enable: all
   - pymdownx.caret
+  - pymdownx.details
   - pymdownx.critic
-  - pymdownx.emoji:
-      emoji_generator: !!python/name:pymdownx.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.magiclink
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
-  - pymdownx.tasklist(custom_checkbox=true)
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.tilde
