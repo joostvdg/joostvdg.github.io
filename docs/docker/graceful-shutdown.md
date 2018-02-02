@@ -211,7 +211,7 @@ func main() {
 }
 ```
 
-### Java plain
+### Java plain (Docker Swarm)
 
 This application is a Java 9 modular application, which can be found on github, [github.com/joostvdg](https://github.com/joostvdg/buming).
 
@@ -308,6 +308,100 @@ public class DockerApp {
                 }));        
     }
 }
+```
+
+### Java Plain (Kubernetes)
+
+So far we've utilized the utilities from Docker itself in conjunction with it's native Docker Swarm orchestrator.
+
+Unfortunately, when it comes to popularity [Kubernetes beats Swarm hands down](https://platform9.com/blog/kubernetes-docker-swarm-compared/).
+
+So this isn't complete if it doesn't also do graceful shutdown in Kubernetes. 
+
+#### In Dockerfile
+
+Our original file had to be changed, as Debian's Slim image doesn't actually contain the kill package.
+And we need a kill package, as we cannot instruct Kubernetes to issue a specific SIGNAL.
+Instead, we can issue a [PreStop exec command](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/), which we can utilise to execute a [killall](https://packages.debian.org/wheezy/psmisc) java [-INT](https://www.tecmint.com/how-to-kill-a-process-in-linux/).
+
+The command will be specified in the Kubernetes deployment definition below.
+
+```dockerfile
+FROM openjdk:9-jdk AS build
+
+RUN mkdir -p /usr/src/mods/jars
+RUN mkdir -p /usr/src/mods/compiled
+
+COPY . /usr/src
+WORKDIR /usr/src
+
+RUN javac -Xlint:unchecked -d /usr/src/mods/compiled --module-source-path /usr/src/src $(find src -name "*.java")
+RUN jar --create --file /usr/src/mods/jars/joostvdg.dui.logging.jar --module-version 1.0 -C /usr/src/mods/compiled/joostvdg.dui.logging .
+RUN jar --create --file /usr/src/mods/jars/joostvdg.dui.api.jar --module-version 1.0 -C /usr/src/mods/compiled/joostvdg.dui.api .
+RUN jar --create --file /usr/src/mods/jars/joostvdg.dui.client.jar --module-version 1.0 -C /usr/src/mods/compiled/joostvdg.dui.client .
+RUN jar --create --file /usr/src/mods/jars/joostvdg.dui.server.jar --module-version 1.0  -e com.github.joostvdg.dui.server.cli.DockerApp\
+    -C /usr/src/mods/compiled/joostvdg.dui.server .
+
+RUN rm -rf /usr/bin/dui-image
+RUN jlink --module-path /usr/src/mods/jars/:/${JAVA_HOME}/jmods \
+    --add-modules joostvdg.dui.api \
+    --add-modules joostvdg.dui.logging \
+    --add-modules joostvdg.dui.server \
+    --add-modules joostvdg.dui.client \
+    --launcher dui=joostvdg.dui.server \
+    --output /usr/bin/dui-image
+
+RUN ls -lath /usr/bin/dui-image
+RUN ls -lath /usr/bin/dui-image
+RUN /usr/bin/dui-image/bin/java --list-modules
+
+FROM debian:stable-slim
+LABEL authors="Joost van der Griendt <joostvdg@gmail.com>"
+LABEL version="0.1.0"
+LABEL description="Docker image for playing with java applications in a concurrent, parallel and distributed manor."
+# Add Tini - it is already included: https://docs.docker.com/engine/reference/commandline/run/
+ENV TINI_VERSION v0.16.1
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+ENTRYPOINT ["/tini", "-vv","-g", "--", "/usr/bin/dui/bin/dui"]
+ENV DATE_CHANGED="20180120-1525"
+RUN apt-get update && apt-get install --no-install-recommends -y psmisc=22.* && rm -rf /var/lib/apt/lists/*
+COPY --from=build /usr/bin/dui-image/ /usr/bin/dui
+RUN /usr/bin/dui/bin/java --list-modules
+```
+
+#### Kubernetes Deployment
+
+So here we have the image's K8s [Deployment]() descriptor.
+
+Including the Pod's [lifecycle]() ```preStop``` with a exec style command. You should know by now [why we prefer that](http://www.johnzaccone.io/entrypoint-vs-cmd-back-to-basics/).
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dui-deployment
+  namespace: default
+  labels:
+    k8s-app: dui
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        k8s-app: dui
+    spec:
+      containers:
+        - name: master
+          image: caladreas/buming
+          ports:
+            - name: http
+              containerPort: 7777
+          lifecycle:
+            preStop:
+              exec:
+                command: ["killall", "java" , "-INT"]
+      terminationGracePeriodSeconds: 60
 ```
 
 ### Java Spring Boot (1.x)
