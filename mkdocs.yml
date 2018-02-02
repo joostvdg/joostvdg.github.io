@@ -40,6 +40,9 @@ pages:
   - Paradigms: productivity/paradigms.md
   - Studies: productivity/studies.md
 
+- Other:
+  - MKDocs (Static Website Generator): other/mkdocs.md
+
 - Jenkins: jenkins/index.md
 - Jenkins Job Management:
     - JobDSL: jenkins-jobs/jobdsl.md
