@@ -751,3 +751,4 @@ buming_dui.0.pnoui2x6elrz@dui-2    | [Server-Ken Thompson]			    [INFO]	[14:19:0
 [^8]: [Andy Wilkinson (from pivotal) explaining Spring Boot shutdown hook for Tomcat](https://github.com/spring-projects/spring-boot/issues/4657#issuecomment-161354811)
 [^9]: [Docker Swarm issue with multicast](https://github.com/docker/swarm/issues/1691)
 [^10]: [Docker network library issue with multicast](https://github.com/docker/libnetwork/issues/552)
+[^11]: [Excellent article on JVM details inside Containers](https://jaxenter.com/nobody-puts-java-container-139373.html)

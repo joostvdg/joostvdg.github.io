@@ -31,6 +31,7 @@ pages:
   - Domain Driven Design: swe/ddd.md
   - Microservices: swe/microservices.md
   - Algorithms: swe/algorithms.md
+  - Observability: swe/observability.md
   - Others: swe/others.md
 
 - Productivity:
