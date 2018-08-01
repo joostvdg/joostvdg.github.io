@@ -1,25 +1,91 @@
 # Developer Productivity
 
+## Commoditization
 
-## The Balancing act between centralized and decentralized
+> "The big change has been in the hardware/software cost ratio. The buyer of a $2 million machine in 1960 felt that he could afford $250,000 more ofr a customized payroll program, one that slipped easily and nondisruptively into the computer-hostile social environment. Buyers of %50,000 office machines today cannot conceivably afford customized payroll programs; so they adapt their paryoll procedures to the packages available." - [^2] F. Brooks - No Silver Bullet
+
+## Where should productivity be sought
+
+If you're looking to increase productivity, it would be best to answer some fundamental questions first.
+
+* What should we be productive in?
+* What is productivity?
+* How do you measure productivity?
+
+The first step is to determine, what you should be productive in.
+If you're building software for example, it is in finding out what to build.
+
+> "The hardest single part of building a software system is deciding precisely what to build." - F. Brooks [^2]
+
+That is actually already one step to far, as you would need a reason to build a software system.
+So the first step for any individual or organization (start up, or otherwise) is to find out what people want that you can offer.
+
+> "The fundamental activity of a startup is to turn ideas into products, measure how customers respond, and then learn whether to pivot or persevere. All successful startup processes should be geared to accelerate that feedback loop." - The Lean Startup [^3]
 
 ## How do you measure productivity
 
+## Grow v.s. Build
+
+
+## The Balancing act between centralized and decentralized
+
 ## On Multitasking
+
+* [Deep Work](https://www.amazon.com/Deep-Work-Focused-Success-Distracted/dp/1455586692)
+* Attention Residue > [Why is it so hard to do my work](https://www.sciencedirect.com/science/article/pii/S0749597809000399)
 
 ## Learning from Lean/Toyota
 
-## Human Psychology
+## Open Space Floor Plans
+
+http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 
 ## Conway's Law
 
 > "organizations which design systems ... are constrained to produce designs which are copies of the communication structures of these organizations." - M. Conway [^1]
 
+## Undifferentiated Heavy Lifting
+
+> "Work that needs to get done, but having it done doesn't bring our customers any direct benefit." - [Dave Hahn](https://www.youtube.com/watch?v=UTKIT6STSVM) 
 
 ### Further reading
 
+### Others
+
+* https://www.youtube.com/watch?v=UTKIT6STSVM
+* https://en.wikipedia.org/wiki/Complex_adaptive_system
+* https://jobs.netflix.com/culture
+* http://blackswanfarming.com/cost-of-delay/
+* https://www.rundeck.com/blog/tickets_make_operations_unnecessarily_miserable
+* https://www.digitalocean.com/community/tutorials/what-is-immutable-infrastructure
+* https://hbr.org/2015/12/what-the-research-tells-us-about-team-creativity-and-innovation
+* https://www.thoughtworks.com/insights/blog/continuous-improvement-safe-environment
+* https://qualitysafety.bmj.com/content/13/suppl_2/ii22
+* https://www.plutora.com/wp-content/uploads/dlm_uploads/2018/03/StateOfDevOpsTools_v14.pdf
+* https://medium.com/@ATavgen/never-fail-twice-608147cb49b
+* https://blogs.dropbox.com/dropbox/2018/07/study-high-performing-teams/?_tk=social&oqa=183tl01liov&linkId=100000003064606
+* http://psycnet.apa.org/record/1979-28632-001
+* https://pdfs.semanticscholar.org/a85d/432f44e43d61753bb8a121c246127b562a39.pdf
+* https://medium.com/@dr_eprice/laziness-does-not-exist-3af27e312d01
+* https://en.wikipedia.org/wiki/Mindset#Fixed_and_growth
+* http://www.reinventingorganizationswiki.com/Teal_Organizations
+* https://www.mckinsey.com/business-functions/organization/our-insights/the-irrational-side-of-change-management
+* https://www.barrypopik.com/index.php/new_york_city/entry/how_do_you_eat_an_elephant
+* https://kadavy.net/blog/posts/mind-management-intro/
+* https://en.wikipedia.org/wiki/Planning_fallacy
+* https://stories.lemonade.com/lemonade-proves-trust-pays-off-big-time-fdcf587af5a1
+* https://www.venturi-group.com/developer-to-cto/
+* https://dzone.com/articles/an-introduction-to-devops-principles
+* https://www.thoughtworks.com/insights/blog/evolving-thoughtworks-internal-it-solve-broader-cross-cutting-problems
+* https://www.thoughtworks.com/insights/blog/platform-tech-strategy-three-layers
+* https://www.thoughtworks.com/insights/blog/why-it-departments-must-reinvent-themselves-part-1
+* https://en.wikipedia.org/wiki/Peter_principle
+* https://hackernoon.com/why-all-engineers-must-understand-management-the-view-from-both-ladders-cc749ae14905
+
 ### Articles
 
+* [Article on the state of Systems Languages](https://blog.usejournal.com/systems-languages-an-experience-report-d008b2b12628)
+* [Article on SILO's](https://www.rundeck.com/blog/whats-a-silo-and-why-they-ruin-everything)
 * [Blog on Twitter's Engineering Efficiency](http://www.gigamonkeys.com/flowers/)
 * [Why Companies should have a Heroku platform for their developers](https://medium.com/@anubhavmishra/why-all-companies-should-have-a-heroku-like-platform-for-their-developers-ee96a6fc6bc0)
 * [Multitasking is bad for your health](http://time.com/4737286/multitasking-mental-health-stress-texting-depression/)
@@ -48,6 +114,13 @@
 * [Thinking Fast and Slow](https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman-ebook/dp/B005MJFA2W/ref=sr_1_1?s=books&ie=UTF8&qid=1520193959&sr=1-1&keywords=thinking+fast+and+slow)
 * [Sapiens](https://www.amazon.com/Sapiens-Humankind-Yuval-Noah-Harari-ebook/dp/B00K7ED54M/ref=pd_sim_351_2?_encoding=UTF8&psc=1&refRID=A1KNY9QCKWPQ94BA248Q)
 
+## On Writing
+
+* https://www.proofreadingservices.com/pages/very
+* 
+
 ## References
 
 [^1]: [Conway's law in wikipedia](https://en.wikipedia.org/wiki/Conway%27s_law)
+[^2]: [No Silver Bullet - F. Brooks](http://faculty.salisbury.edu/~xswang/Research/Papers/SERelated/no-silver-bullet.pdf)
+[^3]: [The Lean Startup Principles](http://theleanstartup.com/principles)
