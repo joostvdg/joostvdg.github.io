@@ -81,9 +81,15 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 * https://www.thoughtworks.com/insights/blog/why-it-departments-must-reinvent-themselves-part-1
 * https://en.wikipedia.org/wiki/Peter_principle
 * https://hackernoon.com/why-all-engineers-must-understand-management-the-view-from-both-ladders-cc749ae14905
+* https://medium.freecodecamp.org/cognitive-bias-and-why-performance-management-is-so-hard-8852a1b874cd
+* https://en.wikipedia.org/wiki/Horn_effect
+* https://en.wikipedia.org/wiki/Halo_effect
+* http://serendipstudio.org/bb/neuro/neuro02/web2/hhochman.html
 
 ### Articles
 
+* [Concept of Shared Services and beyond](https://medium.com/@mattklein123/the-human-scalability-of-devops-e36c37d3db6a)
+* [Introduction to Observability by Weave Net](https://www.weave.works/technologies/monitoring-kubernetes-with-prometheus/#observability-vs-monitoring)
 * [Article on the state of Systems Languages](https://blog.usejournal.com/systems-languages-an-experience-report-d008b2b12628)
 * [Article on SILO's](https://www.rundeck.com/blog/whats-a-silo-and-why-they-ruin-everything)
 * [Blog on Twitter's Engineering Efficiency](http://www.gigamonkeys.com/flowers/)
