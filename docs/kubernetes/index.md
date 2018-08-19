@@ -43,6 +43,7 @@
 
 * [RBAC](https://docs.bitnami.com/kubernetes/how-to/configure-rbac-in-your-kubernetes-cluster/)
 * [11 ways not to get hacked on Kubernetes](https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/)
+* https://www.youtube.com/channel/UCiqnRXPAAk6iv2m47odUFzw
 
 ## Tools to use
 
@@ -61,8 +62,10 @@
 * Grafana
 * Jenkins
 * Kaniko
-* Prow?
-* Knative
+* [Prow](https://github.com/kubernetes/test-infra/tree/master/prow)
+* [Tarmak](http://docs.tarmak.io/user-guide.html#user-guide)
+* [Kube-Lego](https://github.com/jetstack/kube-lego#usage)
+* [Knative](https://github.com/GoogleCloudPlatform/knative-build-tutorials#hello-world)
 * [Rook](https://rook.io/)
 * [Stern - aggregate log rendering tool](https://github.com/wercker/stern)
 * [Linkerd 2](https://linkerd.io/)
