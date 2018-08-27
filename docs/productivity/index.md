@@ -85,9 +85,22 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 * https://en.wikipedia.org/wiki/Horn_effect
 * https://en.wikipedia.org/wiki/Halo_effect
 * http://serendipstudio.org/bb/neuro/neuro02/web2/hhochman.html
+* https://betterhumans.coach.me/how-to-be-a-better-manager-by-understanding-the-difference-between-market-norms-and-social-norms-3082d97d440f
+* https://skillsmatter.com/skillscasts/10466-deep-dive-on-kubernetes-networking
+* https://purplegriffon.com/blog/is-itil-agile-enough
+* https://launchdarkly.com/blog/progressive-delivery-a-history-condensed/
+* http://www.collaborativefund.com/blog/real-world-vs-book-knowledge/
+
+### Presentations
+
+* https://speakerdeck.com/tylertreat/the-future-of-ops
+
 
 ### Articles
 
+* http://blog.christianposta.com/microservices/application-safety-and-correctness-cannot-be-offloaded-to-istio-or-any-service-mesh/
+* https://www.gatesnotes.com/Books/Capitalism-Without-Capital?WT.mc_id=08_16_2018_06_CapitalismWithoutCapital_BG-LI_&WT.tsrc=BGLI&linkId=55623312
+* https://uxdesign.cc/stop-delivering-software-with-agile-it-doesn-t-work-edccea3ab5d3
 * [Concept of Shared Services and beyond](https://medium.com/@mattklein123/the-human-scalability-of-devops-e36c37d3db6a)
 * [Introduction to Observability by Weave Net](https://www.weave.works/technologies/monitoring-kubernetes-with-prometheus/#observability-vs-monitoring)
 * [Article on the state of Systems Languages](https://blog.usejournal.com/systems-languages-an-experience-report-d008b2b12628)
