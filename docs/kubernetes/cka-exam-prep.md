@@ -10,6 +10,7 @@
 * https://sysdig.com/blog/kubernetes-security-guide/
 * https://severalnines.com/blog/installing-kubernetes-cluster-minions-centos7-manage-pods-services
 * https://docs.google.com/presentation/d/1Gp-2blk5WExI_QR59EUZdwfO2BWLJqa626mK2ej-huo/edit#slide=id.g27a78b354c_0_0
+* https://engineering.bitnami.com/articles/a-deep-dive-into-kubernetes-controllers.html
 
 ## Some basic commands
 
