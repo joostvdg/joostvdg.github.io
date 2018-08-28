@@ -52,6 +52,7 @@ pages:
   - Worker Config: kubernetes/khw-gce/worker.md
   - Remote access: kubernetes/khw-gce/remote-access.md
   - Network config: kubernetes/khw-gce/network.md
+  - Debug: kubernetes/khw-gce/debug.md
 
 - Software Engineering:
   - Naming: swe/naming.md
