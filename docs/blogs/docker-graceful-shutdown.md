@@ -1,14 +1,22 @@
-# Graceful shutdown
+# Gracefully Shutting Down Applications In Docker Containers
 
-> We can speak about the graceful shutdown of our application, when all of the resources it used and all of the traffic and/or data processing what it handled are closed and released properly. It means that no database connection remains open and no ongoing request fails because we stop our application. - [Péter Márton](https://blog.risingstack.com/graceful-shutdown-node-js-kubernetes/)
+NOTE: The new title makes is clearer what the subject is
 
-As I could not have done it better myself, I've quoted Péter Márton.
+> We can speak about the graceful shutdown of our application, when all of the resources it used and all of the traffic and/or data processing that it handled are closed and released properly. That means that no database connection remains open and no ongoing request fails because we stop our application. - [Péter Márton](https://blog.risingstack.com/graceful-shutdown-node-js-kubernetes/)
 
-I think we can say that cleaning up your mess and informing people of your impending departure is a good thing. Many programming languages and frameworks have hooks for listening to signals - which we explore later - allowing you to handle a shutdown, expected or not.
+NOTE: While correct, the quoted text is a bit confusing (at least to me). I had to read it twice to understand what the author wanted to say. I'm not sure whether that's because of the text itself or because you started with it without any context. Also, I think it's not gramatically correct. I made a few minor changes but it still does not "sound right".
 
-When we have resources open, such as files, database connections, background processes and others. It would be best for ourselves, but also for our environment to clean those up before exiting. This cleanup would constitute a graceful shutdown.
+Since I could not have written it better myself, I've quoted Péter Márton.
 
-We're going to dive into this subject, exploring several complimentary topics that together should help improve your (Docker) application's ability to gracefully shutdown.
+Cleaning up your mess and informing people of your impending departure is a good thing. Many programming languages and frameworks have hooks for listening to signals allowing you to handle a shutdown, whether it's expected or not. We'll explore them later.
+
+NOTE: Are you giving your personal opinion that is likely different that others or we can consider that a fact (as much as anything is a fact in IT)?
+
+When we have resources open, such as files, database connections, background processes and others, we should clean them up before exiting. This cleanup constitutes graceful shutdown.
+
+NOTE: The first sentence of the previous paragraph is unfinished. It's as if it is part of the second sentence. But, combining them as they are makes a very long sentence.
+
+We're going to dive into that subject, exploring several complimentary topics that together should help improve your (Docker) application's ability to gracefully shutdown.
 
 * The case for graceful shutdown
 * How to run processes in Docker
@@ -17,24 +25,39 @@ We're going to dive into this subject, exploring several complimentary topics th
 
 ## The case for graceful shutdown
 
-We're in an age where many applications are running in Docker containers across a multitude of clusters and (potentially) different orchestrators. These bring with it, other concerns to tackle, such as logging, monitoring, tracing and many more. One significant way we defend ourselves against the perils of distributed nature of these clusters is to make our applications more resilient.
+We're in an age where many applications are running in Docker containers across a multitude of clusters and (potentially) different orchestrators. Such deployment strategies bring a myriad of concerns that should be tackled. A few of the examples are logging, monitoring, tracing, and many more. One significant way we defend ourselves against the perils of distributed nature of these clusters is to make our applications more resilient.
+
+NOTE: I'd mention that this article is not tackling resiliency or, at least, not in depth. Otherwise, the last sentence from the previous paragraph gives a false hope.
 
 However, there is still no guarantee your application is always up and running. So another concern we should tackle is how it responds when it does fail, including it being told to stop by the orchestrator. Now, this can happen for a variety of reasons, for example; your application's health check fails or your application consumed more resources than allowed.
 
-Not only does this increase the reliability of your application, but it also increases the reliability of the cluster it lives in. As you can not always know in advance where your application is run, you might not even be the one putting it in a docker container, make sure your application knows how to quit!
+NOTE: Similar like the previous note... My understanding is that you're not dealing with failures, but in intentional graceful shutdown.
+
+Not only does that increase the reliability of your application, but it also increases the reliability of the cluster it lives in. As you can not always know in advance where your application is run, you might not even be the one putting it in a docker container, make sure your application knows how to quit!
+
+NOTE: Since you already mentioned that an application might not be inside a container, you might also want to mention that the rules of graceful shutdown are not directly related to Docker (they are Linux best-practices).
+
+NOTE: I don't think you made a case for graceful shutdown (as subtitle indicated). You went into other subjects (failover, resiliency, and so on). Why do we want to shut down gracefully? That was hinted in the initial quote but it was lost in the rest of the text (so far).
+
+NOTE: Try to transition from one sub-section to another. Something like "Since containers are a commonly used deployment mechanism, and Docker is (still) the most commonly used container engine, we'll explore how to run processes inside it.
 
 ## How to run processes in Docker
 
 There are many ways to run a process in Docker. I prefer to make things easy to understand and easy to know what to expect. So this article deals with processes started by commands in a Dockerfile.
 
+NOTE: Make a connection to the main subject. Are you explaining this because people don't know how to run commands in Docker or because it's important for graceful shutdown?
+
 There are several ways to run a command in a Dockerfile.
 
-These are:
+These are as follows.
 
 * **RUN**: runs a command during the docker build phase
 * **CMD**: runs a command when the container gets started
 * **ENTRYPOINT**: provides the location from where commands get run when the container starts
-You need at least one ENTRYPOINT or CMD in a Dockerfile for it to be valid. They can be used in collaboration but they can do similar things.
+
+NOTE: Why is `RUN` in this story?
+
+You need at least one `ENTRYPOINT` or `CMD` in a Dockerfile for it to be valid. They can be used in collaboration but they can do similar things.
 
 You can put these commands in both a shell form and an exec form. For more information on these commands, you should check out [Docker's docs on Entrypoint vs. CMD](https://docs.docker.com/engine/reference/builder/#exec-form-entrypoint-example).
 
@@ -44,23 +67,29 @@ Whereas the exec form executes a child process that is still attached to PID1.
 
 We'll show you what that looks like, borrowing the Docker docs example referred to earlier.
 
+NOTE: It might be "I will show you" or "we'll explore". "We'll show you" sounds like both you and the reader are showing something to the reader.
+
+NOTE: Reader's thinking... "Still nothing about graceful shutdown. I'll be patient."
+
 ### Docker Shell form example
 
-Create the following Dockerfile:
+Create the following Dockerfile.
+
+NOTE: Why would I do that?
 
 ```dockerfile
 FROM ubuntu:18.04
 ENTRYPOINT top -b
 ```
 
-Then build and run it:
+Then build and run it.
 
 ```bash
 docker image build --tag shell-form .
 docker run --name shell-form --rm shell-form
 ```
 
-This should yield the following:
+This should yield the following output?
 
 ```bash
 top - 16:34:56 up 1 day,  5:15,  0 users,  load average: 0.00, 0.00, 0.00
@@ -74,16 +103,21 @@ KiB Swap:  1048572 total,  1042292 free,     6280 used.  1579380 avail Mem
     6 root      20   0   36480   2928   2580 R   0.0  0.1   0:00.01 top
 ```
 
-As you can see, two processes are running, **sh** and **top**. 
+As you can see, `sh` and `top` processes are running. 
+
 Meaning, that killing the process, with *ctrl+c* for example, terminates the **sh** process, but not **top**. 
+
 To kill this container, open a second terminal and execute the following command.
 
 ```bash
 docker rm -f shell-form
 ```
 
-As you can imagine, this is usually not what you want. 
-So as a general rule, you should never use the shell form. So on to the exec form we go!
+As you can imagine, this is usually not what you want. So as a general rule, you should never use the shell form. So on to the exec form we go!
+
+NOTE: User's thinking.. "The title is definitelly missleading. There's no graceful shutdown. Like almost everyone else, my attention span is very short and I'm giving up."
+
+NOTE: There is no indication to the reader why all this matters to graceful shutdown. Maybe it does, or maybe it doesn't. Is it?
 
 ### Docker exec form example
 
@@ -267,6 +301,7 @@ Relying on Docker does create a dependency on how your container runs. It only r
 Creating either a different experience for users running your application somewhere else or not able to meet the version requirements. So maybe another solution is to bake a process manager into your image and guarantee its behavior.
 
 ### Depend on a process manager
+
 One of our goals for Docker images is to keep them small. We should look for a lightweight process manager. It does not have too many a whole machine worth or processes, just one and perhaps some children.
 
 Here we would like to introduce you to [Tini](https://github.com/krallin/tini), a lightweight process manager [designed for this purpose](https://github.com/krallin/tini/issues/8). 
