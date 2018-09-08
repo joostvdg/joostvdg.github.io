@@ -1,66 +1,74 @@
-# Graceful shutdown
+# Gracefully Shutting Down Applications in Docker
 
-> We can speak about the graceful shutdown of our application, when all of the resources it used and all of the traffic and/or data processing what it handled are closed and released properly. It means that no database connection remains open and no ongoing request fails because we stop our application. - [Péter Márton](https://blog.risingstack.com/graceful-shutdown-node-js-kubernetes/)
+I'm not sure about you, but I like it when my neighbors leave our shared spaces clean and don't take up parking spaces when they don't need.
 
-As I could not have done it better myself, I've quoted Péter Márton.
+Imagine you live in an apartment complex with the above-mentioned parking lot. Some tenants go away and never come back. If nothing is done to clean up after them - to reclaim their apartment and parking space - then after some time, more and more apartments are unavailable for no reason, the parking lot fills up with cars which belong to no one.
 
-I think we can say that cleaning up your mess and informing people of your impending departure is a good thing. Many programming languages and frameworks have hooks for listening to signals - which we explore later - allowing you to handle a shutdown, expected or not.
+Some tenants did not get a parking lot and are getting frustrated that none are opening up. When they moved in, they were told when others leave, they would be next in line. While they're waiting, they parked outside the complex. Eventually, the entrance is blocked and no one can enter or leave. The end result is a completely unlivable apartment block with trapped tenants - never to be seen or heard.
 
-When we have resources open, such as files, database connections, background processes and others. It would be best for ourselves, but also for our environment to clean those up before exiting. This cleanup would constitute a graceful shutdown.
+If you agree with me that if a tenant leaves, the tenant should clean the apartment and free the parking spot to make it ready for the next inhabitant; then please read on. We're going to dive into the equivalent of doing this with containers.
 
-We're going to dive into this subject, exploring several complimentary topics that together should help improve your (Docker) application's ability to gracefully shutdown.
-
-* The case for graceful shutdown
-* How to run processes in Docker
-* Process management
-* Signals management
+We will explore running our container with Docker (run, compose, swarm) and Kubernetes.
+Even if you use another way to run your containers, this article should provide you with enough insight to get you on your way.
 
 ## The case for graceful shutdown
 
 We're in an age where many applications are running in Docker containers across a multitude of clusters and (potentially) different orchestrators. These bring with it, other concerns to tackle, such as logging, monitoring, tracing and many more. One significant way we defend ourselves against the perils of distributed nature of these clusters is to make our applications more resilient.
 
-However, there is still no guarantee your application is always up and running. So another concern we should tackle is how it responds when it does fail, including it being told to stop by the orchestrator. Now, this can happen for a variety of reasons, for example; your application's health check fails or your application consumed more resources than allowed.
+However, there is still no guarantee your application is always up and running. So another concern we should tackle is how it responds when it needs to shut down. Where we can differentiate between an unexpected shutdown - we crashed - or an expected shutdown.  
 
-Not only does this increase the reliability of your application, but it also increases the reliability of the cluster it lives in. As you can not always know in advance where your application is run, you might not even be the one putting it in a docker container, make sure your application knows how to quit!
+Shutting down can happen for a variety of reasons, in this post we dive into how to deal with an expected shutdown such as it being told to stop by an orchestrator such as Kubernetes.
 
-## How to run processes in Docker
+This can happen for several reasons, including but limited too:
 
-There are many ways to run a process in Docker. I prefer to make things easy to understand and easy to know what to expect. So this article deals with processes started by commands in a Dockerfile.
+* your application's health check fails
+* your application consumed more resources than allowed
+* the application is scaling down
+* and more
+
+Not only does this increase the reliability of your application, but it also increases that of the cluster it lives in. As you can not always know in advance where your application runs, you might not even be the one putting it in a docker container, make sure your application knows how to quit!
+
+Graceful shutdown is not unique to Docker, as it permeates Linux's best practices for quite some years before Docker's existence. However, applying them to Docker container adds extra dimensions.
+
+## Start Good So You Can End Well
+
+When you sign up for an apartment, you probably have to sign a contract detailing your rights and obligations. The more you state explicitly, the easier it is to deal with bad behaving neighbors. This holds the same when running a process; we should make sure we set the rules, obligations, and expectations from the start.
+
+As we say in Dutch: a good beginning is half the work. We will start with how you can run a process in a container that is beneficial to Graceful Shutdown.
+
+There are many ways to start a process in a Docker container. I prefer to make things easy to understand and easy to know what to expect. So this article deals with processes started by commands in a Dockerfile.
 
 There are several ways to run a command in a Dockerfile.
 
-These are:
+These are as follows:
 
-* **RUN**: runs a command during the docker build phase
 * **CMD**: runs a command when the container gets started
-* **ENTRYPOINT**: provides the location from where commands get run when the container starts
+* **ENTRYPOINT**: provides the location (entrypoint) from where commands get run when the container starts
+
 You need at least one ENTRYPOINT or CMD in a Dockerfile for it to be valid. They can be used in collaboration but they can do similar things.
 
 You can put these commands in both a shell form and an exec form. For more information on these commands, you should check out [Docker's docs on Entrypoint vs. CMD](https://docs.docker.com/engine/reference/builder/#exec-form-entrypoint-example).
 
-In summary, the shell form runs the command as a shell command and spawn a process via /bin/sh -c.
-
-Whereas the exec form executes a child process that is still attached to PID1.
-
-We'll show you what that looks like, borrowing the Docker docs example referred to earlier.
 
 ### Docker Shell form example
 
-Create the following Dockerfile:
+We start with the shell form and see if it can do what we want; begin in such a way, we can stop it nicely.
+
+We create the following Dockerfile:
 
 ```dockerfile
 FROM ubuntu:18.04
 ENTRYPOINT top -b
 ```
 
-Then build and run it:
+Then build and run it.
 
 ```bash
 docker image build --tag shell-form .
 docker run --name shell-form --rm shell-form
 ```
 
-This should yield the following:
+This yields the following output.
 
 ```bash
 top - 16:34:56 up 1 day,  5:15,  0 users,  load average: 0.00, 0.00, 0.00
@@ -74,18 +82,19 @@ KiB Swap:  1048572 total,  1042292 free,     6280 used.  1579380 avail Mem
     6 root      20   0   36480   2928   2580 R   0.0  0.1   0:00.01 top
 ```
 
-As you can see, two processes are running, **sh** and **top**. 
-Meaning, that killing the process, with *ctrl+c* for example, terminates the **sh** process, but not **top**. 
+As you can see, two processes are running, **sh** and **top**.
+Meaning, that killing the process, with *ctrl+c* for example, terminates the **sh** process, but not **top**.
 To kill this container, open a second terminal and execute the following command.
 
 ```bash
 docker rm -f shell-form
 ```
 
-As you can imagine, this is usually not what you want. 
-So as a general rule, you should never use the shell form. So on to the exec form we go!
+Shell form doesn't do what we need. Starting a process with shell form will only lead us to the disaster of parking lots filling up unless there's a someone actively cleaning up.
 
 ### Docker exec form example
+
+This leads us to the exec form. Hopefully, this gets us somewhere.
 
 The exec form is written as an array of parameters: `ENTRYPOINT ["top", "-b"]`
 
@@ -96,14 +105,14 @@ FROM ubuntu:18.04
 ENTRYPOINT ["top", "-b"]
 ```
 
-Then build and run it:
+Then build and run it.
 
 ```bash
 docker image build --tag exec-form .
 docker run --name exec-form --rm exec-form
 ```
 
-This should yield the following:
+This yields the following output.
 
 ```bash
 top - 18:12:30 up 1 day,  6:53,  0 users,  load average: 0.00, 0.00, 0.00
@@ -116,7 +125,13 @@ KiB Swap:  1048572 total,  1042292 free,     6280 used.  1574880 avail Mem
     1 root      20   0   36480   2940   2584 R   0.0  0.1   0:00.03 top
 ```
 
-### Docker exec form with parameters
+Now we got something we can work with. If something would tell this Container to stop, it will tell our only running process so it is sure to reach the correct one!
+
+### Gotchas
+
+Knowing we can use the exec form for our goal - gracefully shutting down our container - we can move on to the next part of our efforts. For the sake of imparting you with some hard learned lessons, we will explore two gotchas. They're optional, so you can also choose to skip to *Make Sure Your Process Listens*.
+
+#### Docker exec form with parameters
 
 A caveat with the exec form is that it doesn't interpolate parameters.
 
@@ -169,7 +184,7 @@ docker run --name exec-form --rm -e PARAM="help" exec-param
 
 Resulting in top's help string.
 
-### The special case of Alpine
+#### The special case of Alpine
 
 One of the main [best practices for Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/), is to make them as small as possible. 
 The easiest way to do this is to start with a minimal image. 
@@ -189,7 +204,7 @@ docker image build --tag exec-param .
 docker run --name exec-form --rm -e PARAM="help" exec-param
 ```
 
-It will result in the following output.
+This yields the following output.
 
 ```bash
 Mem: 1509068K used, 537864K free, 640K shrd, 126756K buff, 1012436K cached
@@ -203,28 +218,25 @@ Aside from **top**'s output looking a bit different, there is only one command.
 
 Alpine Linux helps us avoid the problem of shell form altogether!
 
-## Process management
+## Make Sure Your Process Listens
 
-Now that we know how to create a Dockerfile that helps us make sure we can run as PID1 so that we can make sure our process correctly responds to signals?
+It is excellent if your tenants are all signed up, know their rights and obligations.
+But you can't contact them when something happens, how will they ever know when to act?
 
-We'll get into signal handling next, but first, let us explore how we can manage our process. 
-As you're used to by now, there are multiple solutions at our disposal.
+Translating that into our process. It starts and can be told to shut down, but does it process listen?
+Can it interpret the message it gets from Docker or Kubernetes? And if it does, can it relay the message correctly to its Child Processes?
+In order for your process to gracefully shutdown, it should know when to do so. As such, it should listen not only for itself but also on behalf of its children - yours never do anything wrong though!
 
-We can broadly categorize them like this:
+Some processes do, but many aren't designed to [listen](https://www.fpcomplete.com/blog/2016/10/docker-demons-pid1-orphans-zombies-signals) or tell [their Children](https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem). They expect someone else to listen for them and tell them and their children - process managers.
 
-* Process manages itself and it's children, by itself
-* We let Docker manage the process, and it's children
-* We use a process manager to do the work for us
+In order to listen to these **signals**, we can call in the help of others. We will look at two options.
 
-### Process manages itself
+* we let Docker manage the process and its children
+* we use a process manager
 
-Great, if this is the case, it saves you some trouble of relying on dependencies. 
-Unfortunately, not all processes are [designed for PID1](https://www.fpcomplete.com/blog/2016/10/docker-demons-pid1-orphans-zombies-signals), and some might be [prone to zombie processes regardless](https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem).
+### Let Docker manage it for us
 
-In those cases, you still have to invest some time and effort to get a solution in place.
-
-
-### Docker manages PID1
+If you're not using Docker to run or manage your containers, you should skip to *Depend on a process manager*.
 
 Docker has a build in feature, that it uses a lightweight process manager to help you.
 
@@ -236,13 +248,13 @@ Please, note that the below examples require a certain minimum version of Docker
 * [compose (v 2.2)](https://docs.docker.com/compose/compose-file/compose-file-v2/#image) - 1.13.0+
 * [swarm (v 3.7)](https://docs.docker.com/compose/compose-file/#init) - 18.06.0+
 
-#### Docker Run
+#### With Docker Run
 
 ```bash
 docker run --rm -ti --init caladreas/dui
 ```
 
-#### Docker Compose
+#### With Docker Compose
 
 ```yaml
 version: '2.2'
@@ -252,7 +264,7 @@ services:
         init: true
 ```
 
-#### Docker Swarm
+#### With Docker Swarm
 
 ```yaml
 version: '3.7'
@@ -267,6 +279,7 @@ Relying on Docker does create a dependency on how your container runs. It only r
 Creating either a different experience for users running your application somewhere else or not able to meet the version requirements. So maybe another solution is to bake a process manager into your image and guarantee its behavior.
 
 ### Depend on a process manager
+
 One of our goals for Docker images is to keep them small. We should look for a lightweight process manager. It does not have too many a whole machine worth or processes, just one and perhaps some children.
 
 Here we would like to introduce you to [Tini](https://github.com/krallin/tini), a lightweight process manager [designed for this purpose](https://github.com/krallin/tini/issues/8). 
@@ -296,26 +309,26 @@ ENTRYPOINT ["/sbin/tini", "-vv","-g","-s", "--"]
 CMD ["top -b"]
 ```
 
-## Signals management
+## How To Be Told What You Want To Hear
 
-Now that we can capture signals and manage our process, we have to see how we can manage those signals. There are three parts to this:
+You've made it this far; your tenets are reachable so you can inform them if they need to act. However, there's another problem lurking around the corner. Do they speak your language?
 
-* **Handle signals**: we should make sure our process can deal with the signals it receives
-* **Receive the right signals**: we might have to alter the signals we receive from our orchestrators
-* **Signals and Docker orchestrators**: we have to help our orchestrators to know when to deliver these signals.
+Our process now starts knowing it can be talked to, it has someone who takes care of listening for it and its children. Now we need to make sure it can understand what it hears, it should be able to handle the incoming signals. We have two main ways of doing this.
+
+* **Handle signals as they come**: we should make sure our process deal with the signals as they come
+* **State the signals we want**: we can also tell up front, which signals we want to hear and put the burden of translation on our callers
 
 For more details on the subject of Signals and Docker, please read this excellent blog from [Grigorii Chudnov](https://medium.com/@gchudnov/trapping-signals-in-docker-containers-7a57fdda7d86).
 
-### Handle signals
+### Handle signals as they come
 
 Handling process signals depend on your application, programming language or framework.
 
-For Java and Go(lang) we dive into this further, exploring some options we have here, including some of the most used frameworks.
 
-### Receive the right signals
+### State the signals we want
 
-Sometimes your language or framework of choice, doesn't handle signals all that well. 
-It might be very rigid in what it does with specific signals, removing your ability to do the right thing. 
+Sometimes your language or framework of choice, doesn't handle signals all that well.
+It might be very rigid in what it does with specific signals, removing your ability to do the right thing.
 Of course, not all languages or frameworks are designed with Docker container or Microservices in mind, are yet to catch up to this more dynamic environment.
 
 Luckily Docker and Kubernetes allow you to specify what signal too sent to your process.
@@ -395,15 +408,9 @@ spec:
 
 When you create this as deployment.yml, create and delete it - `kubectl apply -f deployment.yml` / `kubectl delete -f deployment.yml` - you will see the same behavior.
 
- 
-### Signals and Docker orchestrators
+## How To Be Told When You Want To Hear It
 
-Now that we can respond to signals and receive the correct signals, there's one last thing to take care off. 
-We have to make sure our orchestrator of choice sends these signals for the right reasons. 
-Quickly telling us, there's something wrong with our running process, and it should shut down, which of course, we'll do gracefully!
-
-As the topic for health, readiness and liveness checks is a topic on its own, we'll keep it short. 
-Giving some basic examples and pointing you to more work to further investigate how to use it to your advantage.
+Our process now will now start knowing it will hear what it wants to hear. But we now have to make sure we hear it when we need to hear it. An intervention is excellent when you can still be saved, but it is a bit useless if you're already dead.
 
 ### Docker
 
@@ -415,5 +422,5 @@ Considering only Docker can use the health check in your Dockerfile,
 
 ### Kubernetes
 
-In Kubernetes we have the concept of [Container Probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes). 
+In Kubernetes we have the concept of [Container Probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes).
 This allows you to configure whether your container is ready (readinessProbe) to be used and if it is still working as expected (livenessProbe).
