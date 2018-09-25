@@ -1,25 +1,31 @@
 # Gracefully Shutting Down Applications in Docker
 
-I'm not sure about you, but I like it when my neighbors leave our shared spaces clean and don't take up parking spaces when they don't need.
+I'm not sure about you, but I prefer that my neighbors leave our shared spaces clean and don't take up parking spaces when they don't need them.
 
-Imagine you live in an apartment complex with the above-mentioned parking lot. Some tenants go away and never come back. If nothing is done to clean up after them - to reclaim their apartment and parking space - then after some time, more and more apartments are unavailable for no reason, the parking lot fills up with cars which belong to no one.
+Imagine you live in an apartment complex with the above-mentioned parking lot. Some tenants go away and never come back. If nothing is done to clean up after them - to reclaim their apartment and parking space - then after some time, more and more apartments are unavailable for no reason, and the parking lot fills with cars which belong to no one.
 
-Some tenants did not get a parking lot and are getting frustrated that none are opening up. When they moved in, they were told when others leave, they would be next in line. While they're waiting, they parked outside the complex. Eventually, the entrance is blocked and no one can enter or leave. The end result is a completely unlivable apartment block with trapped tenants - never to be seen or heard.
+Some tenants did not get a parking lot and are getting frustrated that none are becoming available. When they moved in, they were told that when others leave they would be next in line. While they're waiting, they have to park outside the complex. Eventually, the entrance gets blocked and no one can enter or leave. The end result is a completely unlivable apartment block with trapped tenants.
 
-If you agree with me that if a tenant leaves, the tenant should clean the apartment and free the parking spot to make it ready for the next inhabitant; then please read on. We're going to dive into the equivalent of doing this with containers.
+If you agree with me that when a tenant leaves, he or she should clean the apartment and free the parking spot to make it ready for the next inhabitant; then please read on. We're going to dive into the equivalent of doing this with containers.
 
-We will explore running our container with Docker (run, compose, swarm) and Kubernetes.
+We will explore running our containers with Docker (run, compose, swarm) and Kubernetes.
 Even if you use another way to run your containers, this article should provide you with enough insight to get you on your way.
 
 ## The case for graceful shutdown
 
-We're in an age where many applications are running in Docker containers across a multitude of clusters and (potentially) different orchestrators. These bring with it, other concerns to tackle, such as logging, monitoring, tracing and many more. One significant way we defend ourselves against the perils of distributed nature of these clusters is to make our applications more resilient.
+We're in an age where many applications are running in Docker containers across a multitude of clusters and (potentially) different orchestrators. These bring with it other concerns to tackle, such as logging, monitoring, tracing and many more. One significant way we defend ourselves against the perils of distributed nature of these clusters is to make our applications more resilient.
 
-However, there is still no guarantee your application is always up and running. So another concern we should tackle is how it responds when it needs to shut down. Where we can differentiate between an unexpected shutdown - we crashed - or an expected shutdown.  
+NOTE: How are the perils from the last sentence related logging, monitoring, and tracing?
 
-Shutting down can happen for a variety of reasons, in this post we dive into how to deal with an expected shutdown such as it being told to stop by an orchestrator such as Kubernetes.
+NOTE: The last sentence sounds as if distributed systems make applications less resilient so we need to increase their resiliency. If anything, it's the other way around. Running applications in distributed systems make them more resilient.
 
-This can happen for several reasons, including but limited too:
+However, there is still no guarantee your application is always up and running. So another concern we should tackle is how it responds when it needs to shut down. Where we can differentiate between an unexpected shutdown - we crashed - or an expected shutdown.
+
+NOTE: The first sentence is missleading. The subject is graceful shutdown and that's not directly related with the subject of how containers and schedulers guarantee applications uptime.
+
+Shutting down can happen for a variety of reasons. In this post we'll dive into expected shutdown, such as through an orchestrator like Kubernetes.
+
+Containers can be purposelly shut down for a variety of reasons, including but not limited too:
 
 * your application's health check fails
 * your application consumed more resources than allowed
@@ -28,17 +34,27 @@ This can happen for several reasons, including but limited too:
 
 Not only does this increase the reliability of your application, but it also increases that of the cluster it lives in. As you can not always know in advance where your application runs, you might not even be the one putting it in a docker container, make sure your application knows how to quit!
 
+NOTE: The previous paragraph sounds confusing.
+
 Graceful shutdown is not unique to Docker, as it permeates Linux's best practices for quite some years before Docker's existence. However, applying them to Docker container adds extra dimensions.
+
+NOTE: The previous paragraph sounds confusing.
+
+NOTE: The subtitle is "The case for graceful shutdown" and yet you did not explain the case. For example, terminating pending requests before shutdown.
 
 ## Start Good So You Can End Well
 
-When you sign up for an apartment, you probably have to sign a contract detailing your rights and obligations. The more you state explicitly, the easier it is to deal with bad behaving neighbors. This holds the same when running a process; we should make sure we set the rules, obligations, and expectations from the start.
+When you sign up for an apartment, you probably have to sign a contract detailing your rights and obligations. The more you state explicitly, the easier it is to deal with bad behaving neighbors. The same is true for running processes; we should make sure that we set the rules, obligations, and expectations from the start.
 
-As we say in Dutch: a good beginning is half the work. We will start with how you can run a process in a container that is beneficial to Graceful Shutdown.
+As we say in Dutch: a good beginning is half the work. We will start with how you can run a process in a container with a process that shuts down gracefully.
 
 There are many ways to start a process in a Docker container. I prefer to make things easy to understand and easy to know what to expect. So this article deals with processes started by commands in a Dockerfile.
 
+NOTE: The second sentence sets expectations that you will make things easy, but the third sentence does not follow on that promise. It's as if they're not connected.
+
 There are several ways to run a command in a Dockerfile.
+
+NOTE: We do not run a command in a Dockerfile but in a container. Dockerfile specifies how will a command be executed.
 
 These are as follows:
 
@@ -49,26 +65,30 @@ You need at least one ENTRYPOINT or CMD in a Dockerfile for it to be valid. They
 
 You can put these commands in both a shell form and an exec form. For more information on these commands, you should check out [Docker's docs on Entrypoint vs. CMD](https://docs.docker.com/engine/reference/builder/#exec-form-entrypoint-example).
 
+NOTE: If you start explaining something (e.g., shell for and exec form) provide at least some basic info. Otherwise, remove the first part and leave only the link (e.g., for more info...).
 
 ### Docker Shell form example
 
 We start with the shell form and see if it can do what we want; begin in such a way, we can stop it nicely.
 
-We create the following Dockerfile:
+NOTE: Explain (1 sentence is enough) what is the shell form. Since you assumed that readers don't know what is CMD and what is ENTRYPOINT, you must assume that they do not know what is shell form. In other words, you need to be clear who is the target audience and cannot assume first that they do not know stuff and then that they do know things that build on that stuff.
+
+Please create Dockerfile with the content that follows.
 
 ```dockerfile
 FROM ubuntu:18.04
 ENTRYPOINT top -b
 ```
 
-Then build and run it.
+Then build an image and run a container.
 
 ```bash
 docker image build --tag shell-form .
+
 docker run --name shell-form --rm shell-form
 ```
 
-This yields the following output.
+The latter command yields the following output.
 
 ```bash
 top - 16:34:56 up 1 day,  5:15,  0 users,  load average: 0.00, 0.00, 0.00
@@ -84,6 +104,9 @@ KiB Swap:  1048572 total,  1042292 free,     6280 used.  1579380 avail Mem
 
 As you can see, two processes are running, **sh** and **top**.
 Meaning, that killing the process, with *ctrl+c* for example, terminates the **sh** process, but not **top**.
+
+NOTE: Elaborate why is that so.
+
 To kill this container, open a second terminal and execute the following command.
 
 ```bash
@@ -91,6 +114,12 @@ docker rm -f shell-form
 ```
 
 Shell form doesn't do what we need. Starting a process with shell form will only lead us to the disaster of parking lots filling up unless there's a someone actively cleaning up.
+
+NOTE: I'm not sure I understand why does shell form lead to a disaster?
+
+NOTE: If this is a blog post, you went to far into different ways to execute commands inside containers and there's still not sign of graceful (or non-graceful) shutdown. On the other hand, you're rushing through the shell form. If I don't know what it is, I would probably not understand it after this section. On the other hand, if I do know what it is, I'm bored and will probably give up on my expectation to read about graceful shutdown. I'd recommend to write two articles. One about different ways to run commands in Docker containers and the other about graceful shotdown. The latter can contain the link to the former.
+
+NOTE: Have to go now, so I'll stop the review at this point.
 
 ### Docker exec form example
 
