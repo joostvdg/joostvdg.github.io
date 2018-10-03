@@ -90,6 +90,13 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 * https://purplegriffon.com/blog/is-itil-agile-enough
 * https://launchdarkly.com/blog/progressive-delivery-a-history-condensed/
 * http://www.collaborativefund.com/blog/real-world-vs-book-knowledge/
+* https://blog.codeship.com/using-jx-create-gitops-managed-jenkins-x-installation-cloudbees-codeship-terraform-google-kubernetes-engine/
+* https://martinfowler.com/articles/serverless.html
+* https://www.quora.com/Some-people-including-the-creator-of-C-claim-that-there-is-a-huge-decline-of-quality-among-software-developers-What-seems-to-be-the-main-cause
+* https://medium.com/netflix-techblog/full-cycle-developers-at-netflix-a08c31f83249
+* https://queue.acm.org/detail.cfm?id=3182626
+* http://www.safetydifferently.com/why-do-things-go-right/
+* 
 
 ### Presentations
 
