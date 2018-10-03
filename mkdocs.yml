@@ -69,8 +69,12 @@ pages:
   - Paradigms: productivity/paradigms.md
   - Studies: productivity/studies.md
 
+- Certificates:
+  - Let's Encrypt K8S: certificates/lets-encrypt-k8s.md
+
 - Other:
   - MKDocs (Static Website Generator): other/mkdocs.md
+  - VIM: other/vim.md
 
 - Jenkins: jenkins/index.md
 - Jenkins Job Management:
