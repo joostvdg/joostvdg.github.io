@@ -1,262 +1,308 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-    
     <url>
      <loc>https://joostvdg.github.io/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-        
     <url>
      <loc>https://joostvdg.github.io/java/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/java/spring/boot/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/java/java9/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/java/ecosystem/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/java/networking/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/java/streams/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/java/concurrency/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
-        
     <url>
      <loc>https://joostvdg.github.io/docker/multi-stage-builds/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/docker/graceful-shutdown/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/docker/swarm/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/docker/kubernetes/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
-        
+    <url>
+     <loc>https://joostvdg.github.io/linux/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/linux/systemd/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/linux/networking/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/linux/iptables/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/blogs/docker-graceful-shutdown/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/cka-exam/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/cka-exam-prep/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/install-gke/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/terraform-compute/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/certificates/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/kubeconfigs/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/encryption/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/etcd/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/controller/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/worker/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/remote-access/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/network/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/khw-gce/debug/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
     <url>
      <loc>https://joostvdg.github.io/swe/naming/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/swe/ddd/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/swe/microservices/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/swe/algorithms/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/swe/observability/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/swe/others/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
-        
     <url>
      <loc>https://joostvdg.github.io/productivity/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/productivity/tools/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/productivity/intellij/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/productivity/paradigms/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/productivity/studies/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
-        
+    <url>
+     <loc>https://joostvdg.github.io/certificates/lets-encrypt-k8s/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
     <url>
      <loc>https://joostvdg.github.io/other/mkdocs/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
+    <url>
+     <loc>https://joostvdg.github.io/other/vim/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
     <url>
      <loc>https://joostvdg.github.io/jenkins/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-jobs/jobdsl/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-jobs/jenkins-jobs-builder/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-pipeline/core-concepts/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-pipeline/declarative-pipeline/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-pipeline/groovy-pipeline/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-pipeline/global-shared-library/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-pipeline/ide-integration-pipeline-dsl/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-pipeline/jenkins-parallel-pipeline/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-pipeline/input/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
-    
-        
     <url>
      <loc>https://joostvdg.github.io/jenkins-pipeline-examples/</loc>
-     <lastmod>2018-03-10</lastmod>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>https://joostvdg.github.io</loc>
-     <lastmod></lastmod>
+     <loc>https://joostvdg.github.io/jenkins-pipeline-examples/maven-groovy-dsl/</loc>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>https://joostvdg.github.io</loc>
-     <lastmod></lastmod>
+     <loc>https://joostvdg.github.io/jenkins-pipeline-examples/maven-declarative/</loc>
+     <lastmod>2018-10-03</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
+    <url>
+     <loc>https://joostvdg.github.io/jenkins-pipeline-examples/maven-shared-library/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/jenkins-pipeline-examples/docker-declarative/</loc>
+     <lastmod>2018-10-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
 </urlset>
