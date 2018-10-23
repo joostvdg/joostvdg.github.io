@@ -4,7 +4,7 @@
 
 This about using Let's Encrypt for generating a certificate for your service on Kubernetes. There are several ways to do this, with more or less automation, cluster-wide or namespace bound or with a DNS or HTTP validation check.
 
-I'll choose the route that was the easiest for me and then I'll briefly look at the other options.
+I'll choose the route that was the easiest for me, and then I'll briefly look at the other options.
 
 ## Prerequisites
 
@@ -33,8 +33,8 @@ For more details on Cert Manager, I recommend [reading their introduction](https
 
 In essence, it's a tool that helps you initiate a certificate request with a service such as Let's Encrypt.
 
-You can install it via Helm, and it's meant to be installed only once - so cluster-wide.
-This is due to the usage of Custom Resource Definitions (CRD's) which will block any (re-)installation.
+You can install it via Helm, and it's meant to be installed only once per cluster. 
+The once per cluster restriction is due to the usage of Custom Resource Definitions (CRD's) which will block any (re-)installation.
 
 To confirm if there are any CRD's from cert-manager, you can issue the following command.
 
@@ -80,7 +80,7 @@ We'll be using the `http-01` method, for the `dns-01` method, refer to the [cert
 
 ### ClusterIssuer
 
-As the name implies, the ClusterIssuer is a cluster-wide resource and not bound to a specific namespace.
+As the resource `Kind` implies, a `ClusterIssuer` is a cluster-wide resource and not bound to a specific namespace.
 
 ```YAML
 apiVersion: certmanager.k8s.io/v1alpha1
@@ -102,7 +102,7 @@ spec:
 
 ### Issuer
 
-Not everyone wants a cluster-wide resource and not everyone has the rights to install something elsewhere than their own namespace.
+Not everyone wants a cluster-wide resource, and not everyone has the rights to install something elsewhere than their namespace.
 
 I prefer having as much as possible tied to a namespace - either a team or an application - I will use this type.
 
@@ -214,3 +214,101 @@ Data
 tls.crt:  3797 bytes
 tls.key:  1679 bytes
 ```
+
+## Use certificate to enable https
+
+Assuming the secret and the certificate are correct, we can use them to enable https on our web app.
+
+We put the tls certificate on the ingress of the application, in this case nginx, which assumes the following about the application:
+
+* it has a deployment or stateful set
+* it has a service which provides and endpoint to one or more instances
+* it has an nginx ingress which points to the service
+
+### Deployment
+
+```yaml
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: myapp
+  namespace: myapp
+  labels:
+    app: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: caladreas/catnip-master
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8087
+```
+
+You should always include livenessprobe, resource limits and so on.
+But for the sake of brevity, these are omitted!
+
+### Service
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp
+  namespace: myapp
+  labels:
+    app: myapp
+spec:
+  selector:
+    app: myapp
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8087
+    protocol: TCP
+```
+
+### Ingress
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myapp
+  namespace: myapp
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    certmanager.k8s.io/issuer-kind: Issuer
+    certmanager.k8s.io/issuer-name: myapp-letsencrypt-staging
+spec:
+  rules:
+  - host: myapp.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myapp
+          servicePort: 80
+  tls:
+  - hosts:
+    - myapp.example.com
+    secretName: myapp-tls
+```
+
+## Further resources
+
+* [How Does Let's Encrypt Work](https://letsencrypt.org/how-it-works/)
+* [Tutorial that inspired this page](https://hk.saowen.com/a/c045f2a12e66d94d7addce9101a61887e7f904aaa8efaed07a0e0a1325ab8c55)
+* [Amazone EKS Ingress Guide](https://medium.com/@dmaas/amazon-eks-ingress-guide-8ec2ec940a70)
+* [Kuberetes EKS Ingress and TLS](https://stackoverflow.com/questions/51363674/kubernetes-eks-ingress-and-tls)
+* [How To Configure LTS for Nginx Ingress](https://github.com/kubernetes/contrib/tree/master/ingress/controllers/nginx/examples/tls)
