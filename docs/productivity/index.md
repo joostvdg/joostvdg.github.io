@@ -96,11 +96,14 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 * https://medium.com/netflix-techblog/full-cycle-developers-at-netflix-a08c31f83249
 * https://queue.acm.org/detail.cfm?id=3182626
 * http://www.safetydifferently.com/why-do-things-go-right/
-* 
+* https://www.quora.com/What-is-better-to-become-an-specialist-or-a-generalist-in-software-development-Does-the-full-stack-term-still-makes-sense
+* https://cengizhan.com/3-pillars-of-observability-8e6cb5434206
+* https://www.thoughtworks.com/perspectives/edition1-agile-article
 
 ### Presentations
 
 * https://speakerdeck.com/tylertreat/the-future-of-ops
+* https://www.slideshare.net/rheinwein/the-container-shame-spiral
 
 
 ### Articles

@@ -35,11 +35,17 @@ pages:
 - Blogs:
   - Docker Graceful Shutdown: blogs/docker-graceful-shutdown.md
 
-- Kubernetes:
+- Kubernetes (K8S):
   - Introduction: kubernetes/index.md
   - CKA Exam details: kubernetes/cka-exam.md
   - CKA Exam prep: kubernetes/cka-exam-prep.md
-  - GKE Installation: kubernetes/install-gke.md
+
+- K8S CICD:
+  - CD Pipeline Jenkins & Helm: kubernetes/cicd/cdp-jenkins-helm.md
+
+- K8S Distribution:
+  - GKE: kubernetes/distributions/install-gke.md
+  - AWS EKS: kubernetes/distributions/aws-eks.md
 
 - K8S Hard Way - GCE:
   - Installer Preparation: kubernetes/khw-gce/index.md
@@ -76,6 +82,10 @@ pages:
   - MKDocs (Static Website Generator): other/mkdocs.md
   - VIM: other/vim.md
 
+- CloudBees:
+  - CloudBees Core on EKS: cloudbees/cbc-eks.md
+  - CloudBees Core Post Install: cloudbees/cbc-post-install-tips.md
+
 - Jenkins: jenkins/index.md
 - Jenkins Job Management:
     - JobDSL: jenkins-jobs/jobdsl.md
@@ -90,6 +100,7 @@ pages:
     - Input: jenkins-pipeline/input.md
 - Jenkins Pipeline Examples:
     - Index: jenkins-pipeline-examples/index.md
+    - Docker Alternatives: jenkins-pipeline-examples/docker-alternatives.md
     - Maven:
         - Maven Groovy DSL: jenkins-pipeline-examples/maven-groovy-dsl.md
         - Maven Declarative: jenkins-pipeline-examples/maven-declarative.md
