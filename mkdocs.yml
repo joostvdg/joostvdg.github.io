@@ -34,6 +34,12 @@ pages:
 
 - Blogs:
   - Docker Graceful Shutdown: blogs/docker-graceful-shutdown.md
+  - GitOps Pipeline: blogs/gitops-pipeline.md
+  - Pipelines with Docker Alternatives: blogs/jenkins-pipeline-docker-alternatives.md
+  - Create your own k8s resource: blogs/k8s-crd.md
+  - Create your own k8s controller: blogs/k8s-controller.md
+  - Let's Encrypt for Kubernetes Apps: blogs/k8s-lets-encrypt.md
+  - Jenkins Pipeline Support Tools: blogs/jenkins-pipeline-support-tool.md
 
 - Kubernetes (K8S):
   - Introduction: kubernetes/index.md
