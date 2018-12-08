@@ -532,6 +532,78 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blogs/gitops-pipeline/" title="GitOps Pipeline" class="md-nav__link">
+      GitOps Pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blogs/jenkins-pipeline-docker-alternatives/" title="Pipelines with Docker Alternatives" class="md-nav__link">
+      Pipelines with Docker Alternatives
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blogs/k8s-crd/" title="Create your own k8s resource" class="md-nav__link">
+      Create your own k8s resource
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blogs/k8s-controller/" title="Create your own k8s controller" class="md-nav__link">
+      Create your own k8s controller
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blogs/k8s-lets-encrypt/" title="Let's Encrypt for Kubernetes Apps" class="md-nav__link">
+      Let's Encrypt for Kubernetes Apps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../blogs/jenkins-pipeline-support-tool/" title="Jenkins Pipeline Support Tools" class="md-nav__link">
+      Jenkins Pipeline Support Tools
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1502,6 +1574,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#distributed-applications" title="Distributed Applications" class="md-nav__link">
+    Distributed Applications
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics-to-take-into-account" title="Topics to take into account" class="md-nav__link">
+    Topics to take into account
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#resources" title="Resources" class="md-nav__link">
     Resources
   </a>
@@ -1531,6 +1623,45 @@
 <h2 id="distributed-computing-fundamentals">Distributed Computing fundamentals<a class="headerlink" href="#distributed-computing-fundamentals" title="Permanent link">&para;</a></h2>
 <h3 id="time-and-event-ordering">Time and Event ordering<a class="headerlink" href="#time-and-event-ordering" title="Permanent link">&para;</a></h3>
 <p>See: <a href="https://en.wikipedia.org/wiki/Lamport_timestamps">Lamport timestamp</a></p>
+<h2 id="distributed-applications">Distributed Applications<a class="headerlink" href="#distributed-applications" title="Permanent link">&para;</a></h2>
+<h3 id="topics-to-take-into-account">Topics to take into account<a class="headerlink" href="#topics-to-take-into-account" title="Permanent link">&para;</a></h3>
+<ul>
+<li>logging <ul>
+<li>structured</li>
+<li>pulled into central log service</li>
+<li>Java: SLF4J + LogBack?</li>
+<li>Go: logrus</li>
+</ul>
+</li>
+<li>tracing <ul>
+<li>sampling based</li>
+</ul>
+</li>
+<li>metrics<ul>
+<li>prometheus</li>
+<li>including alert definitions</li>
+</ul>
+</li>
+<li>network connection stability<ul>
+<li>services discovery</li>
+<li>loadbalancing</li>
+<li>circuit brakers</li>
+<li>backpressure</li>
+<li>shallow queues</li>
+<li>connection pools</li>
+<li>dynamic/randomized backoff procedures</li>
+</ul>
+</li>
+<li>network connection performance<ul>
+<li>3-step handshake</li>
+<li>binary over http</li>
+<li>standard protocols</li>
+<li>thin wrapper for UI: GraphQL</li>
+<li>thick wrapper for UI: JSON over HTTP (restful)</li>
+<li>Service to Service: gRPC / twirp</li>
+</ul>
+</li>
+</ul>
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://www.coursera.org/learn/cloud-computing">Coursera course</a></li>
