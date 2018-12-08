@@ -235,7 +235,6 @@ COPY --from=build /usr/bin/jpb-image/ /usr/bin/jpb
 ENTRYPOINT ["/usr/bin/jpb/bin/jpb"]
 ```
 
-
 #### Image disk size
 
 ```bash
@@ -243,21 +242,205 @@ REPOSITORY                                   TAG                 IMAGE ID       
 jpb                                          latest              af7dda45732a        About a minute ago   43.8MB
 ```
 
-#### Container footprint
-
-
 ### Graal
 
-* https://github.com/demomon/jpc-graal--maven
+> GraalVM is a universal virtual machine for running applications written in JavaScript, Python, Ruby, R, JVM-based languages like Java, Scala, Kotlin, Clojure, and LLVM-based languages such as C and C++.   - [graalvm.org](https://www.graalvm.org)
 
-### Resources
+ Ok, that doesn't tell you why using GraalVM is excellent for creating small CLI docker images. Maybe this quote helps:
 
-* https://github.com/spring-io/spring-javaformat
-* https://github.com/testcontainers/testcontainers-java
+> Native images compiled with GraalVM ahead-of-time improve the startup time and reduce the memory footprint of JVM-based applications. 
+
+Where JLink allows you to create a custom JDK image and embed your application as a runtime binary, Graal goes one step further. It replaces the VM altogether and uses [Substrate VM](https://github.com/oracle/graal/tree/master/substratevm) to run your binary. It can't do a lot of the fantastic things the JVM can do and isn't suited for long running applications or those with a large memory footprint and so on. Well, our CLI applications are single shot executions with low memory footprint, the perfect fit for Graal/Substrate!
+
+All the code from this example can is on GitHub at [github.com/demomon/jpc-graal--maven](https://github.com/demomon/jpc-graal--maven).
+
+#### Application Model
+
+While building modular Java applications is excellent, the current tooling support terrible. So this time the application is a single Jar - Graal can create images from classes or jars - where packages do the separation.
+
+```
+.
+├── Dockerfile
+├── LICENSE
+├── README.md
+├── docker-graal-build.sh
+├── pom.xml
+└── src
+    ├── main
+       └── java
+           └── com
+               └── github
+                   └── joostvdg
+                       └── demo
+                           ├── App.java
+                           └── Hello.java
+```
+
+#### Build
+
+Graal can build a native image based on a Jar file. This allows us to use any standard Java build tool such as Maven or Gradle to build the jar. The actual Graal build will be done in a Dockerfile.
+
+The people over at Oracle have created an [official Docker image](https://hub.docker.com/r/oracle/graalvm-ce/) reducing effort spend on our side.
+
+The Dockerfile has three segments:
+
+* build the jar with Maven
+* build the native image with Graal
+* assembly the runtime Docker image based on Alpine
+
+As you can see below, the Graal image is only half the size of the JLink image! Let's see how that stacks up to other languages such as Go and Python.
+
+##### Dockerfile
+
+```dockerfile
+#######################################
+## 1. BUILD JAR WITH MAVEN
+FROM maven:3.6-jdk-8 as BUILD
+WORKDIR /usr/src
+COPY . /usr/src
+RUN mvn clean package -e
+#######################################
+## 2. BUILD NATIVE IMAGE WITH GRAAL
+FROM oracle/graalvm-ce:1.0.0-rc9 as NATIVE_BUILD
+WORKDIR /usr/src
+COPY --from=BUILD /usr/src/ /usr/src
+RUN ls -lath /usr/src/target/
+COPY /docker-graal-build.sh /usr/src
+RUN ./docker-graal-build.sh
+RUN ls -lath
+#######################################
+## 3. BUILD DOCKER RUNTIME IMAGE
+FROM alpine:3.8
+CMD ["jpc-graal"]
+COPY --from=NATIVE_BUILD /usr/src/jpc-graal /usr/local/bin/
+RUN chmod +x /usr/local/bin/jpc-graal
+#######################################
+```
+
+#### Image disk size
+
+```bash
+REPOSITORY                                   TAG                 IMAGE ID            CREATED             SIZE
+jpc-graal-maven                              latest              dc33ebb10813        About an hour ago   19.6MB
+```
 
 ## Go Example
 
+### Application Model
 
+### Build
+
+#### Dockerfile
+
+#### Image Disk size
+
+```bash
+REPOSITORY                                   TAG                 IMAGE ID            CREATED             SIZE
+jpc-go                                       latest              bb4a8e546601        6 minutes ago       12.3MB
+```
 
 ## Python Example
 
+### Application Model
+
+### Build
+
+#### Dockerfile
+
+#### Image Disk size
+
+## Container footprint
+
+```bash
+kubectl top pods mypod-s4wpb-7dz4q --containers
+POD                 NAME         CPU(cores)   MEMORY(bytes)
+mypod-7lxnk-gw1sj   jpc-go       0m           0Mi
+mypod-7lxnk-gw1sj   java-jlink   0m           0Mi
+mypod-7lxnk-gw1sj   java-graal   0m           0Mi
+mypod-7lxnk-gw1sj   jnlp         150m         96Mi
+```
+
+So, the 0Mi memory seems wrong. So I decided to dive into the Google Cloud Console, to see if there's any information in there.
+What I found there, is the data you can see below. The memory is indeed 0Mi, as they're using between 329 and 815 Kilobytes and not hitting the MB threshold (and thus get listed as 0Mi).
+
+We do see that graal uses more CPU and slightly less memory than the JLink setup.
+Both are still significantly larger than the Go CLI tool, but as long as the JNLP container takes ~100MB, I don't think we should worry about 400-500KB.
+
+```bash
+CPU 
+container/cpu/usage_time:gke_container:REDUCE_SUM(, ps-dev-201405): 0.24
+ java-graal: 5e-4
+ java-jlink: 3e-3
+ jnlp: 0.23
+ jpc-go: 2e-4
+Memory 
+ java-graal: 729,088.00
+ java-jlink: 815,104.00
+ jnlp: 101.507M
+ jpc-go: 327,680.00
+Disk 
+ java-graal: 49,152.00
+ java-jlink: 49,152.00
+ jnlp: 94,208.00
+ jpc-go: 49,152.00
+```
+
+## Pipeline
+
+```groovy
+pipeline {
+    agent {
+        kubernetes {
+        label 'mypod'
+        defaultContainer 'jnlp'
+        yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    some-label: some-label-value
+spec:
+  containers:
+  - name: java-graal
+    image: caladreas/jpc-graal:0.1.0-maven-b1
+    command:
+    - cat
+    tty: true
+  - name: java-jlink
+    image: caladreas/jpc-jlink:0.1.0-b1
+    command:
+    - cat
+    tty: true
+  - name: jpc-go
+    image: caladreas/jpc-go:0.1.0-b1
+    command:
+    - cat
+    tty: true
+        """
+        }
+    }
+    stages {
+        stage('Test Versions') {
+            steps {
+                container('java-graal') {
+                    echo "java-graal"
+                    sh '/usr/local/bin/jpc-graal'
+                    sleep 5
+                }
+
+                container('java-jlink') {
+                    echo "java-jlink"
+                    sh '/usr/bin/jpb/bin/jpb GitChangeListToFolder abc abc'
+                    sleep 5
+                }
+
+                container('jpc-go') {
+                    sh 'jpc-go sayHello -n joost'
+                    sleep 5
+                }
+                sleep 60
+            }
+        }
+    }
+}
+```
