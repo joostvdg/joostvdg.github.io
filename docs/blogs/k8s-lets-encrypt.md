@@ -277,7 +277,7 @@ spec:
     protocol: TCP
 ```
 
-### Ingress
+### Ingress for Issuer
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -288,8 +288,36 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     ingress.kubernetes.io/ssl-redirect: "true"
-    certmanager.k8s.io/issuer-kind: Issuer
-    certmanager.k8s.io/issuer-name: myapp-letsencrypt-staging
+    certmanager.k8s.io/issuer: myapp-letsencrypt-staging
+    certmanager.k8s.io/acme-challenge-type: http01
+spec:
+  rules:
+  - host: myapp.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myapp
+          servicePort: 80
+  tls:
+  - hosts:
+    - myapp.example.com
+    secretName: myapp-tls
+```
+
+### Ingress for ClusterIssuer
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myapp
+  namespace: myapp
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    certmanager.k8s.io/cluster-issuer: letsencrypt-staging
+    certmanager.k8s.io/acme-challenge-type: http01
 spec:
   rules:
   - host: myapp.example.com
