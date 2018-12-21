@@ -99,15 +99,16 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 * https://www.quora.com/What-is-better-to-become-an-specialist-or-a-generalist-in-software-development-Does-the-full-stack-term-still-makes-sense
 * https://cengizhan.com/3-pillars-of-observability-8e6cb5434206
 * https://www.thoughtworks.com/perspectives/edition1-agile-article
+* https://blog.mexia.com.au/a-pace-layered-integration-architecture
 
 ### Presentations
 
 * https://speakerdeck.com/tylertreat/the-future-of-ops
 * https://www.slideshare.net/rheinwein/the-container-shame-spiral
 
-
 ### Articles
 
+* https://dzone.com/articles/a-praise-for-self-service-in-it-value-streams
 * http://blog.christianposta.com/microservices/application-safety-and-correctness-cannot-be-offloaded-to-istio-or-any-service-mesh/
 * https://www.gatesnotes.com/Books/Capitalism-Without-Capital?WT.mc_id=08_16_2018_06_CapitalismWithoutCapital_BG-LI_&WT.tsrc=BGLI&linkId=55623312
 * https://uxdesign.cc/stop-delivering-software-with-agile-it-doesn-t-work-edccea3ab5d3

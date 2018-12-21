@@ -1,9 +1,42 @@
 # DockerCon EU 2018 - Recap
 
-* Java maven build (docker-assemble) includes a bill of materials (Docker EE?)
-* CAT interoperability with this bom?
-* Docker app == CNAB
-![](../images/dockerconeu2018/)
+## Generally outline
+
+From my perspective, there were a few red threads throughout the conference.
+
+### Security begins at the Developer
+
+A shift left of security, bringing the responsibility of knowing your dependencies and their quality firmly to the developer. Most of this tooling is still aimed at enterprises though, being part of paid solutions mostly. At least that which was shown at the conference.
+
+* docker-assemble, that can build in an image from a Maven pom.xml and will include meta-data of all your dependencies (transitive included)
+* JFrog X-Ray
+* Docker EE tooling such as Docker Trusted Registry (DTR)
+
+### Broader Automation
+
+More focus on the entire lifecycle of a system and not just an application. It seems people are starting to understand that doing CI/CD and Infrastructure As Code is not a single event for a single application. There is likely to be a few applications belonging together making a whole system which will land on more than one type of infrastructure and possibly more types of clusters.
+
+What we see is tools looking at either a broader scope, a higher level abstraction or more developer focussed (more love for the Dev in DevOps) to allow for easier integration with multiple platforms. For example, Pulumi will enable you to create any type of infrastructure - like Hashicorp's Terraform - but then in programming languages, you're used to (TypeScript, Python, Go).
+
+* Pulumi
+* Docker App
+* CNAB
+* Build-Kit
+
+### Containerization Influences Everything
+
+Containerization has left deep and easy to spot imprints in our industry from startups building entirely on top of containers to programming languages changing their ways to stay relevant.
+
+There are new monitoring kings in the world, DataDog, Sysdig, Honeycomb.io and so on. They live and breathe containers and are not afraid of being thrown around different public clouds, networks and what not. In contrast to traditional monitoring tools, which are often bolting on container support and struggle with the dynamic nature of containerized clusters.
+
+Another extraordinary influence is that on the Java language. Declared dead a million times over and deemed obsolete in the container era due to its massive footprint in image size and runtime size. Both are being addressed, and we see a lot of work done on reducing footprint and static linking (JLink, Graal).
+
+The most significant influence might be on the software behemoth that has rejuvenated itself. Microsoft has sworn allegiance to open source, Linux and containers. Windows 2019 server can run container workloads natively and work as nodes alongside a Docker EE cluster - which can include Kubernetes workloads. The next step would be support for Kubernetes integration, and as in the case of Java, smaller container footprint.
+
+* Java & Docker
+* Windows Container & Windows Server Support
+* Observability tools
+* Kubernetes offerings everywhere...
 
 ## Docker Build with Build-Kit
 
