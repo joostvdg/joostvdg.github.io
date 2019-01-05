@@ -1606,6 +1606,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#designing-distributed-systems-brandon-burns" title="Designing Distributed Systems - Brandon Burns" class="md-nav__link">
+    Designing Distributed Systems - Brandon Burns
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sidecar-pattern" title="Sidecar pattern" class="md-nav__link">
+    Sidecar pattern
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-resources" title="Other resources" class="md-nav__link">
+    Other resources
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#resources" title="Resources" class="md-nav__link">
     Resources
   </a>
@@ -1673,6 +1700,24 @@
 <li>Service to Service: gRPC / twirp</li>
 </ul>
 </li>
+</ul>
+<h2 id="designing-distributed-systems-brandon-burns">Designing Distributed Systems - Brandon Burns<a class="headerlink" href="#designing-distributed-systems-brandon-burns" title="Permanent link">&para;</a></h2>
+<h3 id="sidecar-pattern">Sidecar pattern<a class="headerlink" href="#sidecar-pattern" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>docker run -d &lt;my-app-image&gt;
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>After you run that image, you will receive the identifier for that specific container. It will look something like: cccf82b85000... If you don’t have it, you can always look it up using the docker ps command, which will show all currently running containers. Assuming you have stashed that value in an environment variable named APP_ID, you can then run the topz container in the same PID namespace using:</p>
+</blockquote>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>docker run --pid<span class="o">=</span>container:<span class="si">${</span><span class="nv">APP_ID</span><span class="si">}</span> <span class="se">\ </span>-p <span class="m">8080</span>:8080 brendanburns/topz:db0fa58 /server --address<span class="o">=</span><span class="m">0</span>.0.0.0:8080
+</pre></div>
+</td></tr></table>
+
+<h3 id="other-resources">Other resources<a class="headerlink" href="#other-resources" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="http://label-schema.org/">http://label-schema.org/</a></li>
+<li><a href="https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying</a></li>
 </ul>
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
 <ul>
