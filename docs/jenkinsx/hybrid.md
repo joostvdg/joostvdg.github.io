@@ -236,6 +236,79 @@ jx install \
 
 ### Spring Boot Quickstart
 
+#### Create quickstart
+
+```bash
+jx create spring -d web -d actuator \
+    --group com.example \
+    --artifact jx-spring-boot-demo \
+    -b
+```
+
+```bash
+cd jx-spring-boot-demo
+```
+
+#### Add controller
+
+Assuming you kept the group the same, you should find a folder `src/main/java/com/example/jxspringbootdemo` containing a file, `DemoApplication.java`.
+
+We're going to have to add two files to the same folder:
+
+* `Greeting.java`
+* `GreetingController.java`
+
+##### Greeting
+
+```java
+package com.example.jxspringbootdemo;
+
+public class Greeting {
+
+    private final long id;
+    private final String content;
+
+    public Greeting(long id, String content) {
+        this.id = id;
+        this.content = content;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+}
+```
+
+##### GreetingController
+
+```java
+package com.example.jxspringbootdemo;
+
+import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class GreetingController {
+
+    private static final String template = "Hello, %s!";
+    private final AtomicLong counter = new AtomicLong();
+
+    @RequestMapping("/greeting")
+    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
+        return new Greeting(counter.incrementAndGet(),
+                            String.format(template, name));
+    }
+}
+```
+
+#### Test application
+
 ```bash
 jx get activity -f jx-cdx-spring-boot-demo-1 -w
 ```
