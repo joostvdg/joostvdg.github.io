@@ -1,0 +1,2249 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://joostvdg.github.io/kubernetes/distributions/aks/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
+    
+    
+      
+        <title>Azure Kubernetes Service - Joostvdg's Software Engineering Page</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.572ca0f0.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#fb8c00">
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.8c900955.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="orange" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#azure-kubernetes-service" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://joostvdg.github.io" title="Joostvdg's Software Engineering Page" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Joostvdg's Software Engineering Page
+              </span>
+              <span class="md-header-nav__topic">
+                Azure Kubernetes Service
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/joostvdg/joostvdg.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      joostvdg/joostvdg.github.io
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://joostvdg.github.io" title="Joostvdg's Software Engineering Page" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Joostvdg's Software Engineering Page
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/joostvdg/joostvdg.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      joostvdg/joostvdg.github.io
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Java
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Java
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../java/" title="General" class="md-nav__link">
+      General
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../java/spring/boot/" title="Spring Boot" class="md-nav__link">
+      Spring Boot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../java/java9/" title="Java 9" class="md-nav__link">
+      Java 9
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../java/ecosystem/" title="Java Ecosystem" class="md-nav__link">
+      Java Ecosystem
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../java/networking/" title="Java Networking" class="md-nav__link">
+      Java Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../java/streams/" title="Java Streams" class="md-nav__link">
+      Java Streams
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../java/concurrency/" title="Java Concurrency" class="md-nav__link">
+      Java Concurrency
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Docker
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../docker/multi-stage-builds/" title="Multi-Stage Builds" class="md-nav__link">
+      Multi-Stage Builds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../docker/graceful-shutdown/" title="Graceful shutdown" class="md-nav__link">
+      Graceful shutdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../docker/swarm/" title="Swarm (mode)" class="md-nav__link">
+      Swarm (mode)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../docker/kubernetes/" title="Kubernetes" class="md-nav__link">
+      Kubernetes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Linux
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Linux
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../linux/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../linux/systemd/" title="SystemD" class="md-nav__link">
+      SystemD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../linux/networking/" title="Networking" class="md-nav__link">
+      Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../linux/iptables/" title="iptables" class="md-nav__link">
+      iptables
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Blogs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Blogs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../blogs/docker-graceful-shutdown/" title="Docker Graceful Shutdown" class="md-nav__link">
+      Docker Graceful Shutdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../blogs/gitops-pipeline/" title="GitOps Pipeline" class="md-nav__link">
+      GitOps Pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../blogs/jenkins-pipeline-docker-alternatives/" title="Pipelines with Docker Alternatives" class="md-nav__link">
+      Pipelines with Docker Alternatives
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../blogs/k8s-crd/" title="Create your own k8s resource" class="md-nav__link">
+      Create your own k8s resource
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../blogs/k8s-controller/" title="Create your own k8s controller" class="md-nav__link">
+      Create your own k8s controller
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../blogs/k8s-lets-encrypt/" title="Let's Encrypt for Kubernetes Apps" class="md-nav__link">
+      Let's Encrypt for Kubernetes Apps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../blogs/jenkins-pipeline-support-tool/" title="Jenkins Pipeline Support Tools" class="md-nav__link">
+      Jenkins Pipeline Support Tools
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../blogs/dockercon-eu-2018/" title="DockerCon EU 2018" class="md-nav__link">
+      DockerCon EU 2018
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Kubernetes (K8S)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Kubernetes (K8S)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cka-exam/" title="CKA Exam details" class="md-nav__link">
+      CKA Exam details
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cka-exam-prep/" title="CKA Exam prep" class="md-nav__link">
+      CKA Exam prep
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tools/" title="Tools" class="md-nav__link">
+      Tools
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      K8S CICD
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        K8S CICD
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cicd/cdp-jenkins-helm/" title="CD Pipeline Jenkins & Helm" class="md-nav__link">
+      CD Pipeline Jenkins & Helm
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      K8S Distribution
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        K8S Distribution
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-gke/" title="GKE" class="md-nav__link">
+      GKE
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../aws-eks/" title="AWS EKS" class="md-nav__link">
+      AWS EKS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      K8S Hard Way - GCE
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        K8S Hard Way - GCE
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/" title="Installer Preparation" class="md-nav__link">
+      Installer Preparation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/terraform-compute/" title="Create GCE resources" class="md-nav__link">
+      Create GCE resources
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/certificates/" title="Prepare Certificates" class="md-nav__link">
+      Prepare Certificates
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/kubeconfigs/" title="Prepare Kubeconfigs" class="md-nav__link">
+      Prepare Kubeconfigs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/encryption/" title="Encryption configuration" class="md-nav__link">
+      Encryption configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/etcd/" title="ETCD configuration" class="md-nav__link">
+      ETCD configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/controller/" title="Controller Config" class="md-nav__link">
+      Controller Config
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/worker/" title="Worker Config" class="md-nav__link">
+      Worker Config
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/remote-access/" title="Remote access" class="md-nav__link">
+      Remote access
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/network/" title="Network config" class="md-nav__link">
+      Network config
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../khw-gce/debug/" title="Debug" class="md-nav__link">
+      Debug
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+    
+    <label class="md-nav__link" for="nav-10">
+      Software Engineering
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-10">
+        Software Engineering
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../swe/naming/" title="Naming" class="md-nav__link">
+      Naming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../swe/ddd/" title="Domain Driven Design" class="md-nav__link">
+      Domain Driven Design
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../swe/microservices/" title="Microservices" class="md-nav__link">
+      Microservices
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../swe/algorithms/" title="Algorithms" class="md-nav__link">
+      Algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../swe/observability/" title="Observability" class="md-nav__link">
+      Observability
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../swe/others/" title="Others" class="md-nav__link">
+      Others
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Productivity
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Productivity
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../productivity/" title="General" class="md-nav__link">
+      General
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../productivity/tools/" title="Tools" class="md-nav__link">
+      Tools
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../productivity/intellij/" title="Intelli J" class="md-nav__link">
+      Intelli J
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../productivity/paradigms/" title="Paradigms" class="md-nav__link">
+      Paradigms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../productivity/studies/" title="Studies" class="md-nav__link">
+      Studies
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+    
+    <label class="md-nav__link" for="nav-12">
+      Certificates
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-12">
+        Certificates
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../certificates/lets-encrypt-k8s/" title="Let's Encrypt K8S" class="md-nav__link">
+      Let's Encrypt K8S
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
+    
+    <label class="md-nav__link" for="nav-13">
+      Other
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-13">
+        Other
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../other/mkdocs/" title="MKDocs (Static Website Generator)" class="md-nav__link">
+      MKDocs (Static Website Generator)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../other/vim/" title="VIM" class="md-nav__link">
+      VIM
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
+    
+    <label class="md-nav__link" for="nav-14">
+      CloudBees
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-14">
+        CloudBees
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../cloudbees/cbc-eks/" title="CloudBees Core on EKS" class="md-nav__link">
+      CloudBees Core on EKS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../cloudbees/cbc-post-install-tips/" title="CloudBees Core Post Install" class="md-nav__link">
+      CloudBees Core Post Install
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-15" type="checkbox" id="nav-15">
+    
+    <label class="md-nav__link" for="nav-15">
+      Jenkins X
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-15">
+        Jenkins X
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkinsx/intro/" title="Intro" class="md-nav__link">
+      Intro
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkinsx/hello-world/" title="HelloWorld" class="md-nav__link">
+      HelloWorld
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkinsx/workshop/" title="Workshop" class="md-nav__link">
+      Workshop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkinsx/buildpack/" title="BuildPack" class="md-nav__link">
+      BuildPack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkinsx/maven/" title="Maven" class="md-nav__link">
+      Maven
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkinsx/hybrid/" title="Hybrid" class="md-nav__link">
+      Hybrid
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins/" title="Jenkins" class="md-nav__link">
+      Jenkins
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-17" type="checkbox" id="nav-17">
+    
+    <label class="md-nav__link" for="nav-17">
+      Jenkins Job Management
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-17">
+        Jenkins Job Management
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-jobs/jobdsl/" title="JobDSL" class="md-nav__link">
+      JobDSL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-jobs/jenkins-jobs-builder/" title="JenkinsJobsBuilder" class="md-nav__link">
+      JenkinsJobsBuilder
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-18" type="checkbox" id="nav-18">
+    
+    <label class="md-nav__link" for="nav-18">
+      Jenkins Pipelines
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-18">
+        Jenkins Pipelines
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline/core-concepts/" title="Core Concepts" class="md-nav__link">
+      Core Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline/declarative-pipeline/" title="Pipeline (declarative)" class="md-nav__link">
+      Pipeline (declarative)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline/groovy-pipeline/" title="Groovy DSL Pipeline" class="md-nav__link">
+      Groovy DSL Pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline/global-shared-library/" title="Pipeline Libraries" class="md-nav__link">
+      Pipeline Libraries
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline/ide-integration-pipeline-dsl/" title="DSL IDE Integration" class="md-nav__link">
+      DSL IDE Integration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline/jenkins-parallel-pipeline/" title="Parallel" class="md-nav__link">
+      Parallel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline/input/" title="Input" class="md-nav__link">
+      Input
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-19" type="checkbox" id="nav-19">
+    
+    <label class="md-nav__link" for="nav-19">
+      Jenkins Pipeline Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-19">
+        Jenkins Pipeline Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline-examples/" title="Index" class="md-nav__link">
+      Index
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline-examples/docker-alternatives/" title="Docker Alternatives" class="md-nav__link">
+      Docker Alternatives
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-19-3" type="checkbox" id="nav-19-3">
+    
+    <label class="md-nav__link" for="nav-19-3">
+      Maven
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-19-3">
+        Maven
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline-examples/maven-groovy-dsl/" title="Maven Groovy DSL" class="md-nav__link">
+      Maven Groovy DSL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline-examples/maven-declarative/" title="Maven Declarative" class="md-nav__link">
+      Maven Declarative
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline-examples/maven-shared-library/" title="Maven Shared Library" class="md-nav__link">
+      Maven Shared Library
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-19-4" type="checkbox" id="nav-19-4">
+    
+    <label class="md-nav__link" for="nav-19-4">
+      Other
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-19-4">
+        Other
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../jenkins-pipeline-examples/docker-declarative/" title="Docker Declarative" class="md-nav__link">
+      Docker Declarative
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#resources" title="Resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-az-cli" title="Configure AZ CLI" class="md-nav__link">
+    Configure AZ CLI
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#should-be-owner" title="Should be owner" class="md-nav__link">
+    Should be owner
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terraform-config" title="Terraform Config" class="md-nav__link">
+    Terraform Config
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-storage-account-for-tf-state" title="Create storage account for TF State" class="md-nav__link">
+    Create storage account for TF State
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-locations" title="List locations" class="md-nav__link">
+    List locations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-resource-group" title="Create resource group" class="md-nav__link">
+    Create resource group
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-storage-account" title="Create storage account" class="md-nav__link">
+    Create storage account
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-storage-account-login" title="Retrieve storage account login" class="md-nav__link">
+    Retrieve storage account login
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-tf-storage" title="Create TF Storage" class="md-nav__link">
+    Create TF Storage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#init-terraform-backend" title="Init Terraform backend" class="md-nav__link">
+    Init Terraform backend
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expose-temp-variables" title="Expose temp variables" class="md-nav__link">
+    Expose temp variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollout" title="Rollout" class="md-nav__link">
+    Rollout
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-variables" title="Set variables" class="md-nav__link">
+    Set variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate" title="Validate" class="md-nav__link">
+    Validate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plan" title="Plan" class="md-nav__link">
+    Plan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply-the-plan" title="Apply the plan" class="md-nav__link">
+    Apply the plan
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-kubecontext" title="Configure Kubecontext" class="md-nav__link">
+    Configure Kubecontext
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-cluster-autoscaler" title="Configure Cluster Autoscaler" class="md-nav__link">
+    Configure Cluster Autoscaler
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-multi-node-pool" title="Configure multi-node pool" class="md-nav__link">
+    Configure multi-node pool
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-aks-cluster-via-cli" title="Create AKS cluster via CLI" class="md-nav__link">
+    Create AKS cluster via CLI
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resources_1" title="Resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-available-versions" title="Get available versions" class="md-nav__link">
+    Get available versions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-initial-cluster" title="Create initial cluster" class="md-nav__link">
+    Create initial cluster
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#podsecuritypolicy" title="PodSecurityPolicy" class="md-nav__link">
+    PodSecurityPolicy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#networking" title="Networking" class="md-nav__link">
+    Networking
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-credentials" title="Retrieve credentials" class="md-nav__link">
+    Retrieve credentials
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-second-node-pool" title="Add second node pool" class="md-nav__link">
+    Add second node pool
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/joostvdg/joostvdg.github.io/edit/master/docs/kubernetes/distributions/aks.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="azure-kubernetes-service">Azure Kubernetes Service<a class="headerlink" href="#azure-kubernetes-service" title="Permanent link">&para;</a></h1>
+<h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/aks/use-multiple-node-pools.md">https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/aks/use-multiple-node-pools.md</a></li>
+<li><a href="https://www.danielstechblog.io/azure-kubernetes-service-cluster-autoscaler-configurations/">https://www.danielstechblog.io/azure-kubernetes-service-cluster-autoscaler-configurations/</a></li>
+<li><a href="https://www.cloudbees.com/blog/securing-jenkins-role-based-access-control-and-azure-active-directory">https://www.cloudbees.com/blog/securing-jenkins-role-based-access-control-and-azure-active-directory</a></li>
+<li><a href="https://go.cloudbees.com/docs/cloudbees-core/cloud-install-guide/aks-install/#">https://go.cloudbees.com/docs/cloudbees-core/cloud-install-guide/aks-install/#</a></li>
+<li><a href="https://go.cloudbees.com/docs/cloudbees-core/cloud-install-guide/kubernetes-helm-install/#_additional_information_creating_a_tls_certificate">https://go.cloudbees.com/docs/cloudbees-core/cloud-install-guide/kubernetes-helm-install/#_additional_information_creating_a_tls_certificate</a></li>
+</ul>
+<h2 id="configure-az-cli">Configure AZ CLI<a class="headerlink" href="#configure-az-cli" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az login
+</pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az account show --query <span class="s2">&quot;{subscriptionId:id, tenantId:tenantId}&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">export</span> <span class="nv">SUBSCRIPTION_ID</span><span class="o">=</span>
+</pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nv">SUBSCRIPTION_ID</span><span class="o">=</span>...
+az account <span class="nb">set</span> --subscription<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SUBSCRIPTION_ID</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az ad sp create-for-rbac --role<span class="o">=</span><span class="s2">&quot;Owner&quot;</span> --scopes<span class="o">=</span><span class="s2">&quot;/subscriptions/</span><span class="si">${</span><span class="nv">SUBSCRIPTION_ID</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<h3 id="should-be-owner">Should be owner<a class="headerlink" href="#should-be-owner" title="Permanent link">&para;</a></h3>
+<p>Should be owner, else it cannot create a LoadBalancer via the <code>nginx-ingress</code>.</p>
+<p>See: <a href="https://weidongzhou.wordpress.com/2018/06/27/could-not-get-external-ip-for-load-balancer-on-azure-aks/">https://weidongzhou.wordpress.com/2018/06/27/could-not-get-external-ip-for-load-balancer-on-azure-aks/</a>
+And: <a href="https://github.com/Azure/AKS/issues/427">https://github.com/Azure/AKS/issues/427</a></p>
+<h2 id="terraform-config">Terraform Config<a class="headerlink" href="#terraform-config" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>ARM_SUBSCRIPTION_ID
+ARM_CLIENT_ID
+ARM_CLIENT_SECRET
+ARM_TENANT_ID
+ARM_ENVIRONMENT
+</pre></div>
+</td></tr></table>
+
+<h3 id="create-storage-account-for-tf-state">Create storage account for TF State<a class="headerlink" href="#create-storage-account-for-tf-state" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nv">LOCATION</span><span class="o">=</span>westeurope
+<span class="nv">RESOURCE_GROUP_NAME</span><span class="o">=</span>joostvdg-cb-ext-storage
+<span class="nv">STORAGE_ACCOUNT_NAME</span><span class="o">=</span>joostvdgcbtfstate
+<span class="nv">CONTAINER_NAME</span><span class="o">=</span>tfstate
+</pre></div>
+</td></tr></table>
+
+<h4 id="list-locations">List locations<a class="headerlink" href="#list-locations" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az account list-locations <span class="se">\</span>
+    --query <span class="s2">&quot;[].{Region:name}&quot;</span> <span class="se">\</span>
+    --out table
+</pre></div>
+</td></tr></table>
+
+<h4 id="create-resource-group">Create resource group<a class="headerlink" href="#create-resource-group" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az group create <span class="se">\</span>
+    --name <span class="si">${</span><span class="nv">RESOURCE_GROUP_NAME</span><span class="si">}</span> <span class="se">\</span>
+    --location <span class="si">${</span><span class="nv">LOCATION</span><span class="si">}</span>
+</pre></div>
+</td></tr></table>
+
+<h4 id="create-storage-account">Create storage account<a class="headerlink" href="#create-storage-account" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az storage account create <span class="se">\</span>
+    --name <span class="si">${</span><span class="nv">STORAGE_ACCOUNT_NAME</span><span class="si">}</span> <span class="se">\</span>
+    --resource-group <span class="si">${</span><span class="nv">RESOURCE_GROUP_NAME</span><span class="si">}</span> <span class="se">\</span>
+    --location <span class="si">${</span><span class="nv">LOCATION</span><span class="si">}</span> <span class="se">\</span>
+    --sku Standard_ZRS <span class="se">\</span>
+    --kind StorageV2
+</pre></div>
+</td></tr></table>
+
+<h4 id="retrieve-storage-account-login">Retrieve storage account login<a class="headerlink" href="#retrieve-storage-account-login" title="Permanent link">&para;</a></h4>
+<p>Apparently, no CLI commands available?</p>
+<p>Use the <a href="https://docs.microsoft.com/en-us/azure/terraform/terraform-create-k8s-cluster-with-tf-and-aks#set-up-azure-storage-to-store-terraform-state">Azure Blog on AKS via Terraform</a> for how via the UI.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nv">STORAGE_ACCOUNT_KEY</span><span class="o">=</span>
+</pre></div>
+</td></tr></table>
+
+<h4 id="create-tf-storage">Create TF Storage<a class="headerlink" href="#create-tf-storage" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az storage container create -n <span class="si">${</span><span class="nv">CONTAINER_NAME</span><span class="si">}</span> --account-name <span class="si">${</span><span class="nv">STORAGE_ACCOUNT_NAME</span><span class="si">}</span> --account-key <span class="si">${</span><span class="nv">STORAGE_ACCOUNT_KEY</span><span class="si">}</span>
+</pre></div>
+</td></tr></table>
+
+<h4 id="init-terraform-backend">Init Terraform backend<a class="headerlink" href="#init-terraform-backend" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>terraform init -backend-config<span class="o">=</span><span class="s2">&quot;storage_account_name=</span><span class="si">${</span><span class="nv">STORAGE_ACCOUNT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+ -backend-config<span class="o">=</span><span class="s2">&quot;container_name=</span><span class="si">${</span><span class="nv">CONTAINER_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+ -backend-config<span class="o">=</span><span class="s2">&quot;access_key=</span><span class="si">${</span><span class="nv">STORAGE_ACCOUNT_KEY</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+ -backend-config<span class="o">=</span><span class="s2">&quot;key=codelab.microsoft.tfstate&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<h4 id="expose-temp-variables">Expose temp variables<a class="headerlink" href="#expose-temp-variables" title="Permanent link">&para;</a></h4>
+<p>These are from your Service Principle we created earlier.
+Where <code>client_id</code> = appId, and <code>client_secret</code> the password.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">export</span> <span class="nv">TF_VAR_client_id</span><span class="o">=</span>&lt;your-client-id&gt;
+<span class="nb">export</span> <span class="nv">TF_VAR_client_secret</span><span class="o">=</span>&lt;your-client-secret&gt;
+</pre></div>
+</td></tr></table>
+
+<h2 id="rollout">Rollout<a class="headerlink" href="#rollout" title="Permanent link">&para;</a></h2>
+<h3 id="set-variables">Set variables<a class="headerlink" href="#set-variables" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">source</span> ../export-variables.sh
+</pre></div>
+</td></tr></table>
+
+<h3 id="validate">Validate<a class="headerlink" href="#validate" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>terraform validate
+</pre></div>
+</td></tr></table>
+
+<h3 id="plan">Plan<a class="headerlink" href="#plan" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>terraform plan -out out.plan
+</pre></div>
+</td></tr></table>
+
+<h3 id="apply-the-plan">Apply the plan<a class="headerlink" href="#apply-the-plan" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>terraform apply out.plan
+</pre></div>
+</td></tr></table>
+
+<h2 id="configure-kubecontext">Configure Kubecontext<a class="headerlink" href="#configure-kubecontext" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az aks get-credentials --resource-group cbcore --name cbcore
+</pre></div>
+</td></tr></table>
+
+<h2 id="configure-cluster-autoscaler">Configure Cluster Autoscaler<a class="headerlink" href="#configure-cluster-autoscaler" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az extension add --name aks-preview
+</pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az feature register --name VMSSPreview --namespace Microsoft.ContainerService
+az feature list -o table --query <span class="s2">&quot;[?contains(name, &#39;Microsoft.ContainerService/VMSSPreview&#39;)].{Name:name,State:properties.state}&quot;</span>
+az provider register --namespace Microsoft.ContainerService
+az feature list -o table --query <span class="s2">&quot;[?contains(name, &#39;Microsoft.ContainerService&#39;)].{Name:name,State:properties.state}&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<h2 id="configure-multi-node-pool">Configure multi-node pool<a class="headerlink" href="#configure-multi-node-pool" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az feature register --name MultiAgentpoolPreview --namespace Microsoft.ContainerService
+az feature list -o table --query <span class="s2">&quot;[?contains(name, &#39;Microsoft.ContainerService/MultiAgentpoolPreview&#39;)].{Name:name,State:properties.state}&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az provider register --namespace Microsoft.ContainerService
+</pre></div>
+</td></tr></table>
+
+<h2 id="create-aks-cluster-via-cli">Create AKS cluster via CLI<a class="headerlink" href="#create-aks-cluster-via-cli" title="Permanent link">&para;</a></h2>
+<h3 id="resources_1">Resources<a class="headerlink" href="#resources_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/aks/use-multiple-node-pools.md">https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/aks/use-multiple-node-pools.md</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler">https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler</a></li>
+<li><a href="https://www.danielstechblog.io/azure-kubernetes-service-cluster-autoscaler-configurations/">https://www.danielstechblog.io/azure-kubernetes-service-cluster-autoscaler-configurations/</a></li>
+</ul>
+<h3 id="get-available-versions">Get available versions<a class="headerlink" href="#get-available-versions" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az aks get-versions --location westeurope
+</pre></div>
+</td></tr></table>
+
+<h3 id="create-initial-cluster">Create initial cluster<a class="headerlink" href="#create-initial-cluster" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1"># Create a resource group in East US</span>
+az group create --name myResourceGroup --location eastus
+
+<span class="c1"># Create a basic single-node AKS cluster</span>
+az aks create <span class="se">\</span>
+    --resource-group myResourceGroup <span class="se">\</span>
+    --name myAKSCluster <span class="se">\</span>
+    --enable-vmss <span class="se">\</span>
+    --node-count <span class="m">1</span> <span class="se">\</span>
+    --nodepool-name masters <span class="se">\</span>
+    --node-vm-size Standard_DS2_v2 <span class="se">\</span>
+    --enable-cluster-autoscaler <span class="se">\</span>
+    --enable-vmss <span class="se">\</span>
+    --generate-ssh-keys
+</pre></div>
+</td></tr></table>
+
+<h4 id="podsecuritypolicy">PodSecurityPolicy<a class="headerlink" href="#podsecuritypolicy" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>--enable-cluster-autoscaler    : Enable cluster autoscaler, default value is false.
+    If specified, please make sure the kubernetes version is larger than <span class="m">1</span>.10.6.
+</pre></div>
+</td></tr></table>
+
+<h4 id="networking">Networking<a class="headerlink" href="#networking" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>--network-plugin               : The Kubernetes network plugin to use.
+    Specify <span class="s2">&quot;azure&quot;</span> <span class="k">for</span> advanced networking configurations. Defaults to <span class="s2">&quot;kubenet&quot;</span>.
+--network-policy               : <span class="o">(</span>PREVIEW<span class="o">)</span> The Kubernetes network policy to use.
+    Using together with <span class="s2">&quot;azure&quot;</span> network plugin.
+    Specify <span class="s2">&quot;azure&quot;</span> <span class="k">for</span> Azure network policy manager and <span class="s2">&quot;calico&quot;</span> <span class="k">for</span> calico network policy
+    controller.
+    Defaults to <span class="s2">&quot;&quot;</span> <span class="o">(</span>network policy disabled<span class="o">)</span>.
+</pre></div>
+</td></tr></table>
+
+<h3 id="retrieve-credentials">Retrieve credentials<a class="headerlink" href="#retrieve-credentials" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+</pre></div>
+</td></tr></table>
+
+<h3 id="add-second-node-pool">Add second node pool<a class="headerlink" href="#add-second-node-pool" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>az aks nodepool add <span class="se">\</span>
+    --resource-group myResourceGroup <span class="se">\</span>
+    --cluster-name myAKSCluster <span class="se">\</span>
+    --name mynodepool <span class="se">\</span>
+    --node-count <span class="m">3</span>
+</pre></div>
+</td></tr></table>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 Joost van der Griendt
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/joostvdg" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/joost_vdg" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://linkedin.com/in/joostvdg" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.b41f3d20.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
