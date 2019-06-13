@@ -1521,6 +1521,53 @@
     Spring Boot Quickstart
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-quickstart" title="Create quickstart" class="md-nav__link">
+    Create quickstart
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-controller" title="Add controller" class="md-nav__link">
+    Add controller
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#greeting" title="Greeting" class="md-nav__link">
+    Greeting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#greetingcontroller" title="GreetingController" class="md-nav__link">
+    GreetingController
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-application_1" title="Test application" class="md-nav__link">
+    Test application
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1551,7 +1598,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#test-application_1" title="Test Application" class="md-nav__link">
+  <a href="#test-application_2" title="Test Application" class="md-nav__link">
     Test Application
   </a>
   
@@ -2092,6 +2139,53 @@
     Spring Boot Quickstart
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-quickstart" title="Create quickstart" class="md-nav__link">
+    Create quickstart
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-controller" title="Add controller" class="md-nav__link">
+    Add controller
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#greeting" title="Greeting" class="md-nav__link">
+    Greeting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#greetingcontroller" title="GreetingController" class="md-nav__link">
+    GreetingController
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-application_1" title="Test application" class="md-nav__link">
+    Test application
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2122,7 +2216,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#test-application_1" title="Test Application" class="md-nav__link">
+  <a href="#test-application_2" title="Test Application" class="md-nav__link">
     Test Application
   </a>
   
@@ -2440,6 +2534,113 @@ In order to avoid having to register every environment in at our DNS provider, w
 </td></tr></table>
 
 <h3 id="spring-boot-quickstart">Spring Boot Quickstart<a class="headerlink" href="#spring-boot-quickstart" title="Permanent link">&para;</a></h3>
+<h4 id="create-quickstart">Create quickstart<a class="headerlink" href="#create-quickstart" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>jx create spring -d web -d actuator <span class="se">\</span>
+    --group com.example <span class="se">\</span>
+    --artifact jx-spring-boot-demo <span class="se">\</span>
+    -b
+</pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">cd</span> jx-spring-boot-demo
+</pre></div>
+</td></tr></table>
+
+<h4 id="add-controller">Add controller<a class="headerlink" href="#add-controller" title="Permanent link">&para;</a></h4>
+<p>Assuming you kept the group the same, you should find a folder <code>src/main/java/com/example/jxspringbootdemo</code> containing a file, <code>DemoApplication.java</code>.</p>
+<p>We're going to have to add two files to the same folder:</p>
+<ul>
+<li><code>Greeting.java</code></li>
+<li><code>GreetingController.java</code></li>
+</ul>
+<h5 id="greeting">Greeting<a class="headerlink" href="#greeting" title="Permanent link">&para;</a></h5>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.jxspringbootdemo</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Greeting</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">content</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Greeting</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">,</span> <span class="n">String</span> <span class="n">content</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">long</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getContent</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">content</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table>
+
+<h5 id="greetingcontroller">GreetingController<a class="headerlink" href="#greetingcontroller" title="Permanent link">&para;</a></h5>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">package</span> <span class="nn">com.example.jxspringbootdemo</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.concurrent.atomic.AtomicLong</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestParam</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="o">;</span>
+
+<span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GreetingController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">template</span> <span class="o">=</span> <span class="s">&quot;Hello, %s!&quot;</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">AtomicLong</span> <span class="n">counter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicLong</span><span class="o">();</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&quot;/greeting&quot;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">Greeting</span> <span class="nf">greeting</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="n">defaultValue</span><span class="o">=</span><span class="s">&quot;World&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Greeting</span><span class="o">(</span><span class="n">counter</span><span class="o">.</span><span class="na">incrementAndGet</span><span class="o">(),</span>
+                            <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">template</span><span class="o">,</span> <span class="n">name</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table>
+
+<h4 id="test-application_1">Test application<a class="headerlink" href="#test-application_1" title="Permanent link">&para;</a></h4>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>jx get activity -f jx-cdx-spring-boot-demo-1 -w
 </pre></div>
 </td></tr></table>
@@ -2494,7 +2695,7 @@ We have to "re-install" Jenkins X, to have it install Nexus for us in the <code>
 </pre></div>
 </td></tr></table>
 
-<h3 id="test-application_1">Test Application<a class="headerlink" href="#test-application_1" title="Permanent link">&para;</a></h3>
+<h3 id="test-application_2">Test Application<a class="headerlink" href="#test-application_2" title="Permanent link">&para;</a></h3>
 <p>To trigger a new build, make a change - for example to the <code>README.md</code> and push it.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>jx get activity -f jx-cdx-spring-boot-demo-1 -w
 </pre></div>
