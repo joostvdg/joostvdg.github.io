@@ -2,7 +2,7 @@
 site_name: Joostvdg's Software Engineering Page
 site_url: https://joostvdg.github.io
 # Copyright
-copyright: 'Copyright &copy; 2018 Joost van der Griendt'
+copyright: 'Copyright &copy; 2019 Joost van der Griendt'
 repo_name: 'joostvdg/joostvdg.github.io'
 repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
 
@@ -46,6 +46,7 @@ pages:
   - Introduction: kubernetes/index.md
   - CKA Exam details: kubernetes/cka-exam.md
   - CKA Exam prep: kubernetes/cka-exam-prep.md
+  - Tools: kubernetes/tools.md
 
 - K8S CICD:
   - CD Pipeline Jenkins & Helm: kubernetes/cicd/cdp-jenkins-helm.md
@@ -92,6 +93,14 @@ pages:
 - CloudBees:
   - CloudBees Core on EKS: cloudbees/cbc-eks.md
   - CloudBees Core Post Install: cloudbees/cbc-post-install-tips.md
+
+- Jenkins X: 
+    - Intro: jenkinsx/intro.md
+    - HelloWorld: jenkinsx/hello-world.md
+    - Workshop: jenkinsx/workshop.md
+    - BuildPack: jenkinsx/buildpack.md
+    - Maven: jenkinsx/maven.md
+    - Hybrid: jenkinsx/hybrid.md
 
 - Jenkins: jenkins/index.md
 - Jenkins Job Management:
