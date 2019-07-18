@@ -40,6 +40,7 @@ pages:
   - Create your own k8s controller: blogs/k8s-controller.md
   - Let's Encrypt for Kubernetes Apps: blogs/k8s-lets-encrypt.md
   - Jenkins Pipeline Support Tools: blogs/jenkins-pipeline-support-tool.md
+  - Jenkins Monitoring Kubernetes: blogs/monitor-jenkins-on-k8s.md
   - DockerCon EU 2018: blogs/dockercon-eu-2018.md
 
 - Kubernetes (K8S):
