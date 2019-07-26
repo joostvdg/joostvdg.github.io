@@ -1,5 +1,6 @@
 # CKA Exam Prep
 
+* https://github.com/dgkanatsios/CKAD-exercises
 * https://github.com/kelseyhightower/kubernetes-the-hard-way
 * https://github.com/walidshaari/Kubernetes-Certified-Administrator
 * https://github.com/kubernetes/community/blob/master/contributors/devel/e2e-tests.md
@@ -254,3 +255,6 @@ sysdig -k https://192.168.99.100:8443 -K /home/joostvdg/.minikube/client.crt:/ho
 ```bash
 sudo csysdig -k https://192.168.99.100:8443 -K /home/joostvdg/.minikube/client.crt:/home/joostvdg/.minikube/client.key
 ```
+
+## From Udemy Course
+
