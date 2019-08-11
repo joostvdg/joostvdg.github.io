@@ -6,13 +6,36 @@
 ** via shared lib
 * JX sh step -> tekton -> write interceptor
 
-## GKE
+## The Plan
+
+* install one or more Jenkins instances
+* get metrics from running Jenkins instance(s)
+* have queries for understanding the state and performance of the Jenkins instance(s)
+* have a dashboard to aid debugging an issue or determine new alerts
+* have alerts that fire when (potential) problematic conditions occur
+* get metrics from Jenkins Pipelines
+
+## Get Metrics
+
+To get Data from Jenkins in Kubernetes to monitor, we first need the following:
+
+* a kubernetes cluster
+* prometheus for collecting data and generating alerts
+* grafana for dashboards that help debug issues
+* one or more Jenkins instances
+
+### Create GKE Cluster
 
 ```bash
 REGION=europe-west4
-CLUSTER_NAME=joostvdg-2019-07-1
+CLUSTER_NAME=joostvdg-2019-08-1
 K8S_VERSION=1.13.7-gke.8
+REGION=europe-west4
 PROJECT_ID=
+```
+
+```bash
+gcloud container get-server-config --region $REGION
 ```
 
 ```bash
@@ -35,6 +58,8 @@ kubectl create clusterrolebinding \
     --user $(gcloud config get-value account)
 ```
 
+### Install Ingress Controller
+
 ```bash
 kubectl apply \
     -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/mandatory.yaml
@@ -42,6 +67,16 @@ kubectl apply \
 kubectl apply \
     -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/provider/cloud-generic.yaml
 ```
+
+```bash
+export LB_IP=$(kubectl -n ingress-nginx \
+    get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+echo $LB_IP
+```
+
+### Install Helm
 
 ```bash
 kubectl create \
@@ -54,15 +89,35 @@ kubectl -n kube-system \
     rollout status deploy tiller-deploy
 ```
 
-```bash
-export LB_IP=$(kubectl -n ingress-nginx \
-    get svc ingress-nginx \
-    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+### Install Cert-Manager (Optional)
 
-echo $LB_IP
+```bash
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.8/deploy/manifests/00-crds.yaml
 ```
 
-## Helm
+```bash
+kubectl create namespace cert-manager
+kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+```
+
+```bash
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+```
+
+```bash
+helm install \
+    --name cert-manager \
+    --namespace cert-manager \
+    --version v0.8.0 \
+    jetstack/cert-manager
+```
+
+```bash
+kubectl apply -f cluster-issuer.yaml
+```
+
+## Install Monitoring Components
 
 ### Prepare
 
@@ -275,18 +330,78 @@ dashboards:
 * 8588 - cluster overview (deployments & statefulsets)
 * 6739 - PV capacity
 
-### Install Jenkins
+## Install Jenkins
 
 ```bash
 kubectl create namespace jenkins
 kubens jenkins
 ```
 
+It is recommended to spread teams and applications across Jenkins instances, we will create more than one Jenkins instance. We will create these instances via Helm.
+
+There's a quite well maintained Helm chart ready to use, but it needs some tweaks to be able to hit the ground running.
+
+### Values
+
+Let's explain some of the values:
+
+* `installPlugins`: we want `blueocean` for a nicer Pipeline UI and `prometheus` to expose the metrics in a Prometheus format
+* `resources`: always specify your resources, if these are wrong, our monitoring alerts and dashboard should help use tweak these values
+* `javaOpts`: for some reason the default configuration doesn't have the recommended JVM and Garbage Collection configuration, so we have to specify this, see [CloudBees' JVM Troubleshoot Guide](https://go.cloudbees.com/docs/solutions/jvm-troubleshooting/) for more details
+* `ingress`: because I believe every publicly available service should only be accessible via TLS, we have to configure TLS and certmanager annotions (as we're using Certmanager to manage our certificate)
+* `podAnnotations`: the default metrics endpoint that Prometheus scrapes from is `/metrics`, unfortunately, the by default included Metrics Plugin exposes the metrics on that endpoint in the wrong format. This means we have to inform Prometheus how to retrieve the metrics
+
+```yaml
+master:
+  serviceType: ClusterIP
+  healthProbes: false
+  installPlugins:
+    - blueocean:1.17.0
+    - prometheus:2.0.0
+    - kubernetes:1.17.2
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "1524Mi"
+    limits:
+      cpu: "2000m"
+      memory: "3072Mi"
+  javaOpts: "-XX:+AlwaysPreTouch -XX:+UseG1GC -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled -XX:+DisableExplicitGC -XX:+UnlockDiagnosticVMOptions -XX:+UnlockExperimentalVMOptions"
+  ingress:
+    enabled: true
+    hostName: jenkins.gke.kearos.net
+    tls:
+      - secretName: tls-jenkins-gke-kearos-net
+        hosts:
+          - jenkins.gke.kearos.net
+    annotations:
+      certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "false"
+      nginx.ingress.kubernetes.io/proxy-body-size: 50m
+      nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  podAnnotations:
+    prometheus.io/path: /prometheus
+    prometheus.io/port: "8080"
+    prometheus.io/scrape: "true"
+agent:
+  enabled: true
+rbac:
+  create: true
+```
+
+### First Master
+
 ```bash
 helm upgrade -i jenkins \
     stable/jenkins \
     --namespace jenkins\
-    -f jenkins-values.yaml
+    -f jenkins-values.1.yaml
+```
+
+```bash
+kubectl apply -f jenkins-certificate.1.yaml
 ```
 
 ```bash
@@ -294,16 +409,16 @@ kubectl -n jenkins rollout status deployment jenkins
 ```
 
 ```bash
-printf $(kubectl get secret --namespace jenkins jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+printf $(kubectl get secret --namespace jenkins jenkins1 -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
 ```
 
-#### Second Master
+### Second Master
 
 ```bash
 helm upgrade -i jenkins2 \
     stable/jenkins \
     --namespace jenkins\
-    -f jenkins-values.1.yaml
+    -f jenkins-values.2.yaml
 ```
 
 ```bash
@@ -311,16 +426,20 @@ kubectl -n jenkins rollout status deployment jenkins2
 ```
 
 ```bash
+kubectl apply -f jenkins-certificate.2.yaml
+```
+
+```bash
 printf $(kubectl get secret --namespace jenkins jenkins2 -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
 ```
 
-### Third
+### Third Master
 
 ```bash
 helm upgrade -i jenkins3 \
     stable/jenkins \
     --namespace jenkins\
-    -f jenkins-values.2.yaml
+    -f jenkins-values.3.yaml
 ```
 
 ```bash
@@ -328,32 +447,67 @@ kubectl -n jenkins rollout status deployment jenkins3
 ```
 
 ```bash
+kubectl apply -f jenkins-certificate.3.yaml
+```
+
+```bash
 printf $(kubectl get secret --namespace jenkins jenkins3 -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+```
 
-## Prometheus config
+## Prometheus Queries
 
+Jenkins is a Java Web application, in this case running in Kubernetes.
+Let's categorize the metrics we want to look at and deal with each group individually.
+
+* `JVM`: the JVM metrics are exposed, we should leverage this for very specific queries and alerts
+* `Web`: although it is not the main function of Jenkins, web access will give us some hints about performance trends
+* `Jenkins Configuration`: some configuration elements are exposed, a few of these have very strong recommended values, such as `Master Executor Slots` (should always be **0**)
+* `Jenkins Usage`: jobs running in Jenkins, or Jobs *not* running in Jenkins can also tell us about (potential) problems
+* `Pod Metrics`: any generic metric from a Kubernetes Pod perspective will still be helpful to look at
+
+### Types of Metrics to evaluate
+
+In the age where SRE. DevOps Engineer and Platform Engineer are not only hype terms, there is written alot about which kinds of metrics to really look it. There's enough written about this - including Viktor Farcic' excellent DevOps Toolkit 2.5 - so lets just briefly evaluate these.
+
+* `Latency`: response times of your application, in our case, both external access via Ingress and internal access. We can measure latency on internal access via Jenkins' own metrics, which also has percentile information (for example, p99)
+* `Errors`: we can take a look at network errors such as http 500, which we get straight from Jenkins' webserver (Netty) and at failed jobs
+* `Traffic`: the amount of connections to our service, in our case we have web traffic and jobs running, both we get from Jenkins
+* `Saturation`: how much the system is used compared to the available resources, core resources such as CPU and Memory primarily depend on your Kubernetes Nodes. But we can take a look at the Pod's limits vs. requests and Jenkins' job wait time - which roughly translates to saturation
 
 ### JVM
+
+We have some basic JVM metrics, such as CPU and Memory usage, and uptime. Uptime itself might not be very interresting, until a service has an uptime of less than an hour - Pod was restart - and never seems to be able to go beyond a few hours.
 
 ```bash
 vm_cpu_load
 ```
 
 ```bash
-vm_uptime_milliseconds
-```
-
-```bash
-vm_memory_total_used
-```
-
-```bash
 (vm_memory_total_max - vm_memory_total_used) / vm_memory_total_max * 100.0
 ```
 
-#### Check for to many open files
+```bash
+vm_uptime_milliseconds
+```
 
-* https://support.cloudbees.com/hc/en-us/articles/204246140-Too-many-open-files
+#### Garbage Collection
+
+For fine tuning the JVM's garbage collection for Jenkins, there are two main guides from CloudBees. Which also explains the `JVM_OPTIONS` in the `jenkins-values.yaml` we used for the Helm installation.
+
+* https://support.cloudbees.com/hc/en-us/articles/222446987-Prepare-Jenkins-for-Support
+* https://www.cloudbees.com/blog/joining-big-leagues-tuning-jenkins-gc-responsiveness-and-stability (somewhat outdated)
+
+The second article, while outdated, contains a lot of information on how to debug the Garbage Collection logs and metrics. To process the data thoroughly requires experts with specifically designed tools. I am not such an expert nor is this the document to guide you through this. Distilled from the two guides the conclusion is; measure core metrics (CPU, Memory) and Garbage Collection Throughput (see below) and if problems arise use the CloudBees guide to dive further.
+
+```bash
+1 - sum(rate(vm_gc_G1_Young_Generation_time{kubernetes_namespace=~"$namespace", app_kubernetes_io_instance=~"$instance"}[5m]))by (app_kubernetes_io_instance) 
+/ 
+sum (vm_uptime_milliseconds{kubernetes_namespace=~"$namespace", app_kubernetes_io_instance=~"$instance"}) by (app_kubernetes_io_instance)
+```
+
+### Check for to many open files
+
+When looking at CloudBees guide on [tuning performance on Linux](https://support.cloudbees.com/hc/en-us/articles/115000486312-CloudBees-Core-Performance-Best-Practices-for-Linux) one of the main things to look are core metrics (Memory and CPU) and Open Files. There's even an explicit guide [on monitoring the number of open files](https://support.cloudbees.com/hc/en-us/articles/204246140-Too-many-open-files).
 
 ```bash
 vm_file_descriptor_ratio
@@ -639,8 +793,27 @@ Can we?
 * Average task duration: The Average Task Duration column displays the average duration of a task from start to finish on each label over the selected time period
 * Average total execution time: The Average Total Execution Time column displays the average total execution time of all executors running in each job that run on each label over the selected time period
 
+#### Active Runs
+
+#### Idle Executors
+
+#### Average Time Waiting to Start
+
+#### Completed Runs Per Day
+
+```bash
+sum(increase(jenkins_runs_total_total[24h])) by (app_kubernetes_io_instance)
+```
+
+#### Average Time to complete
+
+```bash
+sum(jenkins_job_building_duration) by (kubernetes_pod_name) /
+```
+
 ## Resources
 
+* https://go.cloudbees.com/docs/solutions/jvm-troubleshooting/
 * https://go.cloudbees.com/docs/cloudbees-documentation/devoptics-user-guide/run_insights/
 * https://medium.com/@eng.mohamed.m.saeed/monitoring-jenkins-with-grafana-and-prometheus-a7e037cbb376
 * https://stackoverflow.com/questions/52230653/graphite-jenkins-job-level-metrics
@@ -648,3 +821,6 @@ Can we?
 * https://github.com/nvgoldin/jenkins-graphite
 * https://www.weave.works/blog/promql-queries-for-the-rest-of-us/
 * https://medium.com/quiq-blog/prometheus-relabeling-tricks-6ae62c56cbda
+* https://docs.google.com/presentation/d/1gtqEfTKM3oLr1N9zjAeXtOcS1eAQS--Xz0D4hwlo_KQ/edit#slide=id.g5bbd4fcccc_10_10
+* https://go.cloudbees.com/docs/cloudbees-documentation/devoptics-user-guide/security_privacy/#_verification_of_connection_to_the_devoptics_service
+* https://sysdig.com/blog/golden-signals-kubernetes/?utm_campaign=kaptain%20-%20The%20Best%20Distributed%20Systems%20Stories&utm_content=Faun%20%F0%9F%A6%88%20Kaptain%20%23175%3A%20Monitoring%20Golden%20Signals%2C%20The%20Ultimate%20Guide%20to%20K8s%20Deployments%20%26%20K8s%20Federation%20v2&utm_medium=email&utm_source=faun
