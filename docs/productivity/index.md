@@ -132,6 +132,10 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 * [Thoughtworks: demystifying Conway's Law](https://www.thoughtworks.com/insights/blog/demystifying-conways-law)
 * [John Allspaw: a mature role for automation](https://www.kitchensoap.com/2012/09/21/a-mature-role-for-automation-part-i/)
 * [Research from DORA](https://devops-research.com/research.html)
+* [Mik Kersten - Cambrian Explosion of DevOps Tools](https://www.tasktop.com/blog/a-cambrian-explosion-of-devops-tools/)
+* [Mik Kersten - End of Manufacturing Line Analogy](https://www.tasktop.com/blog/end-manufacturing-line-analogy/)
+* [Mik Kersten - Mining the ground thruth of Enterprise Toolchains](https://www.tasktop.com/blog/mining-the-ground-truth-of-enterprise-toolchains/)
+* [Framework for putting Mental Models to practice](https://commoncog.com/blog/a-framework-for-putting-mental-models-to-practice/)
 
 ### Books
 
@@ -143,6 +147,15 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 * [DevOps Handbook](https://www.amazon.com/DevOps-Handbook-World-Class-Reliability-Organizations/dp/1942788002/ref=pd_bxgy_14_img_2?_encoding=UTF8&pd_rd_i=1942788002&pd_rd_r=SRT93T4D0PQ42EMVM0M3&pd_rd_w=DYLwa&pd_rd_wg=ADDPF&psc=1&refRID=SRT93T4D0PQ42EMVM0M3)
 * [Thinking Fast and Slow](https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman-ebook/dp/B005MJFA2W/ref=sr_1_1?s=books&ie=UTF8&qid=1520193959&sr=1-1&keywords=thinking+fast+and+slow)
 * [Sapiens](https://www.amazon.com/Sapiens-Humankind-Yuval-Noah-Harari-ebook/dp/B00K7ED54M/ref=pd_sim_351_2?_encoding=UTF8&psc=1&refRID=A1KNY9QCKWPQ94BA248Q)
+* [Project to Product](https://itrevolution.com/book/project-to-product/)
+* [Debugging Teams](https://www.goodreads.com/book/show/26544401-debugging-teams)
+* [The Trusted Advisor](https://www.goodreads.com/book/show/873993.The_Trusted_Advisor)
+* [Crossing the Chasm](https://www.goodreads.com/book/show/61329.Crossing_the_Chasm)
+
+### Papers
+
+* https://www.researchgate.net/publication/200085969_Using_task_context_to_improve_programmer_productivity/link/540dce6b0cf2df04e75676d0/download
+* https://storage.googleapis.com/pub-tools-public-publication-data/pdf/3d102e42ad79a345ebd6464047ac9a6cd10670f4.pdf
 
 ## On Writing
 

@@ -1,5 +1,8 @@
 # Kubernetes
 
+## Reconciliation
+
+* https://speakerdeck.com/thockin/kubernetes-what-is-reconciliation
 
 ## Pods
 
