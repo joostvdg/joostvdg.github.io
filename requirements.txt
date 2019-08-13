@@ -1,6 +1,8 @@
 mkdocs>=1.0.4
 mkdocs-bootswatch>=0.4.0
 python-jenkins>=0.4.10
-mkdocs-material>=3.0.4
-pygments>=2.2.0
-pymdown-extensions>=4.11.0
+mkdocs-material>=4.4.0
+mkdocs-minify-plugin>=0.1.0
+pygments>=2.4.2
+pymdown-extensions>=6.0.0
+Markdown>=3.0.1

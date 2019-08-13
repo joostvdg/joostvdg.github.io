@@ -8,9 +8,105 @@ repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
 
 docs_dir: 'docs'
 
-# Pages
-pages:
-- Home: index.md
+nav:
+- Blogs:
+  - Docker Graceful Shutdown: blogs/docker-graceful-shutdown.md
+  - GitOps Pipeline: blogs/gitops-pipeline.md
+  - Pipelines with Docker Alternatives: blogs/jenkins-pipeline-docker-alternatives.md
+  - Create your own k8s resource: blogs/k8s-crd.md
+  - Create your own k8s controller: blogs/k8s-controller.md
+  - Let's Encrypt for Kubernetes Apps: blogs/k8s-lets-encrypt.md
+  - Jenkins Pipeline Support Tools: blogs/jenkins-pipeline-support-tool.md
+  - Jenkins Monitoring Kubernetes: 
+    - Introduction: blogs/monitor-jenkins-on-k8s/introduction.md
+    - Prepare Environment: blogs/monitor-jenkins-on-k8s/prepare.md
+    - Install Tools: blogs/monitor-jenkins-on-k8s/install.md
+    - Metrics: blogs/monitor-jenkins-on-k8s/metrics.md
+    - Alerts: blogs/monitor-jenkins-on-k8s/alerts.md
+    - Pipeline: blogs/monitor-jenkins-on-k8s/pipeline.md
+    - Dashboard: blogs/monitor-jenkins-on-k8s/dashboard.md
+    - CloudBees: blogs/monitor-jenkins-on-k8s/cloudbees.md
+  - DockerCon EU 2018: blogs/dockercon-eu-2018.md
+- CICD:
+  - CloudBees:
+    - CloudBees Core on EKS: cloudbees/cbc-eks.md
+    - CloudBees Core Post Install: cloudbees/cbc-post-install-tips.md
+  - JX: 
+    - Intro: jenkinsx/intro.md
+    - HelloWorld: jenkinsx/hello-world.md
+    - Workshop: jenkinsx/workshop.md
+    - BuildPack: jenkinsx/buildpack.md
+    - Maven: jenkinsx/maven.md
+    - Hybrid: jenkinsx/hybrid.md
+  - Jenkins: jenkins/index.md
+  - Jenkins Job Management:
+    - JobDSL: jenkins-jobs/jobdsl.md
+    - JenkinsJobsBuilder: jenkins-jobs/jenkins-jobs-builder.md
+  - Jenkins Pipelines:
+    - Core Concepts: jenkins-pipeline/core-concepts.md
+    - Pipeline (declarative): jenkins-pipeline/declarative-pipeline.md
+    - Groovy DSL Pipeline: jenkins-pipeline/groovy-pipeline.md
+    - Pipeline Libraries: jenkins-pipeline/global-shared-library.md
+    - DSL IDE Integration: jenkins-pipeline/ide-integration-pipeline-dsl.md
+    - Parallel: jenkins-pipeline/jenkins-parallel-pipeline.md
+    - Input: jenkins-pipeline/input.md
+  - Jenkins Pipeline Examples:
+    - Index: jenkins-pipeline-examples/index.md
+    - Docker Alternatives: jenkins-pipeline-examples/docker-alternatives.md
+    - Maven Declarative: jenkins-pipeline-examples/maven-declarative.md
+    - Maven Shared Library: jenkins-pipeline-examples/maven-shared-library.md
+    - Docker Declarative: jenkins-pipeline-examples/docker-declarative.md
+- Containers:
+  - Docker:
+    - Multi-Stage Builds: docker/multi-stage-builds.md
+    - Graceful shutdown: docker/graceful-shutdown.md
+    - Swarm (mode): docker/swarm.md
+    - Kubernetes: docker/kubernetes.md
+  - Linux:
+    - Introduction: linux/index.md
+    - SystemD: linux/systemd.md
+    - Networking: linux/networking.md
+    - iptables: linux/iptables.md
+  - Kubernetes (K8S):
+    - Introduction: kubernetes/index.md
+    - CKA Exam details: kubernetes/cka-exam.md
+    - CKA Exam prep: kubernetes/cka-exam-prep.md
+    - Tools: kubernetes/tools.md
+  - K8S CICD:
+    - CD Pipeline Jenkins & Helm: kubernetes/cicd/cdp-jenkins-helm.md
+  - K8S Distribution:
+    - GKE: kubernetes/distributions/install-gke.md
+    - AWS EKS: kubernetes/distributions/aws-eks.md
+  - K8S Hard Way - GCE:
+    - Installer Preparation: kubernetes/khw-gce/index.md
+    - Create GCE resources: kubernetes/khw-gce/terraform-compute.md
+    - Prepare Certificates: kubernetes/khw-gce/certificates.md 
+    - Prepare Kubeconfigs: kubernetes/khw-gce/kubeconfigs.md
+    - Encryption configuration: kubernetes/khw-gce/encryption.md
+    - ETCD configuration: kubernetes/khw-gce/etcd.md
+    - Controller Config: kubernetes/khw-gce/controller.md
+    - Worker Config: kubernetes/khw-gce/worker.md
+    - Remote access: kubernetes/khw-gce/remote-access.md
+    - Network config: kubernetes/khw-gce/network.md
+    - Debug: kubernetes/khw-gce/debug.md
+- SWE:
+  - Other:
+    - Let's Encrypt K8S: certificates/lets-encrypt-k8s.md
+    - MKDocs (Static Website Generator): other/mkdocs.md
+    - VIM: other/vim.md
+  - Software Engineering:
+    - Naming: swe/naming.md
+    - Domain Driven Design: swe/ddd.md
+    - Microservices: swe/microservices.md
+    - Algorithms: swe/algorithms.md
+    - Observability: swe/observability.md
+    - Others: swe/others.md
+  - Productivity:
+    - General: productivity/index.md
+    - Tools: productivity/tools.md
+    - Intelli J: productivity/intellij.md
+    - Paradigms: productivity/paradigms.md
+    - Studies: productivity/studies.md
 - Java:
   - General: java/index.md
   - Spring Boot: java/spring/boot.md
@@ -20,122 +116,27 @@ pages:
   - Java Streams: java/streams.md
   - Java Concurrency: java/concurrency.md
 
-- Docker:
-  - Multi-Stage Builds: docker/multi-stage-builds.md
-  - Graceful shutdown: docker/graceful-shutdown.md
-  - Swarm (mode): docker/swarm.md
-  - Kubernetes: docker/kubernetes.md
-
-- Linux:
-  - Introduction: linux/index.md
-  - SystemD: linux/systemd.md
-  - Networking: linux/networking.md
-  - iptables: linux/iptables.md
-
-- Blogs:
-  - Docker Graceful Shutdown: blogs/docker-graceful-shutdown.md
-  - GitOps Pipeline: blogs/gitops-pipeline.md
-  - Pipelines with Docker Alternatives: blogs/jenkins-pipeline-docker-alternatives.md
-  - Create your own k8s resource: blogs/k8s-crd.md
-  - Create your own k8s controller: blogs/k8s-controller.md
-  - Let's Encrypt for Kubernetes Apps: blogs/k8s-lets-encrypt.md
-  - Jenkins Pipeline Support Tools: blogs/jenkins-pipeline-support-tool.md
-  - Jenkins Monitoring Kubernetes: blogs/monitor-jenkins-on-k8s.md
-  - DockerCon EU 2018: blogs/dockercon-eu-2018.md
-
-- Kubernetes (K8S):
-  - Introduction: kubernetes/index.md
-  - CKA Exam details: kubernetes/cka-exam.md
-  - CKA Exam prep: kubernetes/cka-exam-prep.md
-  - Tools: kubernetes/tools.md
-
-- K8S CICD:
-  - CD Pipeline Jenkins & Helm: kubernetes/cicd/cdp-jenkins-helm.md
-
-- K8S Distribution:
-  - GKE: kubernetes/distributions/install-gke.md
-  - AWS EKS: kubernetes/distributions/aws-eks.md
-
-- K8S Hard Way - GCE:
-  - Installer Preparation: kubernetes/khw-gce/index.md
-  - Create GCE resources: kubernetes/khw-gce/terraform-compute.md
-  - Prepare Certificates: kubernetes/khw-gce/certificates.md 
-  - Prepare Kubeconfigs: kubernetes/khw-gce/kubeconfigs.md
-  - Encryption configuration: kubernetes/khw-gce/encryption.md
-  - ETCD configuration: kubernetes/khw-gce/etcd.md
-  - Controller Config: kubernetes/khw-gce/controller.md
-  - Worker Config: kubernetes/khw-gce/worker.md
-  - Remote access: kubernetes/khw-gce/remote-access.md
-  - Network config: kubernetes/khw-gce/network.md
-  - Debug: kubernetes/khw-gce/debug.md
-
-- Software Engineering:
-  - Naming: swe/naming.md
-  - Domain Driven Design: swe/ddd.md
-  - Microservices: swe/microservices.md
-  - Algorithms: swe/algorithms.md
-  - Observability: swe/observability.md
-  - Others: swe/others.md
-
-- Productivity:
-  - General: productivity/index.md
-  - Tools: productivity/tools.md
-  - Intelli J: productivity/intellij.md
-  - Paradigms: productivity/paradigms.md
-  - Studies: productivity/studies.md
-
-- Certificates:
-  - Let's Encrypt K8S: certificates/lets-encrypt-k8s.md
-
-- Other:
-  - MKDocs (Static Website Generator): other/mkdocs.md
-  - VIM: other/vim.md
-
-- CloudBees:
-  - CloudBees Core on EKS: cloudbees/cbc-eks.md
-  - CloudBees Core Post Install: cloudbees/cbc-post-install-tips.md
-
-- Jenkins X: 
-    - Intro: jenkinsx/intro.md
-    - HelloWorld: jenkinsx/hello-world.md
-    - Workshop: jenkinsx/workshop.md
-    - BuildPack: jenkinsx/buildpack.md
-    - Maven: jenkinsx/maven.md
-    - Hybrid: jenkinsx/hybrid.md
-
-- Jenkins: jenkins/index.md
-- Jenkins Job Management:
-    - JobDSL: jenkins-jobs/jobdsl.md
-    - JenkinsJobsBuilder: jenkins-jobs/jenkins-jobs-builder.md
-- Jenkins Pipelines:
-    - Core Concepts: jenkins-pipeline/core-concepts.md
-    - Pipeline (declarative): jenkins-pipeline/declarative-pipeline.md
-    - Groovy DSL Pipeline: jenkins-pipeline/groovy-pipeline.md
-    - Pipeline Libraries: jenkins-pipeline/global-shared-library.md
-    - DSL IDE Integration: jenkins-pipeline/ide-integration-pipeline-dsl.md
-    - Parallel: jenkins-pipeline/jenkins-parallel-pipeline.md
-    - Input: jenkins-pipeline/input.md
-- Jenkins Pipeline Examples:
-    - Index: jenkins-pipeline-examples/index.md
-    - Docker Alternatives: jenkins-pipeline-examples/docker-alternatives.md
-    - Maven:
-        - Maven Groovy DSL: jenkins-pipeline-examples/maven-groovy-dsl.md
-        - Maven Declarative: jenkins-pipeline-examples/maven-declarative.md
-        - Maven Shared Library: jenkins-pipeline-examples/maven-shared-library.md
-    - Other:
-        - Docker Declarative: jenkins-pipeline-examples/docker-declarative.md
 
 # Theme
 # Configuration
 theme:
+  feature:
+    tabs: true
   name: 'material'
   language: 'en'
+  logo:
+    icon: 'public'
   palette:
     primary: 'orange'
     accent: 'red'
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
 
 extra:
   social:
@@ -151,7 +152,7 @@ markdown_extensions:
   - admonition
   - codehilite:
       linenums: true
-      guess_lang: false
+      guess_lang: true
   - footnotes
   - meta
   - toc:
@@ -170,3 +171,7 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
+
+google_analytics:
+  - 'UA-145385967-1'
+  - 'auto'
