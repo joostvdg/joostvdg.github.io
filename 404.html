@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
     
     
       
@@ -40,9 +40,9 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/application.572ca0f0.css">
+      <link rel="stylesheet" href="assets/stylesheets/application.0284f74d.css">
       
-        <link rel="stylesheet" href="assets/stylesheets/application-palette.22915126.css">
+        <link rel="stylesheet" href="assets/stylesheets/application-palette.01803549.css">
       
       
         
@@ -51,17 +51,45 @@
       
     
     
-      <script src="assets/javascripts/modernizr.8c900955.js"></script>
+      <script src="assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="assets/fonts/material-icons.css">
     
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-145385967-1", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
     
     
   </head>
@@ -74,24 +102,7 @@
       <defs>
         
         
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
-    viewBox="0 0 416 448" id="__github">
-  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
-        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
-        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
-        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
-        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
-        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
-        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
-        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
-        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
-        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
-        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
-        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
-        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
-        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
-        99.5z" />
-</svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
         
       </defs>
     </svg>
@@ -106,7 +117,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="https://joostvdg.github.io" title="Joostvdg's Software Engineering Page" class="md-header-nav__button md-logo">
           
-            <i class="md-icon"></i>
+            <i class="md-icon">public</i>
           
         </a>
       </div>
@@ -116,22 +127,21 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
-            
-              <span class="md-header-nav__topic">
-                Joostvdg's Software Engineering Page
-              </span>
-              <span class="md-header-nav__topic">
+            <span class="md-header-nav__topic">
+              Joostvdg's Software Engineering Page
+            </span>
+            <span class="md-header-nav__topic">
+              
                 
-              </span>
-            
+              
+            </span>
           
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
           
-            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
-            
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
@@ -154,7 +164,6 @@
     </div>
   </div>
 </div>
-          
         
       </div>
       
@@ -165,20 +174,18 @@
 
   
 
-
-  <a href="https://github.com/joostvdg/joostvdg.github.io/" title="Go to repository" class="md-source" data-md-source="github">
-    
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#__github" width="24" height="24"></use>
-        </svg>
-      </div>
-    
-    <div class="md-source__repository">
-      joostvdg/joostvdg.github.io
+<a href="https://github.com/joostvdg/joostvdg.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
     </div>
-  </a>
-
+  
+  <div class="md-source__repository">
+    joostvdg/joostvdg.github.io
+  </div>
+</a>
           </div>
         </div>
       
@@ -191,6 +198,99 @@
         
       
       
+        
+
+<nav class="md-tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="blogs/docker-graceful-shutdown/" title="Blogs" class="md-tabs__link">
+          Blogs
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="cloudbees/cbc-eks/" title="CICD" class="md-tabs__link">
+          CICD
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="docker/multi-stage-builds/" title="Containers" class="md-tabs__link">
+          Containers
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="certificates/lets-encrypt-k8s/" title="SWE" class="md-tabs__link">
+          SWE
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="java/" title="Java" class="md-tabs__link">
+          Java
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
@@ -202,7 +302,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="https://joostvdg.github.io" title="Joostvdg's Software Engineering Page" class="md-nav__button md-logo">
       
-        <i class="md-icon"></i>
+        <i class="md-icon">public</i>
       
     </a>
     Joostvdg's Software Engineering Page
@@ -214,20 +314,18 @@
 
   
 
-
-  <a href="https://github.com/joostvdg/joostvdg.github.io/" title="Go to repository" class="md-source" data-md-source="github">
-    
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#__github" width="24" height="24"></use>
-        </svg>
-      </div>
-    
-    <div class="md-source__repository">
-      joostvdg/joostvdg.github.io
+<a href="https://github.com/joostvdg/joostvdg.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
     </div>
-  </a>
-
+  
+  <div class="md-source__repository">
+    joostvdg/joostvdg.github.io
+  </div>
+</a>
     </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -237,279 +335,15 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="." title="Home" class="md-nav__link">
-      Home
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
     
-    <label class="md-nav__link" for="nav-2">
-      Java
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        Java
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="java/" title="General" class="md-nav__link">
-      General
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="java/spring/boot/" title="Spring Boot" class="md-nav__link">
-      Spring Boot
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="java/java9/" title="Java 9" class="md-nav__link">
-      Java 9
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="java/ecosystem/" title="Java Ecosystem" class="md-nav__link">
-      Java Ecosystem
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="java/networking/" title="Java Networking" class="md-nav__link">
-      Java Networking
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="java/streams/" title="Java Streams" class="md-nav__link">
-      Java Streams
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="java/concurrency/" title="Java Concurrency" class="md-nav__link">
-      Java Concurrency
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
-    
-    <label class="md-nav__link" for="nav-3">
-      Docker
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
-        Docker
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="docker/multi-stage-builds/" title="Multi-Stage Builds" class="md-nav__link">
-      Multi-Stage Builds
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="docker/graceful-shutdown/" title="Graceful shutdown" class="md-nav__link">
-      Graceful shutdown
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="docker/swarm/" title="Swarm (mode)" class="md-nav__link">
-      Swarm (mode)
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="docker/kubernetes/" title="Kubernetes" class="md-nav__link">
-      Kubernetes
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
-    
-    <label class="md-nav__link" for="nav-4">
-      Linux
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
-        Linux
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="linux/" title="Introduction" class="md-nav__link">
-      Introduction
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="linux/systemd/" title="SystemD" class="md-nav__link">
-      SystemD
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="linux/networking/" title="Networking" class="md-nav__link">
-      Networking
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="linux/iptables/" title="iptables" class="md-nav__link">
-      iptables
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
-    
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-1">
       Blogs
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-1">
         Blogs
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -604,6 +438,126 @@
           
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1-8" type="checkbox" id="nav-1-8">
+    
+    <label class="md-nav__link" for="nav-1-8">
+      Jenkins Monitoring Kubernetes
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-1-8">
+        Jenkins Monitoring Kubernetes
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="blogs/monitor-jenkins-on-k8s/introduction/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="blogs/monitor-jenkins-on-k8s/prepare/" title="Prepare Environment" class="md-nav__link">
+      Prepare Environment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="blogs/monitor-jenkins-on-k8s/install/" title="Install Tools" class="md-nav__link">
+      Install Tools
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="blogs/monitor-jenkins-on-k8s/metrics/" title="Metrics" class="md-nav__link">
+      Metrics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="blogs/monitor-jenkins-on-k8s/alerts/" title="Alerts" class="md-nav__link">
+      Alerts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="blogs/monitor-jenkins-on-k8s/pipeline/" title="Pipeline" class="md-nav__link">
+      Pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="blogs/monitor-jenkins-on-k8s/dashboard/" title="Dashboard" class="md-nav__link">
+      Dashboard
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="blogs/monitor-jenkins-on-k8s/cloudbees/" title="CloudBees" class="md-nav__link">
+      CloudBees
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
   <li class="md-nav__item">
     <a href="blogs/dockercon-eu-2018/" title="DockerCon EU 2018" class="md-nav__link">
       DockerCon EU 2018
@@ -623,13 +577,596 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
-    <label class="md-nav__link" for="nav-6">
-      Kubernetes (K8S)
+    <label class="md-nav__link" for="nav-2">
+      CICD
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
+      <label class="md-nav__title" for="nav-2">
+        CICD
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1">
+    
+    <label class="md-nav__link" for="nav-2-1">
+      CloudBees
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-1">
+        CloudBees
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="cloudbees/cbc-eks/" title="CloudBees Core on EKS" class="md-nav__link">
+      CloudBees Core on EKS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="cloudbees/cbc-post-install-tips/" title="CloudBees Core Post Install" class="md-nav__link">
+      CloudBees Core Post Install
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2">
+    
+    <label class="md-nav__link" for="nav-2-2">
+      JX
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        JX
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkinsx/intro/" title="Intro" class="md-nav__link">
+      Intro
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkinsx/hello-world/" title="HelloWorld" class="md-nav__link">
+      HelloWorld
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkinsx/workshop/" title="Workshop" class="md-nav__link">
+      Workshop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkinsx/buildpack/" title="BuildPack" class="md-nav__link">
+      BuildPack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkinsx/maven/" title="Maven" class="md-nav__link">
+      Maven
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkinsx/hybrid/" title="Hybrid" class="md-nav__link">
+      Hybrid
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins/" title="Jenkins" class="md-nav__link">
+      Jenkins
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-4" type="checkbox" id="nav-2-4">
+    
+    <label class="md-nav__link" for="nav-2-4">
+      Jenkins Job Management
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-4">
+        Jenkins Job Management
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-jobs/jobdsl/" title="JobDSL" class="md-nav__link">
+      JobDSL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-jobs/jenkins-jobs-builder/" title="JenkinsJobsBuilder" class="md-nav__link">
+      JenkinsJobsBuilder
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5">
+    
+    <label class="md-nav__link" for="nav-2-5">
+      Jenkins Pipelines
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-5">
+        Jenkins Pipelines
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline/core-concepts/" title="Core Concepts" class="md-nav__link">
+      Core Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline/declarative-pipeline/" title="Pipeline (declarative)" class="md-nav__link">
+      Pipeline (declarative)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline/groovy-pipeline/" title="Groovy DSL Pipeline" class="md-nav__link">
+      Groovy DSL Pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline/global-shared-library/" title="Pipeline Libraries" class="md-nav__link">
+      Pipeline Libraries
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline/ide-integration-pipeline-dsl/" title="DSL IDE Integration" class="md-nav__link">
+      DSL IDE Integration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline/jenkins-parallel-pipeline/" title="Parallel" class="md-nav__link">
+      Parallel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline/input/" title="Input" class="md-nav__link">
+      Input
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-6" type="checkbox" id="nav-2-6">
+    
+    <label class="md-nav__link" for="nav-2-6">
+      Jenkins Pipeline Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-6">
+        Jenkins Pipeline Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline-examples/" title="Index" class="md-nav__link">
+      Index
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline-examples/docker-alternatives/" title="Docker Alternatives" class="md-nav__link">
+      Docker Alternatives
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline-examples/maven-declarative/" title="Maven Declarative" class="md-nav__link">
+      Maven Declarative
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline-examples/maven-shared-library/" title="Maven Shared Library" class="md-nav__link">
+      Maven Shared Library
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline-examples/docker-declarative/" title="Docker Declarative" class="md-nav__link">
+      Docker Declarative
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Containers
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Containers
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1">
+    
+    <label class="md-nav__link" for="nav-3-1">
+      Docker
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="docker/multi-stage-builds/" title="Multi-Stage Builds" class="md-nav__link">
+      Multi-Stage Builds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="docker/graceful-shutdown/" title="Graceful shutdown" class="md-nav__link">
+      Graceful shutdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="docker/swarm/" title="Swarm (mode)" class="md-nav__link">
+      Swarm (mode)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="docker/kubernetes/" title="Kubernetes" class="md-nav__link">
+      Kubernetes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2">
+    
+    <label class="md-nav__link" for="nav-3-2">
+      Linux
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-2">
+        Linux
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="linux/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="linux/systemd/" title="SystemD" class="md-nav__link">
+      SystemD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="linux/networking/" title="Networking" class="md-nav__link">
+      Networking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="linux/iptables/" title="iptables" class="md-nav__link">
+      iptables
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Kubernetes (K8S)
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
         Kubernetes (K8S)
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -687,21 +1224,21 @@
     </nav>
   </li>
 
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-4" type="checkbox" id="nav-3-4">
     
-    <label class="md-nav__link" for="nav-7">
+    <label class="md-nav__link" for="nav-3-4">
       K8S CICD
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-7">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-4">
         K8S CICD
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -723,21 +1260,21 @@
     </nav>
   </li>
 
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-5" type="checkbox" id="nav-3-5">
     
-    <label class="md-nav__link" for="nav-8">
+    <label class="md-nav__link" for="nav-3-5">
       K8S Distribution
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-8">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-5">
         K8S Distribution
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -771,21 +1308,21 @@
     </nav>
   </li>
 
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-6" type="checkbox" id="nav-3-6">
     
-    <label class="md-nav__link" for="nav-9">
+    <label class="md-nav__link" for="nav-3-6">
       K8S Hard Way - GCE
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-9">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-6">
         K8S Hard Way - GCE
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -927,6 +1464,11 @@
     </nav>
   </li>
 
+        
+      </ul>
+    </nav>
+  </li>
+
     
       
       
@@ -935,13 +1477,92 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
-    <label class="md-nav__link" for="nav-10">
-      Software Engineering
+    <label class="md-nav__link" for="nav-4">
+      SWE
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-10">
+      <label class="md-nav__title" for="nav-4">
+        SWE
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1">
+    
+    <label class="md-nav__link" for="nav-4-1">
+      Other
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        Other
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="certificates/lets-encrypt-k8s/" title="Let's Encrypt K8S" class="md-nav__link">
+      Let's Encrypt K8S
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="other/mkdocs/" title="MKDocs (Static Website Generator)" class="md-nav__link">
+      MKDocs (Static Website Generator)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="other/vim/" title="VIM" class="md-nav__link">
+      VIM
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Software Engineering
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
         Software Engineering
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -1023,21 +1644,21 @@
     </nav>
   </li>
 
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
     
-    <label class="md-nav__link" for="nav-11">
+    <label class="md-nav__link" for="nav-4-3">
       Productivity
     </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-11">
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
         Productivity
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -1107,6 +1728,11 @@
     </nav>
   </li>
 
+        
+      </ul>
+    </nav>
+  </li>
+
     
       
       
@@ -1115,14 +1741,14 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
-    <label class="md-nav__link" for="nav-12">
-      Certificates
+    <label class="md-nav__link" for="nav-5">
+      Java
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
-        Certificates
+      <label class="md-nav__title" for="nav-5">
+        Java
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -1133,44 +1759,8 @@
 
 
   <li class="md-nav__item">
-    <a href="certificates/lets-encrypt-k8s/" title="Let's Encrypt K8S" class="md-nav__link">
-      Let's Encrypt K8S
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
-    
-    <label class="md-nav__link" for="nav-13">
-      Other
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-13">
-        Other
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="other/mkdocs/" title="MKDocs (Static Website Generator)" class="md-nav__link">
-      MKDocs (Static Website Generator)
+    <a href="java/" title="General" class="md-nav__link">
+      General
     </a>
   </li>
 
@@ -1181,44 +1771,8 @@
 
 
   <li class="md-nav__item">
-    <a href="other/vim/" title="VIM" class="md-nav__link">
-      VIM
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
-    
-    <label class="md-nav__link" for="nav-14">
-      CloudBees
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-14">
-        CloudBees
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="cloudbees/cbc-eks/" title="CloudBees Core on EKS" class="md-nav__link">
-      CloudBees Core on EKS
+    <a href="java/spring/boot/" title="Spring Boot" class="md-nav__link">
+      Spring Boot
     </a>
   </li>
 
@@ -1229,44 +1783,8 @@
 
 
   <li class="md-nav__item">
-    <a href="cloudbees/cbc-post-install-tips/" title="CloudBees Core Post Install" class="md-nav__link">
-      CloudBees Core Post Install
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-15" type="checkbox" id="nav-15">
-    
-    <label class="md-nav__link" for="nav-15">
-      Jenkins X
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-15">
-        Jenkins X
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkinsx/intro/" title="Intro" class="md-nav__link">
-      Intro
+    <a href="java/java9/" title="Java 9" class="md-nav__link">
+      Java 9
     </a>
   </li>
 
@@ -1277,8 +1795,8 @@
 
 
   <li class="md-nav__item">
-    <a href="jenkinsx/hello-world/" title="HelloWorld" class="md-nav__link">
-      HelloWorld
+    <a href="java/ecosystem/" title="Java Ecosystem" class="md-nav__link">
+      Java Ecosystem
     </a>
   </li>
 
@@ -1289,8 +1807,8 @@
 
 
   <li class="md-nav__item">
-    <a href="jenkinsx/workshop/" title="Workshop" class="md-nav__link">
-      Workshop
+    <a href="java/networking/" title="Java Networking" class="md-nav__link">
+      Java Networking
     </a>
   </li>
 
@@ -1301,8 +1819,8 @@
 
 
   <li class="md-nav__item">
-    <a href="jenkinsx/buildpack/" title="BuildPack" class="md-nav__link">
-      BuildPack
+    <a href="java/streams/" title="Java Streams" class="md-nav__link">
+      Java Streams
     </a>
   </li>
 
@@ -1313,333 +1831,9 @@
 
 
   <li class="md-nav__item">
-    <a href="jenkinsx/maven/" title="Maven" class="md-nav__link">
-      Maven
+    <a href="java/concurrency/" title="Java Concurrency" class="md-nav__link">
+      Java Concurrency
     </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkinsx/hybrid/" title="Hybrid" class="md-nav__link">
-      Hybrid
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="jenkins/" title="Jenkins" class="md-nav__link">
-      Jenkins
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-17" type="checkbox" id="nav-17">
-    
-    <label class="md-nav__link" for="nav-17">
-      Jenkins Job Management
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-17">
-        Jenkins Job Management
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-jobs/jobdsl/" title="JobDSL" class="md-nav__link">
-      JobDSL
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-jobs/jenkins-jobs-builder/" title="JenkinsJobsBuilder" class="md-nav__link">
-      JenkinsJobsBuilder
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-18" type="checkbox" id="nav-18">
-    
-    <label class="md-nav__link" for="nav-18">
-      Jenkins Pipelines
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-18">
-        Jenkins Pipelines
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline/core-concepts/" title="Core Concepts" class="md-nav__link">
-      Core Concepts
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline/declarative-pipeline/" title="Pipeline (declarative)" class="md-nav__link">
-      Pipeline (declarative)
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline/groovy-pipeline/" title="Groovy DSL Pipeline" class="md-nav__link">
-      Groovy DSL Pipeline
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline/global-shared-library/" title="Pipeline Libraries" class="md-nav__link">
-      Pipeline Libraries
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline/ide-integration-pipeline-dsl/" title="DSL IDE Integration" class="md-nav__link">
-      DSL IDE Integration
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline/jenkins-parallel-pipeline/" title="Parallel" class="md-nav__link">
-      Parallel
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline/input/" title="Input" class="md-nav__link">
-      Input
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-19" type="checkbox" id="nav-19">
-    
-    <label class="md-nav__link" for="nav-19">
-      Jenkins Pipeline Examples
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-19">
-        Jenkins Pipeline Examples
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline-examples/" title="Index" class="md-nav__link">
-      Index
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline-examples/docker-alternatives/" title="Docker Alternatives" class="md-nav__link">
-      Docker Alternatives
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-19-3" type="checkbox" id="nav-19-3">
-    
-    <label class="md-nav__link" for="nav-19-3">
-      Maven
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-19-3">
-        Maven
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline-examples/maven-groovy-dsl/" title="Maven Groovy DSL" class="md-nav__link">
-      Maven Groovy DSL
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline-examples/maven-declarative/" title="Maven Declarative" class="md-nav__link">
-      Maven Declarative
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline-examples/maven-shared-library/" title="Maven Shared Library" class="md-nav__link">
-      Maven Shared Library
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-19-4" type="checkbox" id="nav-19-4">
-    
-    <label class="md-nav__link" for="nav-19-4">
-      Other
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-19-4">
-        Other
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="jenkins-pipeline-examples/docker-declarative/" title="Docker Declarative" class="md-nav__link">
-      Docker Declarative
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
   </li>
 
         
@@ -1689,7 +1883,6 @@
           Material for MkDocs</a>
       </div>
       
-        
   <div class="md-footer-social">
     <link rel="stylesheet" href="assets/fonts/font-awesome.css">
     
@@ -1701,19 +1894,15 @@
     
   </div>
 
-      
     </div>
   </div>
 </footer>
       
     </div>
     
-      <script src="assets/javascripts/application.b41f3d20.js"></script>
+      <script src="assets/javascripts/application.245445c6.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:""}})</script>
-      
-    
-    
       
     
   </body>
