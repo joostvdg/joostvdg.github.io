@@ -29,6 +29,7 @@ nav:
   - DockerCon EU 2018: blogs/dockercon-eu-2018.md
 - CICD:
   - CloudBees:
+    - Single Sign On - AzureAD: cloudbees/sso-azure-ad.md
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
     - CloudBees Core Post Install: cloudbees/cbc-post-install-tips.md
   - JX: 
