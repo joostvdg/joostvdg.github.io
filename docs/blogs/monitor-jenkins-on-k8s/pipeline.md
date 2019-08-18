@@ -62,6 +62,63 @@ Potential Labels:
 sum(jenkins_pipeline_run_stage) by (jobName, runId) / 1000
 ```
 
+## Pipeline Example
+
+The tool [Jenkins Pipeline Binary - Monitoring](https://github.com/joostvdg/jpb-mon-go) will retrieve the [Stages Nodes](https://github.com/jenkinsci/blueocean-plugin/tree/master/blueocean-rest#get-pipeline-run-nodes) from Jenkins and translate them to Gauges in Prometheus.
+
+```groovy
+pipeline {
+    agent {
+        kubernetes {
+        label 'jpb-mon'
+        yaml """
+kind: Pod
+metadata:
+  labels:
+    build: prom-test
+spec:
+  containers:
+  - name: jpb
+    image: caladreas/jpb-mon:0.17.0
+    command: ['/bin/jpb-mon', 'sleep', '--sleep', '3m']
+    tty: true
+    resources:
+      requests:
+        memory: "50Mi"
+        cpu: "100m"
+      limits:
+        memory: "50Mi"
+        cpu: "100m"
+"""
+        }
+    }
+    environment {
+        CREDS = credentials('api')
+    }
+    stages {
+        stage('Test1') {
+            steps {
+                sh 'env'
+            }
+        }
+        stage('Test2') {
+            environment {
+                MASTER = 'jenkins1'
+            }
+            steps {
+                sh 'echo "Hello World!"'
+            }
+        }
+    }
+    post {
+        always {
+            container('jpb') {
+                sh "/bin/jpb-mon get-run --host ${JENKINS_URL} --job ${JOB_BASE_NAME} --run ${BUILD_ID} --username ${CREDS_USR} --password ${CREDS_PSW} --push"
+            }
+        }
+    }
+}
+```
 
 ## Resources
 
