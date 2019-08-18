@@ -40,3 +40,4 @@ To get Data from Jenkins in Kubernetes to monitor, we first need the following:
 * https://www.robustperception.io/target-labels-are-for-life-not-just-for-christmas
 * https://prometheus.io/docs/alerting/notifications/
 * https://piotrminkowski.wordpress.com/2017/08/29/visualizing-jenkins-pipeline-results-in-grafana/
+* https://medium.com/@jotak/designing-prometheus-metrics-72dcff88c2e5
