@@ -44,6 +44,65 @@ pages:
     - Root2: root2/index.html
     ```
 
+## Configuration Of This Website
+
+```yaml
+# Theme
+# Configuration
+theme:
+  feature:
+    tabs: true
+  name: 'material'
+  language: 'en'
+  logo:
+    icon: 'public'
+  palette:
+    primary: 'orange'
+    accent: 'red'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/joostvdg'
+    - type: 'twitter'
+      link: 'https://twitter.com/joost_vdg'
+    - type: 'linkedin'
+      link: 'https://linkedin.com/in/joostvdg'
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite:
+      linenums: true
+      guess_lang: true
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.critic
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+```
+
 ## Build the site locally
 
 As it is a Python tool, you can easily build it with Python (2.7 is recommended).
@@ -59,6 +118,86 @@ mkdocs build --clean
 Which will generate the site into ```docs-scripts/site``` where you can simply open the index.html with a browser - it is a static site.
 
 For docker, you can use the ```*.sh``` scripts, or simply ```run.sh``` to kick of the entire build.
+
+### Dependencies
+
+You can use [pip](https://pypi.org/project/pip/) to manage the dependencies required for building the site.
+
+```bash
+pip install -r requirements.txt
+```
+
+#### Requirements.txt
+
+```bash
+mkdocs>=1.0.4
+mkdocs-bootswatch>=0.4.0
+python-jenkins>=0.4.10
+mkdocs-material>=4.4.0
+mkdocs-minify-plugin>=0.1.0
+pygments>=2.4.2
+pymdown-extensions>=6.0.0
+Markdown>=3.0.1
+```
+
+## Host It With Docker
+
+### Dockerfile
+
+```Dockerfile
+FROM nginx:mainline
+
+LABEL authors="Joost van der Griendt <joostvdg@gmail.com>"
+LABEL version="1.0.0"
+LABEL description="Mr J's knowledge base"
+
+RUN apt-get update && apt-get install --no-install-recommends -y curl=7.* && rm -rf /var/lib/apt/lists/*
+HEALTHCHECK CMD curl --fail http://localhost:80/docs/ || exit 1
+COPY site/ /usr/share/nginx/html/docs
+RUN ls -lath /usr/share/nginx/html/docs
+```
+
+### Build
+
+```bash
+#!/usr/bin/env bash
+TAGNAME="joostvdg-github-io-image"
+
+echo "# Building new image with tag: $TAGNAME"
+docker build --tag=$TAGNAME .
+```
+
+### Run
+
+```bash
+#!/usr/bin/env bash
+IMAGE="joostvdg-github-io-image"
+NAME="joostvdg-github-io-instance"
+
+RUNNING=`docker ps | grep -c $NAME`
+if [ $RUNNING -gt 0 ]
+then
+   echo "Stopping $NAME"
+   docker stop $NAME
+fi
+
+EXISTING=`docker ps -a | grep -c $NAME`
+if [ $EXISTING -gt 0 ]
+then
+   echo "Removing $NAME"
+  docker rm $NAME
+fi
+
+echo "Create new instance $NAME based on $IMAGE"
+docker run --name $NAME -d -p 8088:80 $IMAGE
+
+echo "Tail the logs of the new instance"
+docker logs $NAME
+
+# IP=$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' $NAME)
+# echo "IP address of the container: $IP"
+echo "http://127.0.0.1.nip.io:8088/docs/"
+```
 
 ## Jenkins build
 

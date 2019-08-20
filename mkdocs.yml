@@ -1,5 +1,5 @@
 # Meta
-site_name: Joostvdg's Software Engineering Page
+site_name: J's Software Development Pages
 site_url: https://joostvdg.github.io
 # Copyright
 copyright: 'Copyright &copy; 2019 Joost van der Griendt'
@@ -9,6 +9,7 @@ repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
 docs_dir: 'docs'
 
 nav:
+- Me: index.md
 - Blogs:
   - Docker Graceful Shutdown: blogs/docker-graceful-shutdown.md
   - GitOps Pipeline: blogs/gitops-pipeline.md
@@ -32,15 +33,15 @@ nav:
     - Single Sign On - AzureAD: cloudbees/sso-azure-ad.md
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
     - CloudBees Core Post Install: cloudbees/cbc-post-install-tips.md
-  - JX: 
+  - Jenkins X: 
     - Intro: jenkinsx/intro.md
     - HelloWorld: jenkinsx/hello-world.md
     - Workshop: jenkinsx/workshop.md
     - BuildPack: jenkinsx/buildpack.md
     - Maven: jenkinsx/maven.md
     - Hybrid: jenkinsx/hybrid.md
-  - Jenkins: jenkins/index.md
-  - Jenkins Job Management:
+  - Jenkins: 
+    - Intro: jenkins/index.md
     - JobDSL: jenkins-jobs/jobdsl.md
     - JenkinsJobsBuilder: jenkins-jobs/jenkins-jobs-builder.md
   - Jenkins Pipelines:
