@@ -41,3 +41,7 @@ To get Data from Jenkins in Kubernetes to monitor, we first need the following:
 * https://prometheus.io/docs/alerting/notifications/
 * https://piotrminkowski.wordpress.com/2017/08/29/visualizing-jenkins-pipeline-results-in-grafana/
 * https://medium.com/@jotak/designing-prometheus-metrics-72dcff88c2e5
+* https://github.com/prometheus/pushgateway
+* https://github.com/prometheus/client_golang
+* https://blog.pvincent.io/2017/12/prometheus-blog-series-part-2-metric-types/
+* https://prometheus.io/docs/concepts/jobs_instances/
