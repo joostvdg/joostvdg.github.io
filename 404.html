@@ -205,13 +205,16 @@
     <ul class="md-tabs__list">
       
         
-  <li class="md-tabs__item">
-    
-      <a href="." title="Me" class="md-tabs__link md-tabs__link--active">
-        Me
-      </a>
-    
-  </li>
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="." title="Home" class="md-tabs__link">
+          Home
+        </a>
+      
+    </li>
+  
 
       
         
@@ -345,10 +348,70 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      Home
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Home
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
   <li class="md-nav__item">
     <a href="." title="Me" class="md-nav__link">
       Me
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="other/mkdocs/" title="MKDocs (This Static Website)" class="md-nav__link">
+      MKDocs (This Static Website)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="other/vim/" title="VIM" class="md-nav__link">
+      VIM
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="other/shell/" title="Shell" class="md-nav__link">
+      Shell
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -845,6 +908,18 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="jenkins-pipeline/job-types/" title="Job Types" class="md-nav__link">
+      Job Types
+    </a>
+  </li>
+
         
           
           
@@ -1554,30 +1629,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="other/mkdocs/" title="MKDocs (Static Website Generator)" class="md-nav__link">
-      MKDocs (Static Website Generator)
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="other/vim/" title="VIM" class="md-nav__link">
-      VIM
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -1892,6 +1943,22 @@
               
                 
 
+
+  <h2 id="__comments">Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "";
+      this.page.identifier =
+        "";
+    };
+    (function() {
+      var d = document, s = d.createElement("script");
+      s.src = "//joostvdg-github-io.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
 
               
             </article>
