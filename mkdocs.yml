@@ -9,7 +9,11 @@ repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
 docs_dir: 'docs'
 
 nav:
-- Me: index.md
+- Home: 
+  - Me: index.md
+  - MKDocs (This Static Website): other/mkdocs.md
+  - VIM: other/vim.md
+  - Shell: other/shell.md
 - Blogs:
   - Docker Graceful Shutdown: blogs/docker-graceful-shutdown.md
   - GitOps Pipeline: blogs/gitops-pipeline.md
@@ -45,6 +49,7 @@ nav:
     - JobDSL: jenkins-jobs/jobdsl.md
     - JenkinsJobsBuilder: jenkins-jobs/jenkins-jobs-builder.md
   - Jenkins Pipelines:
+    - Job Types: jenkins-pipeline/job-types.md
     - Core Concepts: jenkins-pipeline/core-concepts.md
     - Pipeline (declarative): jenkins-pipeline/declarative-pipeline.md
     - Groovy DSL Pipeline: jenkins-pipeline/groovy-pipeline.md
@@ -94,8 +99,6 @@ nav:
 - SWE:
   - Other:
     - Let's Encrypt K8S: certificates/lets-encrypt-k8s.md
-    - MKDocs (Static Website Generator): other/mkdocs.md
-    - VIM: other/vim.md
   - Software Engineering:
     - Naming: swe/naming.md
     - Domain Driven Design: swe/ddd.md
@@ -141,6 +144,7 @@ plugins:
       minify_html: true
 
 extra:
+  disqus: 'joostvdg-github-io'
   social:
     - type: 'github'
       link: 'https://github.com/joostvdg'
