@@ -1,5 +1,14 @@
 # Introduction
 
+This is a guide on monitoring Jenkins on Kubernetes with Prometheus and Grafana. There are other solutions out there, and if you want to learn those, I suggest to look elsewhere. If you're interested in diving in Jenkins Metrics and how to make sense of them with Prometheus and Grafana, read on!
+
+## What We Will Do
+
+The outline of the steps to take is below. Each has its own page, so if you feel you have
+
+* create a Kubernetes cluster
+* configure the cluster (e.g. Helm)
+* install Prometheus and Grafana
 * install one or more Jenkins instances
 * get metrics from running Jenkins instance(s)
 * have queries for understanding the state and performance of the Jenkins instance(s)
@@ -7,16 +16,9 @@
 * have alerts that fire when (potential) problematic conditions occur
 * get metrics from Jenkins Pipelines
 
-## Get Metrics
-
-To get Data from Jenkins in Kubernetes to monitor, we first need the following:
-
-* a kubernetes cluster
-* prometheus for collecting data and generating alerts
-* grafana for dashboards that help debug issues
-* one or more Jenkins instances
-
 ## Resources
+
+The list below is both a shout out to the resources I learned from and as a reference for you if you want to learn more.
 
 * https://go.cloudbees.com/docs/solutions/jvm-troubleshooting/
 * https://go.cloudbees.com/docs/cloudbees-documentation/devoptics-user-guide/run_insights/

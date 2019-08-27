@@ -16,9 +16,8 @@ nav:
   - Shell: other/shell.md
 - Blogs:
   - Docker Graceful Shutdown: blogs/docker-graceful-shutdown.md
-  - GitOps Pipeline: blogs/gitops-pipeline.md
+  # - GitOps Pipeline: blogs/gitops-pipeline.md
   - Pipelines with Docker Alternatives: blogs/jenkins-pipeline-docker-alternatives.md
-  - Create your own k8s resource: blogs/k8s-crd.md
   # - Create your own k8s controller: blogs/k8s-controller.md
   - Let's Encrypt for Kubernetes Apps: blogs/k8s-lets-encrypt.md
   - CloudBees SSO Azure AD: cloudbees/sso-azure-ad.md
@@ -32,6 +31,7 @@ nav:
     - Pipeline: blogs/monitor-jenkins-on-k8s/pipeline.md
     - Dashboard: blogs/monitor-jenkins-on-k8s/dashboard.md
     - CloudBees: blogs/monitor-jenkins-on-k8s/cloudbees.md
+  - Create your own k8s resource: blogs/k8s-crd.md
   - DockerCon EU 2018: blogs/dockercon-eu-2018.md
 - CICD:
   - CloudBees:
@@ -84,7 +84,9 @@ nav:
     - CD Pipeline Jenkins & Helm: kubernetes/cicd/cdp-jenkins-helm.md
   - K8S Distribution:
     - GKE: kubernetes/distributions/install-gke.md
-    - AWS EKS: kubernetes/distributions/aws-eks.md
+    - AWS EKS: kubernetes/distributions/eks-eksctl.md
+    - AKS CLI : kubernetes/distributions/aks-cli.md
+    - AKS Terraform : kubernetes/distributions/aks-terraform.md
   - K8S Hard Way - GCE:
     - Installer Preparation: kubernetes/khw-gce/index.md
     - Create GCE resources: kubernetes/khw-gce/terraform-compute.md
