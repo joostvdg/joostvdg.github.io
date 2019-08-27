@@ -1,15 +1,35 @@
 # Prepare Environment
 
+This is a guide on monitoring Jenkins on Kubernetes, which makes it rather handy to have a Kubernetes cluster at hand.
+
+There are many ways to create a Kubernetes cluster, below is a guide on creating a cluster with Google Cloud's GKE.
+
+Elsewhere on this site, there are alternatives, such as [Azure's AKS](/kubernetes/distributions/aks-terraform/) and [AWS's EKS](/kubernetes/distributions/eks-eksctl/).
+
+## Things To Do
+
+* create a cluster
+* install and configure Helm
+	* for easily installing other applications on the cluster
+* install and configure Certmanager
+	* for managing TLS certificates with Let's Encrypt
+
 ## Create GKE Cluster
+
+Enough talk about what we should be doing, let's create the cluster!
+
+### Prerequisites
+
+* [gcloud](https://cloud.google.com/sdk/gcloud/) command-line utility
+* Google Cloud account that is activated
 
 ### Variables
 
 ```bash
-REGION=europe-west4
-CLUSTER_NAME=joostvdg-2019-08-1
 K8S_VERSION=1.13.7-gke.8
 REGION=europe-west4
-PROJECT_ID=
+CLUSTER_NAME=<your cluster name>
+PROJECT_ID=<your google project id>
 ```
 
 ### Query available versions
