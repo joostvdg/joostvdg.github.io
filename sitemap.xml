@@ -26,17 +26,7 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://joostvdg.github.io/blogs/gitops-pipeline/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
      <loc>https://joostvdg.github.io/blogs/jenkins-pipeline-docker-alternatives/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/blogs/k8s-crd/</loc>
      <lastmod>2019-08-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -92,6 +82,11 @@
     </url>
     <url>
      <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/cloudbees/</loc>
+     <lastmod>2019-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/blogs/k8s-crd/</loc>
      <lastmod>2019-08-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -296,7 +291,17 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://joostvdg.github.io/kubernetes/distributions/aws-eks/</loc>
+     <loc>https://joostvdg.github.io/kubernetes/distributions/eks-eksctl/</loc>
+     <lastmod>2019-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/distributions/aks-cli/</loc>
+     <lastmod>2019-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/kubernetes/distributions/aks-terraform/</loc>
      <lastmod>2019-08-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
