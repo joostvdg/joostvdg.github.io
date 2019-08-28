@@ -8,7 +8,7 @@ Before we start, there are some requirements.
 
 *  a running CloudBees Core Operations Center instance
 * this instance is accessible via `https.`
-    * if you do not have a valid certificate and you're running on Kubernetes [take a look at my cert-manager guide](certificates/lets-encrypt-k8s/)
+    * if you do not have a valid certificate and you're running on Kubernetes [take a look at my cert-manager guide](/certificates/lets-encrypt-k8s/)
     * Let's Encrypt can now also work with [nip.io](nip.io) addresses
 * active Azure subscription
 * have an Azure subscription Administrator on hand

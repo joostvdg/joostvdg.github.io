@@ -1,5 +1,88 @@
 # Kubernetes Tools
 
+## Helm
+
+We use [Helm](https://helm.sh) as a package manager to more easily install other tools on Kubernetes.
+
+There's several repositories with a large number of mature charts - the name of the Helm packages.
+
+One being [Helm/Stable](https://github.com/helm/charts/tree/master/stable) another being [Helm Hub](https://hub.helm.sh/charts).
+
+### Install
+
+```bash tab="MacOS/Homebrew"
+brew install kubernetes-helm
+```
+
+```bash tab="Windows/Chocolatey"
+hoco install kubernetes-helm
+```
+
+```bash tab="Ubuntu/Snap"
+sudo snap install helm --classic
+```
+
+```bash tab="Sccop"
+scoop install helm
+```
+
+```bash tab="GoFish"
+gofish install helm
+```
+
+### Usage
+
+```bash
+helm install stable/jenkins
+```
+
+## Kubecontext
+
+[Kubectx](https://github.com/ahmetb/kubectx/) is a utility to manage and switch between Kubernetes (`kubectl`) contexts and namespaces (via `kubens`, see below).
+
+### Install
+
+```bash tab="MacOS/Homebrew"
+brew install kubectx
+```
+
+```bash tab="Ubuntu"
+sudo apt install kubectx
+```
+
+### Usage
+
+#### Kubectx
+
+```bash
+kubectx minikube
+Switched to context "minikube".
+
+$ kubectx -
+Switched to context "oregon".
+
+$ kubectx -
+Switched to context "minikube".
+
+$ kubectx dublin=gke_ahmetb_europe-west1-b_dublin
+Context "dublin" set.
+Aliased "gke_ahmetb_europe-west1-b_dublin" as "dublin".
+```
+
+#### Kubens
+
+Kubens (part of Kubectx) helps you manage your current Kubernetes namespace.
+
+```bash
+$ kubens kube-system
+Context "test" set.
+Active namespace is "kube-system".
+
+$ kubens -
+Context "test" set.
+Active namespace is "default".
+```
+
 ## Kuard
 
 [Kuard](https://github.com/kubernetes-up-and-running/kuard) is a small demo application to show your cluster works.
@@ -128,3 +211,70 @@ By default is looks at a single namespace, and allows you to view elements of th
 ```bash
 k9s -n cje
 ```
+
+## K9S
+
+[K9S](https://github.com/derailed/k9s) is a tool that gives you a console UI on your kubernetes cluster/namespace.
+
+### Install
+
+```bash
+brew tap derailed/k9s && brew install k9s
+```
+
+### Use
+
+By default is looks at a single namespace, and allows you to view elements of the pods running.
+
+```bash
+k9s -n cje
+```
+
+## Dive
+
+> A tool for exploring a docker image, layer contents, and discovering ways to shrink your Docker image size.
+
+[Dive](https://github.com/wagoodman/dive) is a tool for analyzing Docker images.
+
+### Install
+
+```bash tab="Debian based"
+wget https://github.com/wagoodman/dive/releases/download/v0.7.1/dive_0.7.1_linux_amd64.deb
+sudo apt install ./dive_0.7.1_linux_amd64.deb
+```
+
+```bash tab="RHEL based"
+curl -OL https://github.com/wagoodman/dive/releases/download/v0.7.1/dive_0.7.1_linux_amd64.rpm
+rpm -i dive_0.7.1_linux_amd64.rpm
+```
+
+```bash tab="Homebrew"
+brew tap wagoodman/dive
+brew install dive
+```
+
+```bash tab="Windows"
+go get github.com/wagoodman/dive
+```
+
+### Use
+
+```bash tab="Existing image"
+dive <your-image-tag>
+```
+
+```bash tab="To be build image"
+dive build -t <some-tag> .
+```
+
+```bash tab="For CI builds"
+CI=true dive <your-image>
+```
+
+## Kiali
+
+https://www.kiali.io/
+
+## Telepresence
+
+https://www.telepresence.io/
