@@ -21,6 +21,7 @@ nav:
   # - Create your own k8s controller: blogs/k8s-controller.md
   - Let's Encrypt for Kubernetes Apps: blogs/k8s-lets-encrypt.md
   - CloudBees SSO Azure AD: cloudbees/sso-azure-ad.md
+  - CloudBees Automate Teams: cloudbees/teams-automation.md
   - Jenkins Pipeline Support Tools: blogs/jenkins-pipeline-support-tool.md
   - Jenkins Monitoring Kubernetes: 
     - Introduction: blogs/monitor-jenkins-on-k8s/introduction.md
@@ -36,6 +37,8 @@ nav:
 - CICD:
   - CloudBees:
     - Single Sign On - AzureAD: cloudbees/sso-azure-ad.md
+    - CloudBees Automate Teams: cloudbees/teams-automation.md
+    - CloudBees Core on GKE: cloudbees/cbc-gke-helm.md
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
     - CloudBees Core Post Install: cloudbees/cbc-post-install-tips.md
   - Jenkins X: 
@@ -65,24 +68,13 @@ nav:
     - Maven Shared Library: jenkins-pipeline-examples/maven-shared-library.md
     - Docker Declarative: jenkins-pipeline-examples/docker-declarative.md
 - Containers:
-  - Docker:
-    - Multi-Stage Builds: docker/multi-stage-builds.md
-    - Graceful shutdown: docker/graceful-shutdown.md
-    - Swarm (mode): docker/swarm.md
-    - Kubernetes: docker/kubernetes.md
-  - Linux:
-    - Introduction: linux/index.md
-    - SystemD: linux/systemd.md
-    - Networking: linux/networking.md
-    - iptables: linux/iptables.md
   - Kubernetes (K8S):
     - Introduction: kubernetes/index.md
-    - CKA Exam details: kubernetes/cka-exam.md
     - CKA Exam prep: kubernetes/cka-exam-prep.md
     - Tools: kubernetes/tools.md
   - K8S CICD:
     - CD Pipeline Jenkins & Helm: kubernetes/cicd/cdp-jenkins-helm.md
-  - K8S Distribution:
+  - K8S Public Services:
     - GKE: kubernetes/distributions/install-gke.md
     - AWS EKS: kubernetes/distributions/eks-eksctl.md
     - AKS CLI : kubernetes/distributions/aks-cli.md
@@ -99,6 +91,11 @@ nav:
     - Remote access: kubernetes/khw-gce/remote-access.md
     - Network config: kubernetes/khw-gce/network.md
     - Debug: kubernetes/khw-gce/debug.md
+  - Docker:
+    - Multi-Stage Builds(TBD): docker/multi-stage-builds.md
+    - Swarm (mode) (TBD): docker/swarm.md
+  - Linux:
+    - SystemD: linux/systemd.md
 - SWE:
   - Other:
     - Let's Encrypt K8S: certificates/lets-encrypt-k8s.md
