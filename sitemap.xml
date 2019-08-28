@@ -41,6 +41,11 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+     <loc>https://joostvdg.github.io/cloudbees/teams-automation/</loc>
+     <lastmod>2019-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>https://joostvdg.github.io/blogs/jenkins-pipeline-support-tool/</loc>
      <lastmod>2019-08-28</lastmod>
      <changefreq>daily</changefreq>
@@ -97,6 +102,16 @@
     </url>
     <url>
      <loc>https://joostvdg.github.io/cloudbees/sso-azure-ad/</loc>
+     <lastmod>2019-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/cloudbees/teams-automation/</loc>
+     <lastmod>2019-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/cloudbees/cbc-gke-helm/</loc>
      <lastmod>2019-08-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -221,52 +236,7 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://joostvdg.github.io/docker/multi-stage-builds/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/docker/graceful-shutdown/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/docker/swarm/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/docker/kubernetes/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/linux/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/linux/systemd/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/linux/networking/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/linux/iptables/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
      <loc>https://joostvdg.github.io/kubernetes/</loc>
-     <lastmod>2019-08-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/kubernetes/cka-exam/</loc>
      <lastmod>2019-08-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -357,6 +327,21 @@
     </url>
     <url>
      <loc>https://joostvdg.github.io/kubernetes/khw-gce/debug/</loc>
+     <lastmod>2019-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/docker/multi-stage-builds/</loc>
+     <lastmod>2019-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/docker/swarm/</loc>
+     <lastmod>2019-08-28</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/linux/systemd/</loc>
      <lastmod>2019-08-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
