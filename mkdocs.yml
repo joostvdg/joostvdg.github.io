@@ -15,14 +15,15 @@ nav:
   - VIM: other/vim.md
   - Shell: other/shell.md
 - Blogs:
-  - Docker Graceful Shutdown: docker/graceful-shutdown.md
+  - Jenkins Pipeline Support Tools: blogs/jenkins-pipeline-support-tool.md
+  - Docker Graceful Shutdown: blogs/graceful-shutdown.md
   # - GitOps Pipeline: blogs/gitops-pipeline.md
-  - Pipelines with Docker Alternatives: jenkins-pipeline-examples/docker-alternatives.md
+  - Pipelines with Docker Alternatives: blogs/docker-alternatives.md
   # - Create your own k8s controller: blogs/k8s-controller.md
   - Let's Encrypt for Kubernetes Apps: blogs/k8s-lets-encrypt.md
-  - CloudBees SSO Azure AD: cloudbees/sso-azure-ad.md
-  - CloudBees Automate Teams: cloudbees/teams-automation.md
-  - Jenkins Pipeline Support Tools: blogs/jenkins-pipeline-support-tool.md
+  - CloudBees SSO Azure AD: blogs/sso-azure-ad.md
+  - CloudBees Automate Teams: blogs/teams-automation.md
+  
   - Jenkins Monitoring Kubernetes: 
     - Introduction: blogs/monitor-jenkins-on-k8s/introduction.md
     - Prepare Environment: blogs/monitor-jenkins-on-k8s/prepare.md
