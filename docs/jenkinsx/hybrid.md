@@ -1,3 +1,6 @@
+title: Jenkins X - Mixing Static And Serverless
+description: How To Setup A Jenkins X Cluster With Static Jenkins And Jenkins X Pipelines
+
 # Jenkins X Hybrid TLS
 
 Jenkins X Hybrid TLS is a configuration of Jenkins X using both Static Jenkins and Jenkins X Serverless with Tekton within the same cluster. As the TLS suffix hints at, it also uses TLS for both installations to make sure all the services and your applications are accessible via https with a valid certificate.

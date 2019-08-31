@@ -17,7 +17,7 @@ public final class Constants {
 
     public static final String HELLO = "WORLD";
     public static final int AMOUNT_OF_CONSTANTS = 2;
-}edge 
+}
 ```
 
 ## Other usefull things

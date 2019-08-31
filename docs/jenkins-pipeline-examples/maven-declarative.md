@@ -1,4 +1,4 @@
-# Maven Declarative Examples 
+# Maven Declarative Examples
 
 ## Basics
 

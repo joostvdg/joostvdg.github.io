@@ -1,3 +1,6 @@
+title: Azure AD For CloudBees Core
+description: Use Azure AD For Single Sign On For Jenkins / CloudBees Core
+
 # Azure AD & CloudBees Core
 
 In this article we're going to configure Azure AD as Single-Sign-Solution for CloudBees Core. The configuration rests on three points; 1) Azure AD, 2) Jenkins' SAML plugin, and 3) CloudBees Core's Role Base Access Control or RBAC for short.

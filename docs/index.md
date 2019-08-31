@@ -1,3 +1,7 @@
+title: joostvdg.github.com
+description: J's Software Development Pages
+hero: J's Ramblings
+
 # Joost van der Griendt's Software Development Docs
 
 This is a collection of knowledge that I have gathered over the years.

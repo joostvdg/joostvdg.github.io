@@ -1,3 +1,6 @@
+title: Distributed Computing Fundamentals
+description: An Introduction To The Fundamentals Of Distributed Computing
+
 # Distributed Computing
 
 ## Distributed Computing fundamentals

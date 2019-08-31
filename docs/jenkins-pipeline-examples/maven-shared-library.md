@@ -1,2 +1,0 @@
-# Maven Shared Library Example
-

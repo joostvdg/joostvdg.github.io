@@ -1,3 +1,7 @@
+title: MKDocs Material
+description: MKDocs Material Static Site Generator
+hero: MKDocs & Material Design
+
 # MKDocs
 
 This website is build using the following:

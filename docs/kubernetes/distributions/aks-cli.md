@@ -1,3 +1,6 @@
+title: Kubernetes Service - Azure AKS (CLI)
+description: Kubernetes Public Cloud Service Azure AKS Via Azure CLI
+
 # Azure CLI
 
 ## Configure AZ CLI

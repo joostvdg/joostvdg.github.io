@@ -1,3 +1,6 @@
+title: Jenkins Declarative Pipeline
+description: Jenkins Declarative Pipeline - The Right Way To Write Pipelines
+
 # Declarative Pipeline
 
 Declarative Pipeline is a relatively recent addition to Jenkins Pipeline [1] which presents a more simplified and opinionated syntax on top of the Pipeline sub-systems.

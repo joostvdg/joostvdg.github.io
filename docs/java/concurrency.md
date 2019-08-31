@@ -1,3 +1,6 @@
+title: Java Concurrency
+description: Introduction Into Concurrency With Java
+
 # Java Concurrency
 
 ## Terminology

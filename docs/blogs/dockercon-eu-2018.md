@@ -1,3 +1,6 @@
+title: DockerCon EU 2018
+description: A Recap Of DockerCon EU 2018 at Barcelona
+
 # DockerCon EU 2018 - Recap
 
 ## Generally outline

@@ -1,3 +1,9 @@
+title: Your Own Kubernetes CRD
+description: How To Create Your Own Kubernetes Customer Resource Definition
+
+
+# Kubernetes CRD
+
 Kubernetes is a fantastic platform that allows you to run a lot of different workloads in various ways. It has APIs front and center, allowing you to choose different implementation as they suit you.
 
 Sometimes you feel something is missing. There is a concept with your application or something you want from the cluster that isn't (however) available in Kubernetes.
