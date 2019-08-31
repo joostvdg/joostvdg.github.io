@@ -1,3 +1,6 @@
+title: Jenkins Pipeline Support Tools
+description: How To Create Better Jenkins Pipelines With Compact CLI's
+
 # Jenkins Pipeline Support Tools
 
 With Jenkins now becoming Cloud Native and a first class citizen of Kubernetes, it is time to review how we use build tools.

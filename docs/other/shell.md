@@ -1,3 +1,7 @@
+title: Setup Your Shell
+description: How to set up your shell to be awesome
+hero: My Awesome Shell
+
 # Shell
 
 ## OSX

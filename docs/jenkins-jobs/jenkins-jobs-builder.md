@@ -1,3 +1,6 @@
+title: Jenkins Job Builder
+description: How To Manage All Your Jobs With Jenkins Job Builder
+
 # Jenkins Job Builder
 
 The configuration setup of Jenkins Job Builder is composed of two main categories. Basic configuration and job configuration. Job configuration can be further split into several sub categories.

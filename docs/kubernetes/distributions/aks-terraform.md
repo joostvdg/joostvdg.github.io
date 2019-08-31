@@ -1,3 +1,6 @@
+title: Kubernetes Service - Azure AKS (Terraform)
+description: Kubernetes Public Cloud Service Azure AKS Via Terraform
+
 # AKS Terraform
 
 ## Resources

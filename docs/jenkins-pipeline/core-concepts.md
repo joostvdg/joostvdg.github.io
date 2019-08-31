@@ -1,3 +1,6 @@
+title: Jenkins Pipeline Core Concepts
+description: The Most Important Things To Understand About Jenkins Pipelines
+
 # Core Concepts
 
 Below are some core concepts to understand before building pipelines in Jenkins.

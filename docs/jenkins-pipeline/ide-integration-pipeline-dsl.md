@@ -1,3 +1,6 @@
+title: Jenkins Pipeline Intelli J
+description: How To Get Code Completion Of Jenkins Pipelines Into Your Intelli J IDE
+
 # IDE Integration for Jenkins Pipeline DSL
 
 ## Supported IDE's

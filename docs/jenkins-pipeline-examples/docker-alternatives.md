@@ -1,3 +1,7 @@
+title: Jenkins Build Docker Images
+description: Alternatives For Building Docker Images In Jenkins
+
+
 # Pipelines With Docker Alternatives
 
 Building pipelines with Jenkins on Docker has been common for a while.
@@ -242,6 +246,8 @@ For more information about the runtime options, see either [jib-maven-plugin doc
 * Java project that can start it self, such as [Spring Boot](https://spring.io/projects/spring-boot) or [Thorntail](https://thorntail.io/) (previously Wildfly Swarm, from the JBoss family)
 * able to build either gradle or maven applications
 
+The project used can be found at [github.com/demomon/maven-spring-boot-demo](https://github.com/demomon/maven-spring-boot-demo/).
+
 ### Steps
 
 * configure the plugin for either Gradle or Maven
@@ -263,7 +269,8 @@ pipeline {
         buildDiscarder logRotator(artifactDaysToKeepStr: '5', artifactNumToKeepStr: '5', daysToKeepStr: '5', numToKeepStr: '5')
     }
     libraries {
-        lib('jenkins-pipeline-library@master')
+        lib('core@master')
+        lib('maven@master')
     }
     agent {
         kubernetes {

@@ -1,3 +1,6 @@
+title: Jenkins Pipeline Job Types
+description: Which Job Types Exist For Jenkins Pipelines And When To Use Them
+
 # Jenkins Pipeline Job Types
 
 ## Models

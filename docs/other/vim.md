@@ -1,3 +1,7 @@
+title: Configure Your Vim
+description: How To Make Your Vim Awesome
+hero: My Awesome Vim
+
 # VIM
 
 ## Install Vundle

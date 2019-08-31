@@ -1,3 +1,5 @@
+# Metrics
+
 Jenkins is a Java Web application, in this case running in Kubernetes.
 Let's categorize the metrics we want to look at and deal with each group individually.
 
@@ -7,7 +9,7 @@ Let's categorize the metrics we want to look at and deal with each group individ
 * `Web`: although it is not the main function of Jenkins, web access will give us some hints about performance trends
 * `Pod Metrics`: any generic metric from a Kubernetes Pod perspective will still be helpful to look at
 
-### Types of Metrics to evaluate
+## Types of Metrics to evaluate
 
 In the age where SRE. DevOps Engineer and Platform Engineer are not only hype terms, there is written alot about which kinds of metrics to really look it. There's enough written about this - including Viktor Farcic' excellent DevOps Toolkit 2.5 - so lets just briefly evaluate these.
 

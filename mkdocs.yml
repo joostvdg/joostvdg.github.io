@@ -15,9 +15,9 @@ nav:
   - VIM: other/vim.md
   - Shell: other/shell.md
 - Blogs:
-  - Docker Graceful Shutdown: blogs/docker-graceful-shutdown.md
+  - Docker Graceful Shutdown: docker/graceful-shutdown.md
   # - GitOps Pipeline: blogs/gitops-pipeline.md
-  - Pipelines with Docker Alternatives: blogs/jenkins-pipeline-docker-alternatives.md
+  - Pipelines with Docker Alternatives: jenkins-pipeline-examples/docker-alternatives.md
   # - Create your own k8s controller: blogs/k8s-controller.md
   - Let's Encrypt for Kubernetes Apps: blogs/k8s-lets-encrypt.md
   - CloudBees SSO Azure AD: cloudbees/sso-azure-ad.md
@@ -35,16 +35,16 @@ nav:
   - Create your own k8s resource: blogs/k8s-crd.md
   - DockerCon EU 2018: blogs/dockercon-eu-2018.md
 - CICD:
+  # - SDM:
+  #   - What Is SDM: sdm/what-is-sdm.md
+  #   - SDM Platform Anatomy: sdm/platform-anatomy.md
   - CloudBees:
     - Single Sign On - AzureAD: cloudbees/sso-azure-ad.md
     - CloudBees Automate Teams: cloudbees/teams-automation.md
     - CloudBees Core on GKE: cloudbees/cbc-gke-helm.md
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
-    - CloudBees Core Post Install: cloudbees/cbc-post-install-tips.md
   - Jenkins X: 
-    - Intro: jenkinsx/intro.md
     - HelloWorld: jenkinsx/hello-world.md
-    - Workshop: jenkinsx/workshop.md
     - BuildPack: jenkinsx/buildpack.md
     - Maven: jenkinsx/maven.md
     - Hybrid: jenkinsx/hybrid.md
@@ -53,6 +53,7 @@ nav:
     - JobDSL: jenkins-jobs/jobdsl.md
     - JenkinsJobsBuilder: jenkins-jobs/jenkins-jobs-builder.md
   - Jenkins Pipelines:
+    - Artifactory Integration: jenkins-pipeline/artifactory-integration.md
     - Job Types: jenkins-pipeline/job-types.md
     - Core Concepts: jenkins-pipeline/core-concepts.md
     - Pipeline (declarative): jenkins-pipeline/declarative-pipeline.md
@@ -65,15 +66,12 @@ nav:
     - Index: jenkins-pipeline-examples/index.md
     - Docker Alternatives: jenkins-pipeline-examples/docker-alternatives.md
     - Maven Declarative: jenkins-pipeline-examples/maven-declarative.md
-    - Maven Shared Library: jenkins-pipeline-examples/maven-shared-library.md
     - Docker Declarative: jenkins-pipeline-examples/docker-declarative.md
 - Containers:
   - Kubernetes (K8S):
     - Introduction: kubernetes/index.md
     - CKA Exam prep: kubernetes/cka-exam-prep.md
     - Tools: kubernetes/tools.md
-  - K8S CICD:
-    - CD Pipeline Jenkins & Helm: kubernetes/cicd/cdp-jenkins-helm.md
   - K8S Public Services:
     - GKE: kubernetes/distributions/install-gke.md
     - AWS EKS: kubernetes/distributions/eks-eksctl.md
@@ -92,33 +90,40 @@ nav:
     - Network config: kubernetes/khw-gce/network.md
     - Debug: kubernetes/khw-gce/debug.md
   - Docker:
+    - Graceful Shutdown: docker/graceful-shutdown.md
+    - BuildKit: docker/build-kit.md
     - Multi-Stage Builds(TBD): docker/multi-stage-builds.md
     - Swarm (mode) (TBD): docker/swarm.md
   - Linux:
     - SystemD: linux/systemd.md
+- Cloud:
+  - Automation - Pulumi: cloud/automation-pulumi.md
 - SWE:
-  - Other:
-    - Let's Encrypt K8S: certificates/lets-encrypt-k8s.md
+  - Let's Encrypt K8S: certificates/lets-encrypt-k8s.md
   - Software Engineering:
+    - Important Concepts: swe/important-concepts.md
     - Naming: swe/naming.md
-    - Domain Driven Design: swe/ddd.md
-    - Microservices: swe/microservices.md
-    - Algorithms: swe/algorithms.md
-    - Observability: swe/observability.md
-    - Others: swe/others.md
+    # - Domain Driven Design: swe/ddd.md
+    # - Microservices: swe/microservices.md
+    # - Algorithms: swe/algorithms.md
+    # - Observability: swe/observability.md
+    - Distributed Computing: swe/distributed.md
+    # - Others: swe/others.md
   - Productivity:
     - General: productivity/index.md
-    - Tools: productivity/tools.md
-    - Intelli J: productivity/intellij.md
-    - Paradigms: productivity/paradigms.md
-    - Studies: productivity/studies.md
+    - Incidents: productivity/incidents.md
+    # - Tools: productivity/tools.md
+    # - Intelli J: productivity/intellij.md
+    # - Paradigms: productivity/paradigms.md
+    # - Studies: productivity/studies.md
 - Java:
   - General: java/index.md
-  - Spring Boot: java/spring/boot.md
-  - Java 9: java/java9.md
-  - Java Ecosystem: java/ecosystem.md
+  - Spring Boot App: keep-watching/
+  # - Spring Boot: java/spring/boot.md
+  # - Java Modules: java/java-modules.md
+  # - Java Ecosystem: java/ecosystem.md
   - Java Networking: java/networking.md
-  - Java Streams: java/streams.md
+  # - Java Streams: java/streams.md
   - Java Concurrency: java/concurrency.md
 
 

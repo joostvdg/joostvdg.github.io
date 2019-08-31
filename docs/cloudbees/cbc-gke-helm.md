@@ -1,3 +1,5 @@
+title: CloudBees Core On GKE
+description: How To Install CloudBees Core Modern On Google's GKE
 
 # Install CloudBees Core On GKE
 

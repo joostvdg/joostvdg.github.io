@@ -1,3 +1,6 @@
+title: Jenkins Shared Libraries
+description: How To Write Jenkins Shared Libraries And Why
+
 # Global Shared Library
 
 https://jenkins.io/doc/book/pipeline/shared-libraries/

@@ -1,3 +1,6 @@
+title: Jenkins Pipeline Input
+description: Jenkins Pipeline Input Step Explained
+
 # Jenkins Pipeline - Input
 
 The Jenkins Pipeline has a plugin for dealing with external input.

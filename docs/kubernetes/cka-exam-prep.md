@@ -1,3 +1,6 @@
+title: Kubernetes CKA Exam Preparation
+description: How To Prepare For Your Kubernetes Administrator Exam
+
 # CKA Exam Prep
 
 * https://github.com/dgkanatsios/CKAD-exercises

@@ -1,3 +1,7 @@
+title: Jenkins Kubernetes Monitoring
+description: Monitoring Jenkins On Kubernetes - Introduction - 1/8
+hero: Introduction - 1/8
+
 # Introduction
 
 This is a guide on monitoring Jenkins on Kubernetes with Prometheus and Grafana. There are other solutions out there, and if you want to learn those, I suggest to look elsewhere. If you're interested in diving in Jenkins Metrics and how to make sense of them with Prometheus and Grafana, read on!

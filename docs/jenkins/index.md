@@ -1,10 +1,9 @@
+title: Jenkins
+description: Everything You Should Know About Jenkins
+
 # Jenkins
 
 [Cloudbees Study Guide](https://www.cloudbees.com/jenkins/jenkins-certification)
-
-## Base configuration
-
-abc
 
 ## Tuning
 
@@ -47,6 +46,8 @@ We will dive into several things that come into play when writing Jenkins pipeli
 * [Multi-Branch Pipeline](https://wiki.jenkins-ci.org/display/JENKINS/Multi-Branch+Project+Plugin)
 * [GitHub Organization](https://wiki.jenkins-ci.org/display/JENKINS/Multi-Branch+Project+Plugin)
 * [BitBucket Team/Project](https://wiki.jenkins-ci.org/display/JENKINS/Bitbucket+Branch+Source+Plugin)
+* [Gitea Organization](https://mike42.me/blog/2019-05-how-to-integrate-gitea-and-jenkins)
+* [GitLab Integration](https://jenkins.io/blog/2019/08/23/introducing-gitlab-branch-source-plugin/)
 
 !!! danger
     When using the [stash function](https://jenkins.io/doc/pipeline/steps/workflow-basic-steps/#code-stash-code-stash-some-files-to-be-used-later-in-the-build) keep in mind that the copying goes from where you are now to the master.
@@ -58,7 +59,6 @@ We will dive into several things that come into play when writing Jenkins pipeli
 ## API
 
 Jenkins has an extensive [API](https://www.devopslibrary.com/lessons/ccjpe-api) allowing you to retrieve a lot of information from the server.
-
 
 ### Plugin
 
@@ -73,3 +73,15 @@ There are some usefull resources to get started:
 Aside from the [Do's and Don'ts](https://www.cloudbees.com/blog/top-10-best-practices-jenkins-pipeline-plugin) from Cloudbees, there are some we want to share.
 
 This changes the requirement for the component identifier property, as a job may only match a single group and a job listing in a group can only match a single. Thus the easiest way to make sure everything will stay unique (template names probably don’t), is to make the component identifier property unique per file - let it use the name of the project.
+
+## Other Resources
+
+* [Configuration As Code](https://jenkins.io/projects/jcasc/)
+* [Jenkins CLI](https://jenkins.io/projects/gsoc/2019/plugin-installation-manager-tool-cli/index.html) - for managing Plugins
+* [Jenkinsfile Runner](https://github.com/jenkinsci/jenkinsfile-runner)
+* [CICD With Jenkins On Docker Compose](https://github.com/joostvdg/cidc)
+* [Jenkins Helm Chart](https://github.com/helm/charts/tree/master/stable/jenkins)
+* [Jenkins Operator](https://github.com/jenkinsci/kubernetes-operator)
+* [Jenkins X](https://jenkins-x.io/)
+* [CloudBees Jenkins Distribution](https://www.cloudbees.com/products/cloudbees-jenkins-distribution)
+* [CloudBees Jenkins X Distribution](https://go.cloudbees.com/docs/cloudbees-jenkins-x-distribution/)

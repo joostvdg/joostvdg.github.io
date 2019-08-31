@@ -1,3 +1,6 @@
+title: Jenkins Kubernetes Monitoring
+description: Monitoring Jenkins On Kubernetes - Install Tools - 3/8
+hero: Install Tools - 3/8
 
 # Install Components for Monitoring
 

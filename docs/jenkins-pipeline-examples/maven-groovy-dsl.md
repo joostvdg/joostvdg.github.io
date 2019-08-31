@@ -1,6 +1,5 @@
 # Maven Groovy DSL Example
 
-
 ```groovy
 node {
     timestamps {

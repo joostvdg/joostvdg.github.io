@@ -49,7 +49,7 @@ kubectl apply -f rbac-config.yaml
 helm init --service-account tiller
 ```
 
-### install nging helm chart
+### install nginx helm chart
 
 ```bash
 helm install stable/nginx-ingress

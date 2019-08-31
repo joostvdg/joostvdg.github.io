@@ -1,3 +1,6 @@
+title: Jenkins X For Maven
+description: How To Use Jenkins X With Maven Projects
+
 # Jenkins X + Maven + Nexus
 
 The goal of this article it to demonstrate how [Jenkins X](https://jenkins-x.io/) works with [Maven](https://maven.apache.org/) and [Sonatype Nexus](https://www.sonatype.com/nexus-repository-sonatype).

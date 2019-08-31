@@ -1,3 +1,6 @@
+title: Jenkins Job DSL
+description: How To Manage All Your Jobs With Jenkins Job DSL
+
 # Jenkins Job DSL
 
 Jenkins is a wonderful system for managing builds, and people love using its UI to configure jobs. Unfortunately, as the number of jobs grows, maintaining them becomes tedious, and the paradigm of using a UI falls apart. Additionally, the common pattern in this situation is to copy jobs to create new ones, these "children" have a habit of diverging from their original "template" and consequently it becomes difficult to maintain consistency between these jobs.

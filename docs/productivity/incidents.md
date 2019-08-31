@@ -1,3 +1,6 @@
+title: Software Development Incident Managent
+description: How To Manage Incidents With Software Development
+
 # Incidents
 
 * incidents
@@ -28,9 +31,18 @@
     * processes are (almost) always part of the problem
     * automation needs to include sanity checks (ranges of sane values)
 
+## Books
+
+* [Code Complete]()
+
+
+## Talks
+
+
 
 ## Resources
 
+* [John Allspaw: a mature role for automation](https://www.kitchensoap.com/2012/09/21/a-mature-role-for-automation-part-i/)
 * https://psnet.ahrq.gov/resources/resource/1582
 * https://www.businessinsider.com/etsy-chad-dickerson-blameless-post-mortem-2012-5?international=true&r=US&IR=T
 * https://codeascraft.com/2012/05/22/blameless-postmortems/

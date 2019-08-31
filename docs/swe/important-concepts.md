@@ -11,7 +11,7 @@ Be that memory, CPU, amount of connections to a database or incoming http connec
 
 ### Back Pressure
 
-!!! note "Back pressure"   
+!!! note "Back pressure"
     When one component is struggling to keep-up, the system as a whole needs to respond in a sensible way. 
     
     It is unacceptable for the component under stress to fail catastrophically or to drop messages in an uncontrolled fashion. 
@@ -45,6 +45,12 @@ Further reading:
 * [Little's law](https://en.wikipedia.org/wiki/Little%27s_law)
 * [Commoditization](https://en.wikipedia.org/wiki/Commoditization)
 * [Amdahl's Law](https://en.wikipedia.org/wiki/Amdahl%27s_law)
+
+## Web Technologies
+
+### HTTP Caching
+
+* https://medium.freecodecamp.org/http-caching-in-depth-part-1-a853c6af99db
 
 [^1]: [Reactive Manifesto](https://www.reactivemanifesto.org/glossary#Back-Pressure)
 [^2]: [Wikipedia article on Memoization](https://en.wikipedia.org/wiki/Memoization)

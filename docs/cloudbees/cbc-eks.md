@@ -1,3 +1,6 @@
+title: CloudBees Core On EKS
+description: How To Install CloudBees Core Modern On AWS EKS
+
 # CloudBees Core on AWS EKS
 
 * https://go.cloudbees.com/docs/cloudbees-core/cloud-install-guide/eks-install/#

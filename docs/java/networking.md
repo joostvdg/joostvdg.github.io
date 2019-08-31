@@ -1,3 +1,6 @@
+title: Java Networking
+description: Java Networking - What You Should Know
+
 # Java Networking
 
 ## General Remarks
