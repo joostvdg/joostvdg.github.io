@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - Configure Worker Nodes (8/11)
+hero: Configure Worker Nodes (8/11)
+
 # Worker Installation
 
 ## Install base components

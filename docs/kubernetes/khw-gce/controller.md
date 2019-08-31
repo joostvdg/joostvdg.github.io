@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - Controllers (7/11)
+hero: Controllers (7/11)
+
 # Controller Config
 
 We have to configure the following:

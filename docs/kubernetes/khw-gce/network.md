@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - Networking (10/11)
+hero: Configure Networking (10/11)
+
 # Networking
 
 First, [configure external access](#remote-access) so we can run `kubectl` commands from our own machine.

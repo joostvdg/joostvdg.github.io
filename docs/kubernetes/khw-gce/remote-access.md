@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - Remote Access (9/11)
+hero: Configure Remote Access (9/11)
+
 # Remote Access
 
 ```bash

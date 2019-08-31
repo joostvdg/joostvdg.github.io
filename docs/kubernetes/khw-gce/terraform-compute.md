@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - VM's (2/11)
+hero: VM's with Terraform (2/11)
+
 # Compute resources
 
 ## Create network

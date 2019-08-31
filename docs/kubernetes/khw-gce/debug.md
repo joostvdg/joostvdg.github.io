@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - How To Debug (11/11)
+hero: How To Debug (11/11)
+
 # Debug
 
 ## Kubernetes components not healthy
