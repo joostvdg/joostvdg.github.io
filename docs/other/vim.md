@@ -4,6 +4,10 @@ hero: My Awesome Vim
 
 # VIM
 
+## End Result
+
+![Screenshot](../images/vim.png)
+
 ## Install Vundle
 
 ```bash
