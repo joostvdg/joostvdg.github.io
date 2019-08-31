@@ -21,12 +21,17 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://joostvdg.github.io/docker/graceful-shutdown/</loc>
+     <loc>https://joostvdg.github.io/blogs/jenkins-pipeline-support-tool/</loc>
      <lastmod>2019-08-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://joostvdg.github.io/jenkins-pipeline-examples/docker-alternatives/</loc>
+     <loc>https://joostvdg.github.io/blogs/graceful-shutdown/</loc>
+     <lastmod>2019-08-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://joostvdg.github.io/blogs/docker-alternatives/</loc>
      <lastmod>2019-08-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -36,17 +41,12 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://joostvdg.github.io/cloudbees/sso-azure-ad/</loc>
+     <loc>https://joostvdg.github.io/blogs/sso-azure-ad/</loc>
      <lastmod>2019-08-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://joostvdg.github.io/cloudbees/teams-automation/</loc>
-     <lastmod>2019-08-31</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://joostvdg.github.io/blogs/jenkins-pipeline-support-tool/</loc>
+     <loc>https://joostvdg.github.io/blogs/teams-automation/</loc>
      <lastmod>2019-08-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
