@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - Introduction (1/11)
+hero: Introduction (1/11)
+
 # Kubernetes the Hard Way - GCE
 
 This assumes OSX and GCE.

@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - Encryption (5/11)
+hero: Encryption (5/11)
+
 # Encryption
 
 > Kubernetes stores a variety of data including cluster state, application configurations, and secrets. Kubernetes supports the ability to encrypt cluster data at rest.

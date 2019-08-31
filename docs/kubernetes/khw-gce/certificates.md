@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - Certificates (3/11)
+hero: Certificates (3/11)
+
 # Certificates
 
 !!! note

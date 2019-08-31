@@ -1,3 +1,7 @@
+title: Kubernetes The Hard Way (KHW) - Google Cloud 
+description: Kubernetes The Hard Way - Prepare Kubeconfig (4/11)
+hero: Kubeconfig (4/11)
+
 # Kubeconfigs
 
 Now that we have certificates we have to make sure we have configurations that the Kubernetes parts can actually use - certificates themselves are not enough.
