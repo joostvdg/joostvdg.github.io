@@ -23,7 +23,7 @@ nav:
   - Let's Encrypt for Kubernetes Apps: blogs/k8s-lets-encrypt.md
   - CloudBees SSO Azure AD: blogs/sso-azure-ad.md
   - CloudBees Automate Teams: blogs/teams-automation.md
-  
+  - Kubernetes SSO Keycloak: blogs/kubernetes-sso-keycloak.md
   - Jenkins Monitoring Kubernetes: 
     - Introduction: blogs/monitor-jenkins-on-k8s/introduction.md
     - Prepare Environment: blogs/monitor-jenkins-on-k8s/prepare.md
@@ -161,11 +161,11 @@ extra:
 
 # Extensions
 markdown_extensions:
+  - footnotes
   - admonition
   - codehilite:
       linenums: true
       guess_lang: true
-  - footnotes
   - meta
   - toc:
       permalink: true
