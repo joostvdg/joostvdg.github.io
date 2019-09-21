@@ -49,6 +49,7 @@ nav:
     - BuildPack: jenkinsx/buildpack.md
     - Maven: jenkinsx/maven.md
     - Hybrid: jenkinsx/hybrid.md
+    - Example For Console Reel: /jenkinsx/kubernetes-days.md
   - Jenkins: 
     - Intro: jenkins/index.md
     - JobDSL: jenkins-jobs/jobdsl.md
