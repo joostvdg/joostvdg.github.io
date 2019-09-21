@@ -56,6 +56,7 @@ They can explain it better than I ever can, so use them to better your own under
 
 ### Articles
 
+* [Weathering The Unexpected - Kripa Krishnan](https://queue.acm.org/detail.cfm?id=2371516)
 * [John Allspaw: a mature role for automation](https://www.kitchensoap.com/2012/09/21/a-mature-role-for-automation-part-i/)
 * [John Allspaw: Resillience Engineering: Part I](https://www.kitchensoap.com/2011/04/07/resilience-engineering-part-i/)
 * [John Allspaw: getting the messy details is critical](https://medium.com/code-for-america/john-allspaw-getting-the-messy-details-is-critical-59e641aa0a77)
