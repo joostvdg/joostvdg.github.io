@@ -51,7 +51,12 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 
 > "Work that needs to get done, but having it done doesn't bring our customers any direct benefit." - [Dave Hahn](https://www.youtube.com/watch?v=UTKIT6STSVM) 
 
-### Further reading
+## Agile
+
+* https://www.infoq.com/articles/agile-agile-blah-blah/
+* https://www.infoq.com/articles/death-agile-beyond
+
+## Further reading
 
 ### Others
 
