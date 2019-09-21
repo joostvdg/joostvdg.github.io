@@ -1,6 +1,12 @@
+title: SSO Jenkins With Keycloak On Kubernetes
+description: Setup Single Sign-On for Jenkins with Apache Keycloak
+
 # Single Sign On on Kubernetes with Keycloak
 
 This article is about setting up an Apache Keycloak[^1] instance for Single Sign-On[^2] (SSO) on Kubernetes.
+
+!!! important
+    This guide is created to help you show how you can do this from a technical point of view. If you are in an enterprise, please consult your in-house - if available - or external security professionals before running tools such as Keycloak in production.
 
 ## Goal
 
@@ -677,7 +683,7 @@ You can do the same with the Users menu item. By default the page is empty, if y
 
 ## SSO with Jenkins
 
-To configure Jenkins to use Keycloak we have two plugins at our disposal, OpenId Connect(`oic-auth)[^22] and Keycloak[^23]. While the Keycloak plugin is easier to configure for authentication, I found it difficult to configure groups. As I feel the group management is mandatory we're going with the OpenId Connect plugin.
+To configure Jenkins to use Keycloak we have two plugins at our disposal, OpenId Connect(`oic-auth`)[^22] and Keycloak[^23]. While the Keycloak plugin is easier to configure for authentication, I found it difficult to configure groups. As I feel the group management is mandatory we're going with the OpenId Connect plugin.
 
 You can install plugins in Jenkins via the UI[^24], via the new Jenkins CLI[^25], or via the `values.yaml` when installing via the Helm Chart[^27].
 
@@ -902,8 +908,6 @@ If everything goes well, you will be redirected to Keycloak, once successfully l
     One thing to remark, that if you're logged into Jenkins and you want to see the Groups, you can select your User (top right, click on your name). 
 
     Alternatively, you can go to `${JENKINS_URL}/whoAmI` (notice the capital casing of the 'A' and 'I', it is required).
-
-## Alternatives
 
 ## References
 
