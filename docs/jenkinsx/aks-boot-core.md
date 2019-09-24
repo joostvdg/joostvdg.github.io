@@ -1,3 +1,6 @@
+title: Jenkins X: jx boot + AKS
+description: Installing Jenkins X on AKS with jx boot + CloudDNS + TLS
+
 # Jenkins X On AKS With JX Boot & CloudBees Core
 
 The goal of the guide is the following:
