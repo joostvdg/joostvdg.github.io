@@ -135,85 +135,174 @@ terraform plan -out out.plan
 terraform apply out.plan
 ```
 
-## Example TF
+## Get kubectl config
 
-### Main
+```bash
+AKS_RESOURCE_GROUP=joostvdg-cbcore
+AKS_CLUSTER_NAME=acctestaks1
+```
 
-```terraform
-resource "azurerm_resource_group" "cbcore" {
-    name     = "${var.resource_group_name}"
-    location = "${var.location}"
-}
+```bash
+az aks get-credentials --resource-group ${AKS_RESOURCE_GROUP} --name ${AKS_CLUSTER_NAME}
+```
 
-resource "azurerm_kubernetes_cluster" "cbcore" {
-    name                = "${var.cluster_name}"
-    location            = "${azurerm_resource_group.cbcore.location}"
-    resource_group_name = "${azurerm_resource_group.cbcore.name}"
-    dns_prefix          = "${var.dns_prefix}"
+## Enable Preview Features
 
-    linux_profile {
-        admin_username = "ubuntu"
+Currently having cluster autoscalers requires enabling of a Preview Feature in Azure.
 
-        ssh_key {
-            key_data = "${file("${var.ssh_public_key}")}"
+The same holds true for enabling multiple node pools, which I think is a best practice for using Kubernetes.
+
+* [Enable Multi Node Pool](https://docs.microsoft.com/en-us/azure/aks/use-multiple-node-pools)
+* [Enable Cluster Autoscaler - via VMScaleSets](https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler#register-scale-set-feature-provider)
+
+## Terraform Code
+
+!!! important
+    When using Terraform for AKS and you want to use Multiple Node Pools and/or the Cluster Autoscaler, you need to use the minimum of `1.32.0` of the `azurerm` provider.
+
+??? example "main.tf"
+
+    ```terraform
+    provider "azurerm" {
+        # whilst the `version` attribute is optional, we recommend pinning to a given version of the Provider
+        version = "~> 1.32.0"
+    }
+
+    terraform {
+        backend "azurerm" {}
+    }
+    ```
+
+??? example "k8s.tf"
+
+    ```terraform
+    resource "azurerm_kubernetes_cluster" "k8s" {
+        name                = "acctestaks1"
+        location            = "${azurerm_resource_group.k8s.location}"
+        resource_group_name = "${azurerm_resource_group.k8s.name}"
+        dns_prefix          = "jvdg"
+        kubernetes_version  = "${var.kubernetes_version}"
+
+        agent_pool_profile {
+            name            = "default"
+            vm_size         = "Standard_D2s_v3"
+            os_type         = "Linux"
+            os_disk_size_gb = 30
+            enable_auto_scaling = true
+            count = 2
+            min_count = 2
+            max_count = 3
+            type = "VirtualMachineScaleSets"
+            node_taints = ["mytaint=true:NoSchedule"]
+        }
+
+        agent_pool_profile {
+            name            = "pool1"
+            vm_size         = "Standard_D2s_v3"
+            os_type         = "Linux"
+            os_disk_size_gb = 30
+            enable_auto_scaling = true
+            min_count = 1
+            max_count = 3
+            type = "VirtualMachineScaleSets"
+        }
+
+        agent_pool_profile {
+            name            = "pool2"
+            vm_size         = "Standard_D4s_v3"
+            os_type         = "Linux"
+            os_disk_size_gb = 30
+            enable_auto_scaling = true
+            min_count = 1
+            max_count = 3
+            type = "VirtualMachineScaleSets"
+        }
+
+        role_based_access_control {
+            enabled = true
+        }
+
+        service_principal {
+            client_id     = "${var.client_id}"
+            client_secret = "${var.client_secret}"
+        }
+
+        tags = {
+            Environment = "Development"
+            CreatedBy = "Joostvdg"
         }
     }
 
-    agent_pool_profile {
-        name            = "builds"
-        count           = 1
-        vm_size         = "Standard_D1_v2"
-        os_type         = "Linux"
-        os_disk_size_gb = 30
+    output "client_certificate" {
+        value = "${azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate}"
     }
 
-    agent_pool_profile {
-        name            = "masters"
-        count           = 2
-        vm_size         = "Standard_D2_v2"
-        os_type         = "Linux"
-        os_disk_size_gb = 30
+    output "kube_config" {
+        value = "${azurerm_kubernetes_cluster.k8s.kube_config_raw}"
+    }
+    ```
+
+??? example "variables.tf"
+
+    ```terraform
+    variable "client_id" {}
+    variable "client_secret" {}
+
+    variable "kubernetes_version" {
+        default = "1.14.6"
     }
 
-    service_principal {
-        client_id     = "${var.client_id}"
-        client_secret = "${var.client_secret}"
+    variable "agent_count" {
+        default = 3
     }
 
-    tags = {
-        Environment = "Development"
-        CreatedBy = "Me"
+    variable "ssh_public_key" {
+        default = "~/.ssh/id_rsa.pub"
     }
-}
-```
 
-### Variables
+    variable "dns_prefix" {
+        default = "jvdg"
+    }
 
-```terraform
-variable "client_id" {}
-variable "client_secret" {}
+    variable cluster_name {
+        default = "cbcore"
+    }
 
-variable "agent_count" {
-    default = 3
-}
+    variable resource_group_name {
+        default = "joostvdg-cbcore"
+    }
 
-variable "ssh_public_key" {
-    default = "~/.ssh/id_rsa.pub"
-}
+    variable container_registry_name {
+        default = "joostvdgacr"
+    }
 
-variable "dns_prefix" {
-    default = "cbcore"
-}
+    variable location {
+        default = "westeurope"
+    }
+    ```
 
-variable cluster_name {
-    default = "cbcore"
-}
+??? example "acr.tf"
 
-variable resource_group_name {
-    default = "cbcore"
-}
+    ```terraform
+    resource "azurerm_resource_group" "ecr" {
+        name     = "${var.resource_group_name}-acr"
+        location = "${var.location}"
+    }
 
-variable location {
-    default = "West Europe"
-}
-```
+    resource "azurerm_container_registry" "acr" {
+        name                     = "${var.container_registry_name}"
+        resource_group_name      = "${azurerm_resource_group.ecr.name}"
+        location                 = "${azurerm_resource_group.k8s.location}"
+        sku                      = "Premium"
+        admin_enabled            = false
+    }
+    ```
+
+??? example "resource-group.tf"
+
+    ```terraform
+    resource "azurerm_resource_group" "k8s" {
+        name     = "${var.resource_group_name}"
+        location = "${var.location}"
+    }
+    ```
