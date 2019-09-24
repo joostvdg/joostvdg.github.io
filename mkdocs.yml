@@ -45,6 +45,7 @@ nav:
     - CloudBees Core on GKE: cloudbees/cbc-gke-helm.md
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
   - Jenkins X: 
+    - JX Boot & CloudBees Core: jenkinsx/aks-boot-core.md
     - HelloWorld: jenkinsx/hello-world.md
     - BuildPack: jenkinsx/buildpack.md
     - Maven: jenkinsx/maven.md
