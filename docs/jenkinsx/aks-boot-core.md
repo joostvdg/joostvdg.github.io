@@ -302,3 +302,4 @@ cbcore:
 * https://medium.com/google-cloud/kubernetes-w-lets-encrypt-cloud-dns-c888b2ff8c0e
 * https://support.google.com/domains/answer/3290309?hl=en-GB&ref_topic=9018335
 * https://thorsten-hans.com/how-to-use-private-azure-container-registry-with-kubernetes
+* https://cloud.google.com/dns/docs/migrating
