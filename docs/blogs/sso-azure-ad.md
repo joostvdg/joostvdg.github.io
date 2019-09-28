@@ -5,6 +5,19 @@ description: Use Azure AD For Single Sign On For Jenkins / CloudBees Core
 
 In this article we're going to configure Azure AD as Single-Sign-Solution for CloudBees Core. The configuration rests on three points; 1) Azure AD, 2) Jenkins' SAML plugin, and 3) CloudBees Core's Role Base Access Control or RBAC for short.
 
+!!! important
+    Currently there's a discrepency between the TimeToLive (TTL) of the RefreshToken in Azure AD and the default configuration in the SAML plugin.
+
+    This creates the problem that you can be logged in, in Azure, but when going to Jenkins you get the Logged Out page. The only way to log back in, is to logout in Azure and back in.
+
+    The reason is as follows:
+
+    > The max lifetime of the Access Token in Azure AD seems to be 24 hours where the refresh token can live for a maximum of 14 days (if the access token expires the refresh token is used to try to obtain a new access token). The Jenkins setting in Configure Global Security > SAML Identity Provider Settings > Maximum Authentication Lifetime is 24 hours (86400 in seconds) upping this to 1209600 (which is 14 days in seconds/the max lifetime of the Refresh Token).
+
+    The recommended resolution is to set `Maximum Authentication Lifetime` to the same value of your RefreshToken TTL. If you haven't changed this in Azure AD, it is `1209600`.
+
+    `Manage Jenkins` -> `Configure Global Security` > `SAML Identity Provider Settings` > `Maximum Authentication Lifetime` = `1209600`
+
 ## Prerequisites
 
 Before we start, there are some requirements.
