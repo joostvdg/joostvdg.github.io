@@ -56,14 +56,16 @@ nav:
     - JobDSL: jenkins-jobs/jobdsl.md
     - JenkinsJobsBuilder: jenkins-jobs/jenkins-jobs-builder.md
   - Jenkins Pipelines:
-    - Artifactory Integration: jenkins-pipeline/artifactory-integration.md
     - Job Types: jenkins-pipeline/job-types.md
+    - Build Docker Image Kaniko: jenkins-pipeline/kaniko-pipelines.md
+    - PodTemplate With Docker-In-Docker: jenkins-pipeline/podtemplate-dind.md
+    - Parallel Pipelines: jenkins-pipeline/jenkins-parallel-pipeline.md
     - Core Concepts: jenkins-pipeline/core-concepts.md
+    - Artifactory Integration: jenkins-pipeline/artifactory-integration.md
     - Pipeline (declarative): jenkins-pipeline/declarative-pipeline.md
     - Groovy DSL Pipeline: jenkins-pipeline/groovy-pipeline.md
     - Pipeline Libraries: jenkins-pipeline/global-shared-library.md
     - DSL IDE Integration: jenkins-pipeline/ide-integration-pipeline-dsl.md
-    - Parallel: jenkins-pipeline/jenkins-parallel-pipeline.md
     - Input: jenkins-pipeline/input.md
   - Jenkins Pipeline Examples:
     - Index: jenkins-pipeline-examples/index.md
