@@ -45,6 +45,8 @@ nav:
     - CloudBees Core on GKE: cloudbees/cbc-gke-helm.md
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
   - Jenkins X: 
+    - JX Boot GKE: jenkinsx/jxboot.md
+    - JX Boot AKS: jenkinsx/jxboot-aks.md
     - JX Boot & CloudBees Core: jenkinsx/aks-boot-core.md
     - HelloWorld: jenkinsx/hello-world.md
     - BuildPack: jenkinsx/buildpack.md
@@ -79,6 +81,7 @@ nav:
     - Tools: kubernetes/tools.md
   - K8S Public Services:
     - GKE: kubernetes/distributions/install-gke.md
+    - GKE Terraform: kubernetes/distributions/gke-terraform.md
     - AWS EKS: kubernetes/distributions/eks-eksctl.md
     - AKS CLI : kubernetes/distributions/aks-cli.md
     - AKS Terraform : kubernetes/distributions/aks-terraform.md

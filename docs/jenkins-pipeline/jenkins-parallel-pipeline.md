@@ -401,7 +401,7 @@ Alternatively, you can either look for externalizing your workspace or keep the 
 
     Alternatively, you can encode the build number into the name:
 
-    ```groovy hl_lines="2 3"
+    ```groovy hl_lines="3"
     agent {
         kubernetes {
             label "jxmavenlib-jdk11-b${BUILD_NUMBER}"
@@ -419,7 +419,7 @@ To reuse a Pod, we have to override some default values in the PodTemplate[^10].
 The configuration below means the Pod can be idle for about 5 minutes before it gets deleted.
 Additionally, we changed the label to not include the phase name - else we cannot get the same Pod. 
 
-```groovy hl_lines="2 3"
+```groovy hl_lines="3"
 agent {
     kubernetes {
         idleMinutes 5
