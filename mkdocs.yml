@@ -44,6 +44,7 @@ nav:
     - CloudBees Automate Teams: cloudbees/teams-automation.md
     - CloudBees Core on GKE: cloudbees/cbc-gke-helm.md
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
+    - Team Master Namespace: cloudbees/cbc-team-namespace.md
   - Jenkins X: 
     - JX Boot GKE: jenkinsx/jxboot.md
     - JX Boot AKS: jenkinsx/jxboot-aks.md
