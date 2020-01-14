@@ -1,15 +1,23 @@
 title: Team Master In Alternative Namespace
-description: How to create a Team Master in a alternative namespace
+description: How to create a Team Master in an alternative namespace
 
 # Team Master In Alternative Namespace
 
+## Goal
+
+The goal of this document is to show how to create a Team Master with CloudBees Core Modern in a different [Kubernetes] Namespace than where the Operations Center resides.
+
+## Audience
+
+For anyone working with CloudBees Core Modern as an Administrator or Cluster Administrator.
+
 ## Pre-requisites
 
-* working installation of CloudBees Core Modern
+* working installation of [CloudBees Core Modern](https://docs.cloudbees.com/docs/cloudbees-core/latest/)
 * kubectl access to the cluster with sufficient rights to set permissions
-* helm installed
-* cloudbees helm chart configured
-* kubectx installed
+* [Helm](https://github.com/helm/helm) installed
+* [CloudBees Helm Chart](https://hub.helm.sh/charts/cloudbees/cloudbees-core) configured
+* [Kubectx](https://github.com/ahmetb/kubectx) installed
 
 ### Prepare Helm
 
@@ -18,14 +26,23 @@ description: How to create a Team Master in a alternative namespace
 
 ## Process
 
-* create Namespace
-* create helm values file
-* create kubernetes yaml configuration for namespace via helm template
-* apply yaml configuration to the namespace
-* configure additional kubernetes endpoint in CJOC
+* create & configure the new Namespace
+* configure additional Kubernetes endpoint in CJOC
 * create Team Master via Team UI using new Kubernetes Endpoint
 
-## Create Namespace
+!!!	important
+	Unlike a Managed Master, we cannot choose the Namespace in which we want to create the Team Master. Not in the Teams UI nor in the Jenkins CLI. 
+	To achieve our goal, we leverage the **Kubernetes Endpoint** configuration with **Master Provisioning**. 
+
+## Configure New Namespace
+
+If we want the Operations Center to create our Team Master in a different Namespace, we have to create this namespace first.
+
+That isn't enough; we also have to configure this Namespace so that Operations Center has the permissions to create resources. Additionally, we need to make sure that the new Team Master can create build agents (via PodTemplates) in the new Namespace as well.
+
+### Create Namespace
+
+First, we create the Namespace via `kubectl`.
 
 ```bash
 NAMESPACE=
@@ -35,49 +52,69 @@ NAMESPACE=
 kubectl create namespace $NAMESPACE
 ```
 
+This sets the new Namespace as default.
+
 ```bash
 kubens $NAMESPACE
 ```
 
-## Create Helm Values File
+!!!	note
+	`kubens` is part of the [kubectx](https://github.com/ahmetb/kubectx) tool.
 
-We need to set two values at least:
+### Create Helm Values File
+
+To configure the Namespace with everything the Operations Center and the to-be-created Team Master need, we can leverage the CloudBees Core Helm Chart. 
+
+The Helm chart has a built-in feature to generate the Namespace configuration for a secondary namespace. To do so, we need to set two values at least:
 
 * **Master.OperationsCenterNamespace**=`${NAMESPACE}`
 * **OperationsCenter.Enabled**=`false`
 
-Or in yaml form (`namespace-values.yaml`):
+In yaml form (`namespace-values.yaml`):
 
 ```yaml
 Master:
-    OperationsCenterNamespace: cloudbees
+ OperationsCenterNamespace: cloudbees-core
 
 OperationsCenter:
-    Enabled: false
+ Enabled: false
 ```
 
-## Create Config Via Helm Template
+!!!	note
+	Make sure that `OperationsCenterNamespace` is the Namespace your Operations Center is configured in. By default, it should be `cloudbees-core`.
 
 ### Fetch Helm Chart
 
+We then have to retrieve the Helm Chart itself, so Helm can use it for templating.
+
 ```bash
 helm fetch \
-  --repo https://charts.cloudbees.com/public/cloudbees \
-  --version 3.8.0+a0d07461ae1c \
-    cloudbees-core
+ --repo https://charts.cloudbees.com/public/cloudbees \
+ --version 3.8.0+a0d07461ae1c \
+ cloudbees-core
 ```
 
-### Create Config
+!!!	note
+	Make sure to change the version to reflect the version you've downloaded.
+
+### Create Namespace Configuration
+
+We have the values and the Chart. We can now let Helm create the configuration via `helm template`. 
 
 ```bash
 helm template cloudbees-core-namespace \
-    cloudbees-core-3.8.0+a0d07461ae1c.tgz \
-     -f namespace-values.yaml \
-    --namespace ${NAMESPACE} \
-    > cloudbees-core-namespace.yml
+ cloudbees-core-3.8.0+a0d07461ae1c.tgz \
+ -f namespace-values.yaml \
+ --namespace ${NAMESPACE} \
+ > cloudbees-core-namespace.yml
 ```
 
-## Apply Namespace Configuration
+!!!    note
+    Make sure to change the Chart filename to reflect the version you've downloaded.
+
+### Apply Namespace Configuration
+
+Now that we have the complete configuration file of the Namespace, we can apply it via `kubectl apply -f`.
 
 ```bash
 kubectl apply -f cloudbees-core-namespace.yml --namespace ${NAMESPACE}
@@ -85,12 +122,11 @@ kubectl apply -f cloudbees-core-namespace.yml --namespace ${NAMESPACE}
 
 ## Configure Kubernetes Endpoint In Operations Center
 
-Where: `Operations Center` -> `Manage Jenkins` -> `Configure System` -> `Kubernetes Master Provisioning`
-What: Click `Add`
+Now that we have the Namespace configured, we can create a new Kubernetes Endpoint definition in Operations Center.
 
-Now you have to configure the endpoint.
+Go to `Operations Center` -> `Manage Jenkins` -> `Configure System` -> `Kubernetes Master Provisioning` and click `Add`.
 
-Assuming you will only change the namespace and not a different cluster, you can leave the following fields blank.
+Here we configure the endpoint. We change the namespace only, and stay within the same cluster, so we leave the following fields blank:
 
 * `API endpoint URL`
 * `Credentials`
@@ -103,7 +139,7 @@ We then have to add the namespace of where Operations Center is in, to the URL. 
 The end result being: `http://cjoc.cloudbees-core.svc.cluster.local/cjoc`.
 
 !!! info
-    Make sure to hit the `Validate` button to ensure the configuration works.
+ Make sure to hit the `Validate` button to ensure the configuration works.
 
 ![configure endpoint](../images/cb-oc-k-endpoint.png)
 
