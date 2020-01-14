@@ -46,11 +46,12 @@ nav:
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
     - Team Master Namespace: cloudbees/cbc-team-namespace.md
   - Jenkins X: 
+    - Build Packs: jenkinsx/build-packs.md
+    - Jenkins X Pipelines: jenkinsx/jx-pipelines.md
     - JX Boot GKE: jenkinsx/jxboot.md
     - JX Boot AKS: jenkinsx/jxboot-aks.md
     - JX Boot & CloudBees Core: jenkinsx/aks-boot-core.md
     - HelloWorld: jenkinsx/hello-world.md
-    - BuildPack: jenkinsx/buildpack.md
     - Maven: jenkinsx/maven.md
     - Hybrid: jenkinsx/hybrid.md
     - Example For Console Reel: jenkinsx/kubernetes-days.md

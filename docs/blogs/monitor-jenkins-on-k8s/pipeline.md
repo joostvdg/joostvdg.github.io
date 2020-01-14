@@ -3,7 +3,7 @@
 ## Get Data From Jobs
 
 * Use Prometheus Push Gateway
-** via shared lib
+    * via shared lib
 * JX sh step -> tekton -> write interceptor
 
 ## Configure Prometheus Push Gateway
@@ -143,6 +143,17 @@ sum(jenkins_pipeline_run_hist_count) by (jobName)
 ```
  count(jenkins_pipeline_run_hist_sum{ result="SUCCESS"}) by (jobName, runId) /  count(jenkins_pipeline_run_hist_sum) by (jobName, runId)
 ```
+
+## Github Autostatus
+
+* install influxDB
+    * configure influxDB into Grafana as Datasource
+* install plugin in Jenkins
+    * Plugin: https://plugins.jenkins.io/github-autostatus
+    * configure in jenkins config to us influxdb
+* import dashboard into Grafana
+    * `5786`
+    * `SELECT "jobtime", "buildnumber", "passed", "branch", "buildurl" FROM "job" WHERE ("owner" = 'joostvdg') AND $timeFilter GROUP BY "repo"`
 
 ## Things to look at
 
