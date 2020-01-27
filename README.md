@@ -1,38 +1,38 @@
-# Flusso CI/CD Docs
+# jx convert jenkinsfile
 
-## Tools used
-* Python2 or Python3
-* pip - a python install tool (optional)
-* mkdocs
-* mkdocs-bootswatch
-* nginx (optional)
-* Docker (optional)
+`jx convert jenkinsfile` is a plugin for [Jenkins X](https://jenkins-x.io) to assist in converting from the legacy
+`Jenkinsfile`-based pipelines to the modern `jenkins-x.yml`-based pipelines. It will attempt to convert an existing
+`Jenkinsfile` into the equivalent `jenkins-x.yml` in the same directory, letting the user know if there are parts
+ of the existing `Jenkinsfile` which cannot be converted.
 
-## Get started
-To get started, confirm you have:
-* python2 or python3 installed
-    * python -version
-* Either
-    * directly install **mkdocs** and **mdocs-bootswatch**
-    * use the install.sh (requires pip)
-* Write some docs in Markdown!
+Directives in the `Jenkinsfile` which cannot be automatically converted will be noted in the  `jenkins-x.yml` with
+comments showing the `Jenkinsfile` snippet, and steps which cannot be converted will be noted with comments and
+replaced by `echo ... && exit 1` in the actual pipeline execution.
 
-# Build
-To build you can use *mkdocs build*.
-It will generate the static site in the folder **site**
+If the `Jenkinsfile` contains code outside of the `pipeline { ... }` block, or unknown Declarative directives, 
+`jx convert jenkinsfile` will exit with an error.
 
-# Run
-You can run it with a live reload, via *mkdocs serve*.
+## Installation
 
-# Docker / Distribute
-There is a Dockerfile for distribution.
-Simply run **rerun.sh** to build the docs, create a docker image and then run said docker image.
+Download the `jx-convert-jenkinsfile` binary and place it in a directory in your `PATH`:
 
-Or you can type all the commands yourself. Your choice.
+### Linux
 
-# Troubleshooting
-If pip install runs correctly and your system still can't find **mkdocs** chances are that binary is installed in your ```~/.local/bin``` and that is not in your ```PATH```. You can add it by doing:
-```export PATH=$PATH:~/.local/bin```
-This problem occurs when you didn't **sudo** the install.
+```shell
+curl -L https://github.com/jenkins-x/jx-convert-jenkinsfile/releases/download/$(curl --silent https://api.github.com/repos/jenkins-x/jx-convert-jenkinsfile/releases/latest | jq -r '.tag_name')/jx-convert-jenkinsfile-linux-amd64.tar.gz | tar xzv 
+sudo mv jx-convert-jenkinsfile /usr/local/bin
+```
 
-# Help!
+### macOS
+
+```shell
+curl -L https://github.com/jenkins-x/jx-convert-jenkinsfile/releases/download/$(curl --silent https://api.github.com/repos/jenkins-x/jx-convert-jenkinsfile/releases/latest | jq -r '.tag_name')/jx-convert-jenkinsfile-darwin-amd64.tar.gz | tar xzv 
+sudo mv jx-convert-jenkinsfile /usr/local/bin
+```
+
+You can now invoke the tool by running `jx convert jenkinsfile`.
+
+## Usage
+
+Run `jx convert jenkinsfile`, optionally specifying `--dir ...` to look for the `Jenkinsfile` in a different
+directory than the current one. 
