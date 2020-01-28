@@ -3,12 +3,17 @@ description: How To Install CloudBees Core Modern On AWS EKS
 
 # CloudBees Core on AWS EKS
 
-* https://go.cloudbees.com/docs/cloudbees-core/cloud-install-guide/eks-install/#
-* https://go.cloudbees.com/docs/cloudbees-core/cloud-reference-architecture/ra-for-eks/#_ingress_tls_termination
+The basics of installing CloudBees Core on EKS can found in the [CloudBees Core  Install Guide](https://go.cloudbees.com/docs/cloudbees-core/cloud-install-guide/eks-install). For details around the architecture and possibilities for TLS termination (L4 or L7 with ELB), see the [CloudBees Core EKS Manual Install guide](https://docs.cloudbees.com/docs/cloudbees-core/latest/eks-install-guide/eks-prerequisites-manual-install#https-setup-manual-eks).
+
+This guide is here to do the installation with TLS on the Ingress Controller and certificates managed by Let's Encrypt. It will also go beyond the installation and continue with configuration of the Operations Center and create some Masters.
+
+!!! Note
+    This guide is originally written during 2019, when CloudBees Core didn't have a helm chart yet.
+    If you prefer a Helm install, please refer to [CloudBees Core EKS Helm Install guide](https://docs.cloudbees.com/docs/cloudbees-core/latest/eks-install-guide/installing-eks-using-helm).
 
 ## Create EKS Cluster
 
-See my guide on creating a [EKS cluster with EKSCTL](kubernetes/distributions/eks-eksctl/) 
+See my guide on creating a [EKS cluster with EKSCTL](/kubernetes/distributions/eks-eksctl/) , which is the recommended solution with regards to Kubernetes on AWS.
 
 ### Certmanager
 
