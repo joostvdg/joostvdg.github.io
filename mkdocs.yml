@@ -45,6 +45,7 @@ nav:
     - CloudBees Core on GKE: cloudbees/cbc-gke-helm.md
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
     - Team Master Namespace: cloudbees/cbc-team-namespace.md
+    - Multi-Cluster: cloudbees/multi-cluster.md
   - Jenkins X: 
     - Build Packs: jenkinsx/build-packs.md
     - Jenkins X Pipelines: jenkinsx/jx-pipelines.md
