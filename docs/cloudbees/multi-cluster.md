@@ -1,8 +1,8 @@
-Imagine you have a whole range of departments and development teams. Preferably you want to serve them with a standardized [SDA]() platform, but at the same time, make sure they pay for their own usage.
+Imagine you have a whole range of departments and development teams. Preferably you want to serve them with a standardized SDA(Software Delivery Automation) platform, but at the same time, make sure they pay for their usage.
 
-I don't think this is too far fetched or something that is bad. I think it makes sense. In this light, CloudBees Core now [supports running on multiple Kubernetes clusters](https://docs.cloudbees.com/docs/cloudbees-core/latest/cloud-admin-guide/multiple-clusters). 
+I don't think this is too far fetched or something terrible. I think it makes sense. In this light, CloudBees Core now [supports running on multiple Kubernetes clusters](https://docs.cloudbees.com/docs/cloudbees-core/latest/cloud-admin-guide/multiple-clusters). 
 
-In this guide, we're going to explore how to run CloudBees Core on a GKE and AKS cluster at the same time.
+In this guide, we're going to explore how to run CloudBees Core on a GKE and AKS cluster at the same time. And how to deal with the details of getting the namespace configured, certificates, Kubernetes API tokens and so on and so forth.
 
 ## Prerequisites
 
@@ -119,7 +119,7 @@ It will then look something like this.
 
 Last but not least, we also have to update the Nginx Ingress *service*  resource.
 
-```
+```bash
 kubectl -n $NAMESPACE edit svc nginx-ingress-controller
 ```
 
@@ -159,7 +159,7 @@ spec:
 
 ### Set Default TLS Certificate
 
-First thing you'll have to do, is to find out the name of the secret container the certificate. If you've created it yourself, great, else this is a way.
+The first thing you'll have to do is to find out the name of the secret container the certificate. If you've created it yourself, great, else this is a way.
 
 ```bash
 kubectl get certificate -A
@@ -233,6 +233,8 @@ MIIEyTCCArGgAwIBAgIQK0sOS0aRjfZPYLM1TaRQMjANBgkqhkiG9w0BAQsFADAN
 kKrPcnzV0gRdWNGNoJtRh9EGtKDP1VZUBiwdH44=
 -----END CERTIFICATE-----
 ```
+
+Save this into a `.pem` file, we're going to need it. Let's call it `aks-kubernetes-api-server.pem`.
 
 ### Install an Ingress controller
 
@@ -314,7 +316,7 @@ Master:
  OperationsCenterNamespace: cloudbees-core
 Agents:
  Enabled: true
- ```
+```
 
 To be able to generate the Kubernetes resources files, we first have to use `helm fetch` to retrieve the chart.
 
@@ -335,7 +337,7 @@ helm template cloudbees-core-namespace \
  > cloudbees-core-namespace.yml
 ```
 
-Which we can then apply.
+Which we then apply.
 
 ```bash
 kubectl apply -f cloudbees-core-namespace.yml --namespace ${NAMESPACE}
@@ -362,7 +364,14 @@ This assumes we're in the folder `ca-bundle`.
 
 ```bash
 cat valid-isrgrootx1-letsencrypt-org.pem >> ca-certificates.crt
-keytool -import -noprompt -keystore cacerts -file valid-isrgrootx1-letsencrypt-org.pem -storepass changeit -alias myDomain;
+keytool -import -noprompt -keystore cacerts -file valid-isrgrootx1-letsencrypt-org.pem -storepass changeit -alias letsencrypt;
+```
+
+We also have to add the `aks-kubernetes-api-server.pem` to ensure we can talk to the Kubernetes API Endpoint.
+
+```bash
+cat aks-kubernetes-api-server.pem >> ca-certificates.crt
+keytool -import -noprompt -keystore cacerts -file aks-kubernetes-api-server.pem -storepass changeit -alias kubeapi;
 ```
 
 !!! info
@@ -417,8 +426,82 @@ kubectl apply -f cloudbees-sidecar-injector.yml
 
 ## Configure Operations Center
 
-TODO
+We have to configure two things in Operations Center. First, we create the AKS endpoint, and then we configure the Master template by adding a YAML snippet.
+
+We go to `Operations Center` -> `Manage Jenkins` -> `Configure System` -> `Kubernetes Master Provisioning`.
+
+### Configure Endpoint
+
+![configure endpoint](../images/multi-cluster-cjoc.png)
+
+Every field is essential here.
+
+* **API endpoint URL**: the Kubernetes API server url, you should have this saved somewhere (e.g. `~/.kube/config`)
+* **Display Name**: the name by which you can refer to this endpoint
+* **Credentials**: credentials of the Service Account that can access the Kubernetes API, you should have this saved somewhere (e.g. `~/.kube/config`, `users.user.token`)
+* **Server Certificate**: the certificate of the Kubernetes API Server of the target cluster, copy paste the contents of `aks-kubernetes-api-server.pem`
+* **Namespace**: the namespace we created on the AKS cluster which is configured to be used by Operations Center
+* **Master URL Pattern**: assuming that your domain name for the other cluster is different, make sure you have a pattern in here `http://ake.mydomain.com/*/` ensure all Master will have that host name and the Master name will replace the `*`
+* **Jenkins URL**: the URL of this Operations Center, you can leave this blank
+
+### Master Template
+
+We can open up the Master template configuration by hitting the  `Advanced` button in the Kubernetes Master Provisioning block.
+
+![multi-cluster-cjoc-template](../images/multi-cluster-cjoc-template-1.png)
+
+We have to add the annotation `com.cloudbees.sidecar-injector/inject: yes` to ensure the Masters will receive the certificates from the CloudBees Sidecar Injector - so they can talk to Operations Center.
+
+The full snippet becomes this:
+
+```yaml
+apiVersion: "apps/v1"
+kind: "StatefulSet"
+spec:
+  template:
+    metadata:
+      annotations:
+        com.cloudbees.sidecar-injector/inject: yes
+```
+
+![multi-cluster-cjoc-template](../images/multi-cluster-cjoc-template-2.png)
+
+And then hit the `Save` button at the bottom to persist our changes.
 
 ## Create a Managed Master
 
-TODO
+To create a Managed Master, we go to the home page of the Operations Center. If you're unsure, go to `<cjocHost>/cjoc/` or click on the top left breadcrumb `Jenkins`.
+
+On the top right, hit the button `New Master`.
+
+![new-managed-master-step-1](../images/multi-cluster-cjoc-create-mm1.png)
+
+Give the Master an appropriate name and hit `Go`.
+
+!!! tip
+    Sometimes the button is not clickable. Click next to the button with your mouse to make the text field lose focus. It should now be clickable.
+
+![new-managed-master-step-2](../images/multi-cluster-cjoc-create-mm2.png)
+
+The first thing we have to change, is the `Cluster endpoint`. This should now be a dropdown with `kubernetes` and `Azure` (or whatever you've named your endpoint). Select the one that points to your other cluster, in my case, `Azure`.
+
+![new-managed-master-step-3](../images/multi-cluster-cjoc-create-mm3.png)
+
+We have one more change to make. We have to tell the JVM where our truststore is with the additional certificates. To ensure we can contact the Operations Center and the Kubernetes API.
+
+We do this by supplying the `javax.net.ssl.trustStore` and `javax.net.ssl.trustStorePassword` properties in the `System Properties` field. Each should be on its own line. If you're wondering what the location is, this is where the CloudBees Sidecar Injector will place the truststore.
+
+```bash
+javax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts
+javax.net.ssl.trustStorePassword=changeit
+```
+
+If you run into SSL or truststore issues -not trust issues, I cannot help you with those - you can enable debug logging by adding the following property.
+
+```bash
+javax.net.debug=SSL,trustmanager
+```
+
+![new-managed-master-step-4](../images/multi-cluster-cjoc-create-mm4.png)
+
+Hit the `Save` button at the bottom, and you should be good to go!
