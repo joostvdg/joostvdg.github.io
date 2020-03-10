@@ -106,6 +106,8 @@ See the docs for all the possible values[^5].
 * **gitKind: bitbucketserver**: the `kind` of git server, in this case `bitbucketserver`, because `bitbucket` refers to [Bitbucket Cloud](https://bitbucket.org/)
 * **gitName: bs**: the name for our gitserver configuration
 * **gitServer: http://bitbucket.openshift.example.com**: the url to our Bitbucket Server
+* **registry: docker.io**: when not using a Public Cloud provider, you have to specify the docker registry URL, in this case, Dockerhub (which is `docker.io`)
+* **dockerRegistryOrg: caladreas**:  when the docker registry owner - in my case, `caladreas`- is different from the git repository owner, you have to specify this via `dockerRegistryOrg`
 
 We also have to set the storage for at least the logs.
 If we do not configure the storage for our logs, they will be assumed to be written to github pages of our application.
@@ -141,6 +143,7 @@ jx edit storage -c logs --git-url http://bitbucket.openshift.kearos.net/scm/jx/b
       namespace: jx
       provider: kubernetes
       registry: docker.io
+      dockerRegistryOrg: caladreas
     environments:
     - ingress:
         domain: openshift.example.com

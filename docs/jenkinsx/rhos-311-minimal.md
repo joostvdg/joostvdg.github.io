@@ -86,8 +86,10 @@ The current (as of March 2020) recommended way of installing Jenkins X, is via [
 
 * **provider: kubernetes**: Normally, this is set to your cloud provider. in order to stay close to Kubernetes itself and thus OpenShift, we set this to `kubernetes`
 * **registry: docker.io**: If you're on a public cloud vender, `jx boot` creates a docker registry for you (GCR on GCP, ACR on AWS, and so on), in this example we leverage Docker Hub (`docker.io`). This should be indicative for any self-hosted registry as well!
+* **dockerRegistryOrg: caladreas**:  when the docker registry owner - in my case, `caladreas`- is different from the git repository owner, you have to specify this via `dockerRegistryOrg`
 * **secretStorage: local**: Thre recommended approach is to use the HashiCorp Vault integration, but that isn't supported on OpenShift
 * **webhook: prow**: This uses Prow for webhook management. In March 2020 the best option to use with GitHub. If you want to use Bitbucket [read my guide on jx with lighthouse & bitbucket](/jenkinsx/lighthouse-bitbucket/).
+
 
 ??? example "jx-requirements.yaml"
 
@@ -104,6 +106,7 @@ The current (as of March 2020) recommended way of installing Jenkins X, is via [
       namespace: jx
       provider: kubernetes
       registry: docker.io
+      dockerRegistryOrg: caladreas
     environments:
     - ingress:
         domain: openshift.kearos.net
@@ -235,9 +238,8 @@ jx create quickstart --filter golang-http --project-name jx-go-rhos311 --batch-m
 
 This creates a new repository based on the quickstart for Go (lang)[^4] and the build pack for Go (lang)[^5].
 
-I ran into three issues:
+I ran into two issues:
 
-1. Jenkins X buildpack expects, that the Docker registry owner is the same as the Git repository owner
 1. Tekton is not mounting my Docker registry credentials, thus the Kaniko build fails with `401: not authenticated` 
 1. the expose controller[^6] is using Ingress resources by default, but doesn't want to create those on OpenShift[^7]
 
@@ -254,72 +256,6 @@ Which should look something like this:
 APPLICATION STAGING PODS URL
 jx-go       0.0.1   1/1  http://jx-go-jx-staging.staging.openshift.example.com
 ```
-
-### Registry Owner Mismatch
-
-In order to resolve the mismatch between the Docker registry owner and the Git repository owner, we need to change two things in our Jenkins X pipeline (`jenkins-x.yml`)[^8].
-
-1. add an override for the Docker registry owner in the `jenkins-x.yml`, the pipeline of your application.
-1. add an override for the `container-build` step of the `build` stage, for both the `release` and `pullrequest` pipelines.
-
-Overriding the pipeline is done by specifying the stage to override under `pipelineConfig.overides`[^8][^9].
-
-When you set `dockerRegistryOwner`, it overrides the value generated elsewhere.
-
-```yaml
-dockerRegistryOwner: caladreas
-```
-
-The only exception is where the image gets uploaded to via `Kaniko`. 
-
-```yaml
-- --destination=docker.io/caladreas/jx-go-rhos311-1:${inputs.params.version}
-```
-
-The end result will look like this.
-
-!!! example "jenkins-x.yml"
-
-    ```yaml
-    dockerRegistryOwner: caladreas
-    buildPack: go
-    pipelineConfig:
-        overrides:
-        - pipeline: release
-          stage: build 
-          name: container-build
-          steps:
-            - name: container-build
-              dir: /workspace/source
-              image: gcr.io/kaniko-project/executor:9912ccbf8d22bbafbf971124600fbb0b13b9cbd6
-              command: /kaniko/executor
-              args:
-                - --cache=true
-                - --cache-dir=/workspace
-                - --context=/workspace/source
-                - --dockerfile=/workspace/source/Dockerfile
-                - --destination=docker.io/caladreas/jx-go-rhos311-1:${inputs.params.version}
-                - --cache-repo=docker.io/todo/cache
-                - --skip-tls-verify-registry=docker.io
-                - --verbosity=debug
-        - pipeline: pullrequest
-          stage: build 
-          name: container-build
-          steps:
-            - name: container-build
-              dir: /workspace/source
-              image: gcr.io/kaniko-project/executor:9912ccbf8d22bbafbf971124600fbb0b13b9cbd6
-              command: /kaniko/executor
-              args:
-                - --cache=true
-                - --cache-dir=/workspace
-                - --context=/workspace/source
-                - --dockerfile=/workspace/source/Dockerfile
-                - --destination=docker.io/caladreas/jx-go-rhos311-1:${inputs.params.version}
-                - --cache-repo=docker.io/todo/cache
-                - --skip-tls-verify-registry=docker.io
-                - --verbosity=debug
-    ```
 
 ### Missing Docker Credentials
 
@@ -470,6 +406,77 @@ Which should yield something like this:
 PULL REQUEST                                           NAMESPACE        APPLICATION
 https://bitbucket.openshift.kearos.net/jx/jx-go/pull/1 jx-jx-jx-go-pr-1 http://jx-go.jx-jx-jx-go-pr-1.openshift.example.com
 ```
+
+## Errata
+
+### Registry Owner Mismatch
+
+It can happen that the docker registry owner is not the same for every application. If this is the case, the application will have to make a workaround after it is imported into Jenkins X (via `jx import` or `jx create quickstart`).
+
+In order to resolve the mismatch between the default Jenkins X installation Docker registry owner and the application's owner, we need to change two things in our Jenkins X pipeline (`jenkins-x.yml`)[^8].
+
+1. add an override for the Docker registry owner in the `jenkins-x.yml`, the pipeline of your application.
+1. add an override for the `container-build` step of the `build` stage, for both the `release` and `pullrequest` pipelines.
+
+Overriding the pipeline is done by specifying the stage to override under `pipelineConfig.overides`[^8][^9].
+
+When you set `dockerRegistryOwner`, it overrides the value generated elsewhere.
+
+```yaml
+dockerRegistryOwner: caladreas
+```
+
+The only exception is where the image gets uploaded to via `Kaniko`. 
+
+```yaml
+- --destination=docker.io/caladreas/jx-go-rhos311-1:${inputs.params.version}
+```
+
+The end result will look like this.
+
+!!! example "jenkins-x.yml"
+
+    ```yaml
+    dockerRegistryOwner: caladreas
+    buildPack: go
+    pipelineConfig:
+        overrides:
+        - pipeline: release
+          stage: build 
+          name: container-build
+          steps:
+            - name: container-build
+              dir: /workspace/source
+              image: gcr.io/kaniko-project/executor:9912ccbf8d22bbafbf971124600fbb0b13b9cbd6
+              command: /kaniko/executor
+              args:
+                - --cache=true
+                - --cache-dir=/workspace
+                - --context=/workspace/source
+                - --dockerfile=/workspace/source/Dockerfile
+                - --destination=docker.io/caladreas/jx-go-rhos311-1:${inputs.params.version}
+                - --cache-repo=docker.io/todo/cache
+                - --skip-tls-verify-registry=docker.io
+                - --verbosity=debug
+        - pipeline: pullrequest
+          stage: build 
+          name: container-build
+          steps:
+            - name: container-build
+              dir: /workspace/source
+              image: gcr.io/kaniko-project/executor:9912ccbf8d22bbafbf971124600fbb0b13b9cbd6
+              command: /kaniko/executor
+              args:
+                - --cache=true
+                - --cache-dir=/workspace
+                - --context=/workspace/source
+                - --dockerfile=/workspace/source/Dockerfile
+                - --destination=docker.io/caladreas/jx-go-rhos311-1:${inputs.params.version}
+                - --cache-repo=docker.io/todo/cache
+                - --skip-tls-verify-registry=docker.io
+                - --verbosity=debug
+    ```
+
 
 ## References
 
