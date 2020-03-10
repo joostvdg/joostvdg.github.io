@@ -146,20 +146,23 @@ nav:
 # Theme
 # Configuration
 theme:
-  feature:
-    tabs: true
+  features:
+    - tabs
+    - instant
   name: 'material'
   language: 'en'
-  logo:
-    icon: 'public'
+  # icon:
+  #   logo: material/cloud
   palette:
     primary: 'orange'
-    accent: 'red'
+    accent: 'indigo'
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
 
 plugins:
+  - git-revision-date-localized:
+      type: iso_datetime
   - search
   - minify:
       minify_html: true
@@ -167,12 +170,12 @@ plugins:
 extra:
   disqus: 'joostvdg-github-io'
   social:
-    - type: 'github'
-      link: 'https://github.com/joostvdg'
-    - type: 'twitter'
-      link: 'https://twitter.com/joost_vdg'
-    - type: 'linkedin'
-      link: 'https://linkedin.com/in/joostvdg'
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/joostvdg
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/joost_vdg
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/joostvdg
 
 # Extensions
 markdown_extensions:
