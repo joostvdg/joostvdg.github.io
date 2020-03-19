@@ -157,8 +157,8 @@ theme:
     primary: 'orange'
     accent: 'indigo'
   font:
-    text: 'Roboto'
-    code: 'Roboto Mono'
+    text: 'Lato'
+    code: 'Cutive Mono'
 
 plugins:
   - git-revision-date-localized:

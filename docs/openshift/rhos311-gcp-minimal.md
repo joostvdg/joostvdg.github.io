@@ -41,7 +41,7 @@ As we won't have cluster autoscaling - a bit fancy for a manual test cluster - w
 Another thing we need for OpenShift, is having DNS that works between the nodes. For example, you should be able to say `node1` and end up at the correct machine. Due to GCP networking, this internal DNS works out-of-the-box for any machine with our network/project. 
 
 !!!! important
-    In this case, I'm not creating any specific network resources - such as a VPC - so our machines need to have unique names!
+    Our machines need to have unique names!
 
 So I ended up with the following:
 
@@ -51,7 +51,8 @@ So I ended up with the following:
 
 !!! caution
     For a first iteration, I've ignored creating a separate VPC and networking configuration.
-    This to avoid learning too many things at once. You prob
+    This to avoid learning too many things at once. You probably do want that for a more secure cluster.
+    Read [the medium effort guide](/openshift/rhos311-gcp-medium/) in case you want to.
 
 ### VM Image
 
@@ -592,41 +593,13 @@ Bellow follow some variables I recommend configuring, for information, consult t
     * **oreg_auth_password**: your RedHat account password
     * **openshift_cloudprovider_kind**: the kind of cloud provider where RHOS is installed on, in the case of GCP its `gce` (don't ask me)
     * **openshift_gcp_project**: is required to allow OpenShift the ability to create local disks in GCP for PersistentVolumes, should be your Google Project ID
-    * **os_firewall_use_firewalld**: use `firewalld` instead of iptables, this means you have to follow `Configure firewalld & iptables` below
-* Node definitions (`etcd`, `masters`, `nodes`): 
+    * **os_firewall_use_firewalld**: use `firewalld` instead of iptables, seems to work better and is recommended by the RHOS 3.11 install guide (as of 2018+ I believe)
+* Node definitions (`etcd`, `masters`, `nodes`): instructs Ansible which machine should be configured and with what
 
 !!! important
     If you use an external LoadBalancer, also set `openshift_master_cluster_public_hostname`.
 
     > This variable overrides the public host name for the cluster, which defaults to the host name of the master. If you use an external load balancer, specify the address of the external load balancer. 
-
-### Configure firewalld & iptables
-
-Disable the firewall and enable iptables on every node, add this to the sudoers file (`/etc/sudoers`)
-
-```bash
-%google-sudoers ALL= NOPASSWD: /bin/systemctl disable firewalld.service
-%google-sudoers ALL= NOPASSWD: /bin/systemctl enable iptables.service
-%google-sudoers ALL= NOPASSWD: /bin/systemctl start iptables.service
-%google-sudoers ALL= NOPASSWD: /bin/systemctl daemon-reload
-```
-
-```bash
-%google-sudoers        ALL=(ALL)       NOPASSWD: ALL
-%joostvdg        ALL=(ALL)       NOPASSWD: ALL
-joostvdg        ALL=(ALL)       NOPASSWD: ALL
-```
-
-### OpenShift Docker Registry
-
-Create a bucket via Terraform, and then ensure OpenShift can use that as the storage for the docker registry.
-
-```ansible
-openshift_hosted_registry_storage_provider=gcs
-openshift_hosted_registry_storage_gcs_bucket=bucket01
-openshift_hosted_registry_storage_gcs_keyfile=test.key
-openshift_hosted_registry_storage_gcs_rootdirectory=/registry
-```
 
 ### Example Inventory File
 
