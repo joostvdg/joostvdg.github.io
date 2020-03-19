@@ -16,6 +16,7 @@ So, in order to help out those running OpenShift 3.11 and want to leverage Jenki
 
 ## Pre-requisites
 
+* [jx binary](https://jenkins-x.io/docs/getting-started/setup/install/)
 * kubectl is 1.16.x or less
 * Helm v2
 * running OpenShift cluster
@@ -30,8 +31,6 @@ This means you might run newer versions of Helm and kubectl and need to downgrad
 
     As of March 2020, the support for Bitbucket Server is missing some features [read here on what you can about that](). 
     Meanwhile, we suggest you either use GitHub Enterprise or GitLab as alternatives with better support.
-
-
 
 ### Temporarily set Helm V2
 
