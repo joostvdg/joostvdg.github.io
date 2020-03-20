@@ -73,7 +73,8 @@ nav:
   - JX Boot GKE: jenkinsx/jxboot.md
   - JX Boot AKS: jenkinsx/jxboot-aks.md
   - JX Boot & CloudBees Core: jenkinsx/aks-boot-core.md
-  - JX On OpenShift 3.11: jenkinsx/rhos-311-minimal.md
+  - OpenShift 3.11: jenkinsx/rhos-311-minimal.md
+  - OpenShift 3.11 - Restricted: jenkinsx/rhos-311-restricted.md
   - Lighthouse & Bitbucket: jenkinsx/lighthouse-bitbucket.md
   - HelloWorld: jenkinsx/hello-world.md
   - Maven: jenkinsx/maven.md

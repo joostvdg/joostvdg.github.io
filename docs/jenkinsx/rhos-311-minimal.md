@@ -12,15 +12,15 @@ So, in order to help out those running OpenShift 3.11 and want to leverage Jenki
 !!! note
     This guide is written early March 2020, using `jx` version `2.0.1212` and OpenShift version `v3.11.170`.
     
-    The OpenShift used is [installed on GCP in a minimal fashion](http://127.0.0.1:8000/jenkinsx/lighthouse-bitbucket/),  so some shortcuts are taken. For example, there's only one user, the Cluster Admin. This isn't likely in a production cluster, but it is a start.
+    The OpenShift used is [installed on GCP in a minimal fashion](/openshift/rhos311-gcp-minimal/),  so some shortcuts are taken. For example, there's only one user, the Cluster Admin. This isn't likely in a production cluster, but it is a start.
 
 ## Pre-requisites
 
 * [jx binary](https://jenkins-x.io/docs/getting-started/setup/install/)
 * kubectl is 1.16.x or less
 * Helm v2
-* running OpenShift cluster
-    * with cluster admin access (will update how to avoid this)
+* running OpenShift 3.11 cluster
+    * with cluster admin access - for withouth, take a look at [this guide](/jenkinsx/rhos-311-restricted/)
 * GitHub account
 
 If you're like me, you're likely managing your packages via a package manager such as Homebrew or Chocolatey.
@@ -475,7 +475,6 @@ The end result will look like this.
                 - --skip-tls-verify-registry=docker.io
                 - --verbosity=debug
     ```
-
 
 ## References
 
