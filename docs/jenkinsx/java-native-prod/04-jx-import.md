@@ -1,5 +1,5 @@
 title: Jenkins X - Java Native Image Prod
-description: Creating a Java Native Image application and run it as Production with Jenkins X - Jenkins X Import - 1/8
+description: Creating a Java Native Image application and run it as Production with Jenkins X - Jenkins X Import - 4/8
 hero: Jenkins X Import - 4/8
 
 # Jenkins X Import
@@ -77,13 +77,28 @@ CMD ["./application", "-Dquarkus.http.host=0.0.0.0", "-Xmx64m"]
 
 One of the most important aspects of your application running in Kubernetes, is giving Kubernetes enough information about the state of your application. Kubernetes does this via [Liveness and Readiness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
+### What Are These Probes
+
 If you don't know much about these probes, or want to understand them better, [read the Kubernetes docs](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/). For the lazy, I've added quotes for this docs page.
 
 > **livenessProbe**: Indicates whether the Container is running. If the liveness probe fails, the kubelet kills the Container, and the Container is subjected to its restart policy. If a Container does not provide a liveness probe, the default state is Success.
 
 > **readinessProbe**: Indicates whether the Container is ready to service requests. If the readiness probe fails, the endpoints controller removes the Pod’s IP address from the endpoints of all Services that match the Pod. The default state of readiness before the initial delay is Failure. If a Container does not provide a readiness probe, the default state is Success.
 
+We recommend servicing each probe with a distinct endpoint if you can. 
 
+### Quarkus Health Checks
+
+Luckily, Quarkus has a dependency that gives us exactly that: `quarkus-smallrye-health`.
+`quarkus-smallrye-health` is an implementation of MicroProfile's Health specification, and they [have a guide on using and extending it](https://quarkus.io/guides/microprofile-health).
+
+For those wanting to skip the line, for the minimal implementation we add one dependency to our `pom.xml`, namely, the mentioned `quarkus-smallrye-health`. This dependency automatically gives us three endpoints for health checks:
+
+* `/health/live`: The application is up and running.
+* `/health/ready`: The application is ready to serve requests.
+* `/health`: Accumulating all health check procedures in the application.
+
+### Add Dependency
 
 ```xml
 <dependency>
@@ -92,11 +107,88 @@ If you don't know much about these probes, or want to understand them better, [r
 </dependency>
 ```
 
-* `/health/live`: The application is up and running.
-* `/health/ready`: The application is ready to serve requests.
-* `/health`: Accumulating all health check procedures in the application.
+### Update Our Kubernetes Configuration
 
-https://quarkus.io/guides/microprofile-health
+We now have the ability to give Kubernetes the information it needs to understand the status of our application.
+We still have to ensure Kubernetes knows how to get this information.
 
+To do so, we have two choices. 
 
+1. Update the `values.yaml` of our Chart, it has one entry for both checks, so not optimal, but minimal effort
+1. Update the `templates/deployment.yaml` of our Chart, where we have to set both endpoints
 
+#### Update Values
+
+By default, the Helm chart that is generated has one variable for both the liveness and readyness probes: `probePath`.
+
+The value is specified between `resources` and `livenessProbe`:
+
+We set the value of `probePath` to `/health`:
+
+!!! example "charts/Name-Of-Your-App/values.yaml"
+
+    ```yaml hl_lines="8" 
+    resources:
+      limits:
+        cpu: 250m
+        memory: 64Mi
+      requests:
+        cpu: 250m
+        memory: 64Mi
+    probePath: /health
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    ```
+
+#### Update Deployment
+
+The second way of make the required change, is to update our Deployment definition.
+You can choose to set the values directly in the template, or better, change the variables used in the probe paths and set the values of these variables in the `values.yaml`.
+
+We will do the latter here:
+
+!!! example "charts/Name-Of-Your-App/templates/deployment.yaml"
+
+    ```yaml hl_lines="3 11" 
+    livenessProbe:
+      httpGet:
+        path: {{ .Values.livenessProbePath }}
+        port: {{ .Values.service.internalPort }}
+      initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+      periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+      successThreshold: {{ .Values.livenessProbe.successThreshold }}
+      timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+    readinessProbe:
+      httpGet:
+        path: {{ .Values.readinessProbePath }}
+        port: {{ .Values.service.internalPort }}
+      periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+      successThreshold: {{ .Values.readinessProbe.successThreshold }}
+      timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+    ```
+
+!!! example "charts/Name-Of-Your-App/values.yaml"
+
+    ```yaml hl_lines="8 9" 
+    resources:
+      limits:
+        cpu: 250m
+        memory: 64Mi
+      requests:
+        cpu: 250m
+        memory: 64Mi
+    livenessProbePath: /health/live
+    readinessProbePath: /health/ready
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    ```
+
+## Next Steps
+
+We are going to do a lot more things, but this concludes the initial steps to import our application in Jenkins X. Our application still can't run, because it doesn't have the information to connect to the database. This is our next stop.
