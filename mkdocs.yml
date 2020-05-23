@@ -29,8 +29,8 @@ nav:
     - Cloud SQL: jenkinsx/java-native-prod/02-cloud-sql.md
     - Quarkus: jenkinsx/java-native-prod/03-quarkus.md
     - JX Import: jenkinsx/java-native-prod/04-jx-import.md
-    - Native Image: jenkinsx/java-native-prod/05-native-image.md
-    - JX Secrets: jenkinsx/java-native-prod/06-jx-secrets.md
+    - Database Connection And Secrets: jenkinsx/java-native-prod/05-jx-secrets.md
+    - Native Image: jenkinsx/java-native-prod/06-native-image.md
     - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
     - Production Improvements: jenkinsx/java-native-prod/08-production-improvements.md
   - Jenkins Monitoring Kubernetes: 
@@ -84,8 +84,8 @@ nav:
     - Cloud SQL: jenkinsx/java-native-prod/02-cloud-sql.md
     - Quarkus: jenkinsx/java-native-prod/03-quarkus.md
     - JX Import: jenkinsx/java-native-prod/04-jx-import.md
-    - Native Image: jenkinsx/java-native-prod/05-native-image.md
-    - JX Secrets: jenkinsx/java-native-prod/06-jx-secrets.md
+    - Database Connection And Secrets: jenkinsx/java-native-prod/05-jx-secrets.md
+    - Native Image: jenkinsx/java-native-prod/06-native-image.md
     - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
     - Production Improvements: jenkinsx/java-native-prod/08-production-improvements.md
   - JX Boot GKE: jenkinsx/jxboot.md

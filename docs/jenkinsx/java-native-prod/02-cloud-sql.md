@@ -15,3 +15,8 @@ hero: Cloud SQL - 2/8
 ## How To Connect To The Database
 
 * https://cloud.google.com/sql/docs/mysql/connect-kubernetes-engine?hl=en_US
+
+### Create Service Account
+
+### Generate JSON Key
+
