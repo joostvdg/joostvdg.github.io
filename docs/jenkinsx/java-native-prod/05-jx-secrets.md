@@ -309,6 +309,88 @@ For the username, this is all we have to do, as we directly inject this variable
     * add environment injection from secret for password
 * updated `charts/Name-Of-Your-Application/values.yaml` with placeholders for the secrets
 
+??? example "templates/deployment.yaml"
+
+    Your deployment should now look like this:
+
+    ```yaml
+    {{- if .Values.knativeDeploy }}
+    {{- else }}
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: {{ template "fullname" . }}
+      labels:
+        draft: {{ default "draft-app" .Values.draft }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    spec:
+      selector:
+        matchLabels:
+          app: {{ template "fullname" . }}
+    {{- if .Values.hpa.enabled }}
+    {{- else }}
+      replicas: {{ .Values.replicaCount }}
+      {{- end }}
+      template:
+        metadata:
+          labels:
+            draft: {{ default "draft-app" .Values.draft }}
+            app: {{ template "fullname" . }}
+          annotations:
+            prometheus.io/port: "8080"
+            prometheus.io/scrape: "true"
+    {{- if .Values.podAnnotations }}
+    {{ toYaml .Values.podAnnotations | indent 8 }} #Only for pods
+    {{- end }}
+        spec:
+          containers:
+          - name: cloudsql-proxy
+            image: gcr.io/cloudsql-docker/gce-proxy:1.16
+            command: ["/cloud_sql_proxy",
+                      "-instances={{.Values.secrets.sql_connection}}=tcp:3306",
+                      "-credential_file=/secrets/cloudsql/credentials.json"]
+            volumeMounts:
+              - name: cloudsql-instance-credentials
+                mountPath: /secrets/cloudsql
+                readOnly: true
+          - name: {{ .Chart.Name }}
+            envFrom:
+              - secretRef:
+                  name: {{ template "fullname" . }}-sql-secret
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            env:
+    {{- range $pkey, $pval := .Values.env }}
+            - name: {{ $pkey }}
+              value: {{ $pval }}
+    {{- end }}
+            ports:
+            - containerPort: {{ .Values.service.internalPort }}
+            livenessProbe:
+              httpGet:
+                path: {{ .Values.probePath }}
+                port: {{ .Values.service.internalPort }}
+              initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+              periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+              successThreshold: {{ .Values.livenessProbe.successThreshold }}
+              timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            readinessProbe:
+              httpGet:
+                path: {{ .Values.probePath }}
+                port: {{ .Values.service.internalPort }}
+              periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+              successThreshold: {{ .Values.readinessProbe.successThreshold }}
+              timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            resources:
+    {{ toYaml .Values.resources | indent 12 }}
+            terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+    {{- end }}
+          volumes:
+            - name: cloudsql-instance-credentials
+              secret:
+                secretName: {{ template "fullname" . }}-sql-sa
+    ```
+
 ### Summary of Changes Made To Staging Environment
 
 * created a new file, called `jx-requirements.yml` at the root
