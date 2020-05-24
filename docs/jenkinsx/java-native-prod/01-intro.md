@@ -56,6 +56,20 @@ If you want to focus on a stable production ready cluster, I can also recommend 
     * [CloudBees Jenkins X Distribution](https://docs.cloudbees.com/docs/cloudbees-jenkins-x-distribution/latest/)
     * [Youtube video with installation and maintenance guidance](https://www.youtube.com/watch?v=rQlP_3iXvRE)
 
+!!! important
+
+    A little spoiler, but the Native Image build requires at least 6GB of memory but works best with about 8GB.
+    This means your Kubernetes worker node that your build runs on, needs have at least about 10-12GB memory.
+
+    If you're in GKE, as the guide assumes, the following machine types work:
+
+    * `e2-highmem-2`
+    * `n2-highmem-2`
+    * `e2-standard-4`
+    * `n2-standard-4`
+
+    Keep in mind, you can use more than one Node Pool. You don't have to run all your nodes on these types, you need at least to be safe. Having autoscaling enabled for this Node Pool is recommended.
+
 ## Why Quarkus
 
 Before we start, I'd like to make the case, why I chose to use Quarkus for this.
@@ -63,34 +77,13 @@ Before we start, I'd like to make the case, why I chose to use Quarkus for this.
 Wanting to build a Native Image with Java 11 is part of the reason, we'll dive into that next.
 
 Quarkus has seen an tremendous amount of updates since its inception. 
-It is a really active framework, which does not require you to forget everything you've learned in other Java frameworks such as Spring and Spring Boot.
+It is a really active framework, which does not require you to forget everything you've learned in other Java frameworks such as Spring and Spring Boot. I like to stay up-to-date with what happens in the Java community, so spending some time with Quarkus was on my todo list.
 
 It comes out of the same part from RedHat that is involved with OpenShift - RedHat's Kubernetes distribution.
 This ensures the framework is created with running Java on Kubernetes in mind. 
 Jenkins X starts from Kubernetes, so this makes it a natural fit.
 
 Next, the capabilities for making a Native Image and work done to ensure you - the developer - do not have to worry (too much) about how to get from a Spring application to a Native Image is staggering. This makes the Native Image experience pleasant and involve little to no debugging.
-
-## Why Native Image
-
-Great that Quarkus helps with making a Native Image. What is a Native Image?
-In short, its makes your Java code into a runnable executable build for a specific environment.
-
-You might wonder, what is wrong with using a runnable Jar - such as Spring Boot - or using a JVM?
-Nothing in and on itself. However, there are cases where having a long running process with a slow start-up time hurts you.
-
-In a Cloud Native world, including Kubernetes, this is far more likely than in traditional - read, VM's - environments. With the advent of creating many smaller services that may or may not be stateless, and should be capable of scaling horizontally from 0 to infinity, different characteristics are required.
-
-Some of these characterics:
-
-* minimal resource use as we pay per usage (to a degree)
-* fast startup time
-* perform as expected on startup (JVM needs to warm up)
-
-A Native Image performs better on the above metrics than a classic Java application with a JVM.
-Next to that, when you have a fixed runtime, the benefit of Java's "build once, run everywhere" is not as useful. When you always run your application in the same container in similar Kubernetes environments, a Native Image is perfectly fine.
-
-Now, wether a Native Image performs better for your application depends on your application and its usage. The Native Image is no silver bullet. So it is still on you to do load and performance tests to ensure you're not degrading your performance for no reason!
 
 ## Resources
 

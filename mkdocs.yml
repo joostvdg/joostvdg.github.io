@@ -28,7 +28,7 @@ nav:
     - Intro: jenkinsx/java-native-prod/01-intro.md
     - Cloud SQL: jenkinsx/java-native-prod/02-cloud-sql.md
     - Quarkus: jenkinsx/java-native-prod/03-quarkus.md
-    - JX Import: jenkinsx/java-native-prod/04-jx-import.md
+    - Import Into Jenkins X: jenkinsx/java-native-prod/04-jx-import.md
     - Database Connection And Secrets: jenkinsx/java-native-prod/05-jx-secrets.md
     - Native Image: jenkinsx/java-native-prod/06-native-image.md
     - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
@@ -83,11 +83,12 @@ nav:
     - Intro: jenkinsx/java-native-prod/01-intro.md
     - Cloud SQL: jenkinsx/java-native-prod/02-cloud-sql.md
     - Quarkus: jenkinsx/java-native-prod/03-quarkus.md
-    - JX Import: jenkinsx/java-native-prod/04-jx-import.md
+    - Import Into Jenkins X: jenkinsx/java-native-prod/04-jx-import.md
     - Database Connection And Secrets: jenkinsx/java-native-prod/05-jx-secrets.md
     - Native Image: jenkinsx/java-native-prod/06-native-image.md
     - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
     - Production Improvements: jenkinsx/java-native-prod/08-production-improvements.md
+  - Create Builder Image: jenkinsx/builder-image.md
   - JX Boot GKE: jenkinsx/jxboot.md
   - JX Boot AKS: jenkinsx/jxboot-aks.md
   - JX Boot & CloudBees Core: jenkinsx/aks-boot-core.md
@@ -217,6 +218,7 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
+  - pymdownx.tabbed
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
