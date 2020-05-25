@@ -1,6 +1,6 @@
 title: Jenkins X - Java Native Image Prod
 description: Creating a Java Native Image application and run it as Production with Jenkins X - Cloud SQL - 2/8
-hero: Cloud SQL - 2/8
+hero: Cloud SQL - 2/9
 
 # Google Cloud SQL
 

@@ -1,6 +1,6 @@
 title: Jenkins X - Java Native Image Prod
-description: Creating a Java Native Image application and run it as Production with Jenkins X -Database Connection And Secrets - 5/8
-hero:Database Connection And Secrets - 5/8
+description: Creating a Java Native Image application and run it as Production with Jenkins X -Database Connection And Secrets - 5/9
+hero:Database Connection And Secrets - 5/9
 
 # Database Connection And Secrets
 
