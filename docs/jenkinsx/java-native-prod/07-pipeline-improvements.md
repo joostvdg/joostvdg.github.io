@@ -1,6 +1,6 @@
 title: Jenkins X - Java Native Image Prod
-description: Creating a Java Native Image application and run it as Production with Jenkins X - Pipeline Improvements - 7/8
-hero: Pipeline Improvements - 7/8
+description: Creating a Java Native Image application and run it as Production with Jenkins X - Pipeline Improvements - 7/9
+hero: Pipeline Improvements - 7/9
 
 # Pipeline Improvements
 
@@ -10,7 +10,7 @@ There are a dozen additional checks I'd like to add to the pipeline to increase 
 
 1. Static Code Analysis with SonarQube
 1. Dependency Vulnerability Scan with OSS Index
-1. Integration Test with PostMan
+1. [Integration Test with PostMan](/jenkinsx/java-native-prod/08-preview-int-test/) (next page)
 
 ## Static Code Analysis with SonarQube
 
@@ -142,29 +142,31 @@ There are various ways to do it, in this case I'm using the `overrides` mechanic
 
 We can add any Kubernetes container configuration to our stage's container, via Jenkins X's `containerOptions` key.
 
-```yaml hl_lines="21"
-pipelineConfig:
-  pipelines:
-    overrides:
-      - name: mvn-deploy
-        pipeline: release
-        stage: build
-        containerOptions:
-          envFrom:
-            - secretRef:
-                name: my-sonar-token
-        step:
-          name: sonar
-          command: mvn
-          args:
-            - compile
-            - org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar
-            - -Dsonar.host.url=$SONAR_HOST_URL
-            - -e
-            - --show-version
-            - -DskipTests=true
-        type: after
-```
+!!! example "jenkins-x.yml"
+
+    ```yaml hl_lines="21"
+    pipelineConfig:
+      pipelines:
+        overrides:
+          - name: mvn-deploy
+            pipeline: release
+            stage: build
+            containerOptions:
+              envFrom:
+                - secretRef:
+                    name: my-sonar-token
+            step:
+              name: sonar
+              command: mvn
+              args:
+                - compile
+                - org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar
+                - -Dsonar.host.url=$SONAR_HOST_URL
+                - -e
+                - --show-version
+                - -DskipTests=true
+            type: after
+    ```
 
 For more syntax details, see the [Jenkins X Pipeline page](https://jenkins-x.io/docs/reference/pipeline-syntax-reference/#containerOptions).
 
@@ -223,26 +225,28 @@ envFrom:
 In this case, we're going to run this build step after our `sonar` analysis. 
 So the name we match on, is set to `sonar` and type to `after`.
 
-```yaml
-  - name: sonar
-    stage: build
-    containerOptions:
-      envFrom:
-        - secretRef:
-            name: sonatype-oss-index
-    step:
-      name: sonatype-ossindex
-      command: mvn 
-      args: 
-        - org.sonatype.ossindex.maven:ossindex-maven-plugin:audit 
-        - -f
-        - pom.xml
-        - -Dossindex.scope=compile
-        - -Dossindex.reportFile=ossindex.json
-        - -Dossindex.cvssScoreThreshold=4.0
-        - -Dossindex.fail=false
-    type: after
-```
+!!! example "jenkins-x.yml"
+
+    ```yaml
+      - name: sonar
+        stage: build
+        containerOptions:
+          envFrom:
+            - secretRef:
+                name: sonatype-oss-index
+        step:
+          name: sonatype-ossindex
+          command: mvn 
+          args: 
+            - org.sonatype.ossindex.maven:ossindex-maven-plugin:audit 
+            - -f
+            - pom.xml
+            - -Dossindex.scope=compile
+            - -Dossindex.reportFile=ossindex.json
+            - -Dossindex.cvssScoreThreshold=4.0
+            - -Dossindex.fail=false
+        type: after
+    ```
 
 ### Analysis Error
 
@@ -258,5 +262,6 @@ So, we can:
 
 In the example I've gone for option #4, but I recommend you make your own choice.
 
-## Integration Test with PostMan
+## Next Steps
 
+The next step is to add Integration Tests via Preview Environments, so we increase the confidence in our application's stability prior to promoting it to (semi-)permanent environments - such as Staging and Production.

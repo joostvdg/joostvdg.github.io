@@ -32,7 +32,8 @@ nav:
     - Database Connection And Secrets: jenkinsx/java-native-prod/05-jx-secrets.md
     - Native Image: jenkinsx/java-native-prod/06-native-image.md
     - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
-    - Production Improvements: jenkinsx/java-native-prod/08-production-improvements.md
+    - Previews & Integration Tests: jenkinsx/java-native-prod/08-preview-int-test.md
+    - Production Improvements: jenkinsx/java-native-prod/09-production-improvements.md
   - Jenkins Monitoring Kubernetes: 
     - Introduction: blogs/monitor-jenkins-on-k8s/introduction.md
     - Prepare Environment: blogs/monitor-jenkins-on-k8s/prepare.md
@@ -87,7 +88,8 @@ nav:
     - Database Connection And Secrets: jenkinsx/java-native-prod/05-jx-secrets.md
     - Native Image: jenkinsx/java-native-prod/06-native-image.md
     - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
-    - Production Improvements: jenkinsx/java-native-prod/08-production-improvements.md
+    - Previews & Integration Tests: jenkinsx/java-native-prod/08-preview-int-test.md
+    - Production Improvements: jenkinsx/java-native-prod/09-production-improvements.md
   - Create Builder Image: jenkinsx/builder-image.md
   - JX Boot GKE: jenkinsx/jxboot.md
   - JX Boot AKS: jenkinsx/jxboot-aks.md

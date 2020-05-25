@@ -1,6 +1,6 @@
 title: Jenkins X - Java Native Image Prod
-description: Creating a Java Native Image application and run it as Production with Jenkins X - Native Image - 6/8
-hero: Native Image - 6/8
+description: Creating a Java Native Image application and run it as Production with Jenkins X - Native Image - 6/9
+hero: Native Image - 6/9
 
 # Build Native Image
 

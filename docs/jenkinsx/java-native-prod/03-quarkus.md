@@ -1,6 +1,6 @@
 title: Jenkins X - Java Native Image Prod
-description: Creating a Java Native Image application and run it as Production with Jenkins X - Quarkus - 3/8
-hero: Quarkus - 3/8
+description: Creating a Java Native Image application and run it as Production with Jenkins X - Quarkus - 3/9
+hero: Quarkus - 3/9
 
 # Create Quarkus Application
 
@@ -219,6 +219,22 @@ And add  `quarkus-resteasy-jackson`.
   <artifactId>quarkus-resteasy-jackson</artifactId>
 </dependency>
 ```
+
+## Update FruitResource findAll
+
+If you have tested our application, you might have noticed our `findAll()` method no longer works. This is because the `RestEasy Jackson` library doesn't properly marshall the Fruit's iterator. To solve this, we make and return a List instead.
+
+!!! example "FruitResource.java"
+
+    ```java
+    public List<Fruit> findAll() {
+        var it = fruitRepository.findAll();
+        List<Fruit> fruits = new ArrayList<Fruit>();
+        it.forEach(fruits::add);
+        return fruits;
+    }
+    ```
+
 
 ## Next Steps
 

@@ -1,6 +1,6 @@
 title: Jenkins X - Java Native Image Prod
-description: Creating a Java Native Image application and run it as Production with Jenkins X - Introduction - 1/8
-hero: Introduction - 1/8
+description: Creating a Java Native Image application and run it as Production with Jenkins X - Introduction - 1/9
+hero: Introduction - 1/9
 
 # Introduction
 
@@ -16,6 +16,7 @@ hero: Introduction - 1/8
 * **Quarkus**: our Java framework
     * Spring Data JPA for ORM
     * Spring Web for the REST API
+* **Flyway**: to manage our Database schema (introduced in [Previews & Integration Tests](/jenkinsx/java-native-prod/08-preview-int-test/))
 * **Java 11**
 * **GraalVM**: compiler/runtime to create a native executable of our Java code
 
