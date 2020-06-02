@@ -1,6 +1,6 @@
 title: Jenkins X - Java Native Image Prod
-description: Creating a Java Native Image application and run it as Production with Jenkins X - Introduction - 1/9
-hero: Introduction - 1/9
+description: Creating a Java Native Image application and run it as Production with Jenkins X - Introduction - 1/10
+hero: Introduction - 1/10
 
 # Introduction
 
@@ -25,7 +25,7 @@ hero: Introduction - 1/9
 The outline of the steps to take is below. Each has its own page, so if you feel you have.
 
 * Create Google Cloud SQL (MySql flavor) as datasource (we're on GCP afterall)
-* Create Quarkus application 
+* Create Quarkus application
 * Import the application into Jenkins X
 * Change the Build to Native Image (with GraalVM)
 * Retrieve application secrets (such as Database username/password) from HashiCorp Vault
@@ -37,6 +37,7 @@ The outline of the steps to take is below. Each has its own page, so if you feel
     * Monitoring with Prometheus & Grafana
     * Tracing with OpenTracing & Jaeger
     * Manage our logs with Sentry.io
+* Promote the application to Jenkins X's Production environment
 
 ## Pre-requisites
 
@@ -113,3 +114,4 @@ Next, the capabilities for making a Native Image and work done to ensure you - t
 * https://github.com/opentracing-contrib/java-jdbc
 * https://quarkus.io/guides/opentracing
 * https://cloud.google.com/sql/docs/mysql/connect-kubernetes-engine?hl=en_US
+* https://dbabulletin.com/index.php/2018/03/29/best-practices-using-flyway-for-database-migrations/

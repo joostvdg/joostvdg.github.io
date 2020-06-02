@@ -1,6 +1,6 @@
 title: Jenkins X - Java Native Image Prod
-description: Creating a Java Native Image application and run it as Production with Jenkins X - Production Improvements - 9/9
-hero: Production Improvements - 9/9
+description: Creating a Java Native Image application and run it as Production with Jenkins X - Production Improvements - 9/10
+hero: Production Improvements - 9/10
 
 # Production Improvements
 
@@ -1211,8 +1211,6 @@ Another change is the `GOOGLE_SQL_CONN` variable. In order for the tracing to wo
       JAEGER_SAMPLER_RATE: 1
     ```
 
-## Completed
+## Next Steps
 
-Well, it is never finished now is it?
-
-But this is as much as I want to write down, for now.
+Now that we have (more) control over our application and the environment it runs in, we can promote the application to Production.
