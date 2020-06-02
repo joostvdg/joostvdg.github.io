@@ -34,6 +34,7 @@ nav:
     - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
     - Previews & Integration Tests: jenkinsx/java-native-prod/08-preview-int-test.md
     - Production Improvements: jenkinsx/java-native-prod/09-production-improvements.md
+    - Promote To Production: jenkinsx/java-native-prod/10-promote-prod.md
   - Jenkins Monitoring Kubernetes: 
     - Introduction: blogs/monitor-jenkins-on-k8s/introduction.md
     - Prepare Environment: blogs/monitor-jenkins-on-k8s/prepare.md
@@ -55,7 +56,8 @@ nav:
     - CloudBees Core on GKE: cloudbees/cbc-gke-helm.md
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
     - Team Master Namespace: cloudbees/cbc-team-namespace.md
-    - Multi-Cluster: cloudbees/multi-cluster.md
+    - Multi-Cluster GKE: cloudbees/multi-cluster-gke.md
+    - Multi-Cluster (OLD): cloudbees/multi-cluster.md
   - Jenkins: 
     - Intro: jenkins/index.md
     - JobDSL: jenkins-jobs/jobdsl.md
@@ -90,6 +92,7 @@ nav:
     - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
     - Previews & Integration Tests: jenkinsx/java-native-prod/08-preview-int-test.md
     - Production Improvements: jenkinsx/java-native-prod/09-production-improvements.md
+    - Promote To Production: jenkinsx/java-native-prod/10-promote-prod.md
   - Create Builder Image: jenkinsx/builder-image.md
   - JX Boot GKE: jenkinsx/jxboot.md
   - JX Boot AKS: jenkinsx/jxboot-aks.md

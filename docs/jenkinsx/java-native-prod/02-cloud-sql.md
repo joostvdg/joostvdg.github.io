@@ -1,6 +1,6 @@
 title: Jenkins X - Java Native Image Prod
-description: Creating a Java Native Image application and run it as Production with Jenkins X - Cloud SQL - 2/9
-hero: Cloud SQL - 2/9
+description: Creating a Java Native Image application and run it as Production with Jenkins X - Cloud SQL - 2/10
+hero: Cloud SQL - 2/10
 
 # Google Cloud SQL
 
@@ -63,7 +63,7 @@ gcloud sql instances create quarkus-fruits \
 ### Create Database
 
 ```sh
-gcloud sql databases create quarkus-fruits --instance quarkus-fruits
+gcloud sql databases create fruits --instance quarkus-fruits
 ```
 
 ## Terraform
@@ -162,7 +162,7 @@ terraform apply "plan.out"
 
 		variable "database_name" {
 				description = "The name of the database"
-				default     = "quarkus-fruits"
+				default     = "fruits"
 		}
 		```
 
