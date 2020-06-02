@@ -128,6 +128,8 @@ I'd recommend using it, as it is well tested and does everything we need in mini
 
     EXPOSE 8080
     USER 1001
+
+    ENTRYPOINT [ "/deployments/run-java.sh" ]
     ```
 
 ## Health Check
