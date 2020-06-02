@@ -276,10 +276,9 @@ So we create a new property called `secrets`, and fill in empty (placeholder) va
       sql_password: ""
       sql_connection: ""
       sqlsa: ""
-      
+
     # define environment variables here as a map of key: value
     env:
-      GOOGLE_SQL_USER: vault:quarkus-fruits:GOOGLE_SQL_USER
     ```
 
 ### Google CloudSQL Connection URL
@@ -407,8 +406,8 @@ When using `envFrom`, there are several options of where it comes from. In our c
               value: {{ quote $pval }}
     {{- end }}
             envFrom:
-              - secretRef:
-                  name: {{ template "fullname" . }}-sql-secret
+            - secretRef:
+                name: {{ template "fullname" . }}-sql-secret
     {{ toYaml .Values.envFrom | indent 10 }} ## LINE TO REMOVE
     ```
 
@@ -498,17 +497,15 @@ For this secret, this is all we need to do. As our CloudSQL Proxy Container dire
     {{- if .Values.hpa.enabled }}
     {{- else }}
       replicas: {{ .Values.replicaCount }}
-      {{- end }}
+    {{- end }}
       template:
         metadata:
           labels:
             draft: {{ default "draft-app" .Values.draft }}
             app: {{ template "fullname" . }}
-          annotations:
-            prometheus.io/port: "8080"
-            prometheus.io/scrape: "true"
     {{- if .Values.podAnnotations }}
-    {{ toYaml .Values.podAnnotations | indent 8 }} #Only for pods
+          annotations:
+    {{ toYaml .Values.podAnnotations | indent 8 }}
     {{- end }}
         spec:
           containers:
@@ -530,14 +527,13 @@ For this secret, this is all we need to do. As our CloudSQL Proxy Container dire
               value: {{ quote $pval }}
     {{- end }}
             envFrom:
-              - secretRef:
-                  name: {{ template "fullname" . }}-sql-secret
-    {{ toYaml .Values.envFrom | indent 10 }}
+            - secretRef:
+                name: {{ template "fullname" . }}-sql-secret
             ports:
             - containerPort: {{ .Values.service.internalPort }}
             livenessProbe:
               httpGet:
-                path: {{ .Values.probePath }}
+                path: {{ .Values.livenessProbePath }}
                 port: {{ .Values.service.internalPort }}
               initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
               periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
@@ -545,14 +541,14 @@ For this secret, this is all we need to do. As our CloudSQL Proxy Container dire
               timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
             readinessProbe:
               httpGet:
-                path: {{ .Values.probePath }}
+                path: {{ .Values.readinessProbePath }}
                 port: {{ .Values.service.internalPort }}
               periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
               successThreshold: {{ .Values.readinessProbe.successThreshold }}
               timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
             resources:
     {{ toYaml .Values.resources | indent 12 }}
-            terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+          terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
     {{- end }}
           volumes:
             - name: cloudsql-instance-credentials

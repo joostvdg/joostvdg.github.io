@@ -285,6 +285,37 @@ containerOptions:
                   memory: 10Gi
     ```
 
+## Update Container Resources
+
+If we look at our `charts/Name-of-your-Application/values.yaml` file, we can see it defines the CPU and Memory requests & limits. These correspond to the expected bounds for our application.
+
+```yaml
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 400m
+    memory: 512Mi
+```
+
+The bounds that are in there, are set for a Java 11 application running on a JVM.
+Now that we changed our application to run as a Native Image, we can drastically reduce them.
+
+Please set them accordingly:
+
+!!! example "values.yaml"
+
+    ```yaml
+    resources:
+      limits:
+        cpu: 250m
+        memory: 64Mi
+      requests:
+        cpu: 250m
+        memory: 64Mi
+    ```
+
 ### Worker Node Capity
 
 !!! important

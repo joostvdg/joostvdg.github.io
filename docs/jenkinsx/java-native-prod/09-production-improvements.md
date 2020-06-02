@@ -115,16 +115,20 @@ Our Deployment now looks like this (at least, the section related to our contain
 
 !!! example "charts/Name-Of-Your-Application/templates/deployment.yaml"
     
-    ```yaml hl_lines="5 6"
-    - name: {{ .Chart.Name }}
-      envFrom:
-        - secretRef:
-            name: {{ template "fullname" . }}-sql-secret
-        - secretRef:
-            name: {{ template "fullname" . }}-sentry-dsn
-      image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-      imagePullPolicy: {{ .Values.image.pullPolicy }}
-      env:
+    ```yaml hl_lines="12 13"
+          - name: {{ .Chart.Name }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            env:
+    {{- range $pkey, $pval := .Values.env }}
+            - name: {{ $pkey }}
+              value: {{ quote $pval }}
+    {{- end }}
+            envFrom:
+            - secretRef:
+                name: {{ template "fullname" . }}-sql-secret
+            - secretRef:
+                name: {{ template "fullname" . }}-sentry-dsn
     ```
 
 ### Configure Logging
