@@ -319,6 +319,7 @@ kubectl create secret generic external-dns-gcp-sa --from-file=credentials.json -
     tcp: 
       50000: "cloudbees-ci/cjoc:50000"
     ```
+
 !!! example "ingress-values-c2.yaml"
 
     ```yaml
