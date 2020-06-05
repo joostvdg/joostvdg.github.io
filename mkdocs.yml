@@ -57,7 +57,8 @@ nav:
     - CloudBees Core on EKS: cloudbees/cbc-eks.md
     - Team Master Namespace: cloudbees/cbc-team-namespace.md
     - Multi-Cluster GKE: cloudbees/multi-cluster-gke.md
-    - Multi-Cluster (OLD): cloudbees/multi-cluster.md
+    - Multi-Cluster EKS: cloudbees/multi-cluster-eks.md
+    - Multi-Cluster (OLD/AKS): cloudbees/multi-cluster.md
   - Jenkins: 
     - Intro: jenkins/index.md
     - JobDSL: jenkins-jobs/jobdsl.md
