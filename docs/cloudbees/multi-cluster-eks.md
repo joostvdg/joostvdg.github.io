@@ -70,9 +70,7 @@ For production clusters, you either want Service Account IAM access, or multiple
     eksctl create cluster  --config-file cluster.yaml --profile cloudbees-eks
     ```
 
-
-
-## Create Route53 Hosted Zone
+## 2. Create Route53 Hosted Zone
 
 * via the UI: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html
 * Via CLI: https://docs.aws.amazon.com/cli/latest/reference/route53/create-hosted-zone.html
