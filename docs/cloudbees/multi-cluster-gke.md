@@ -274,18 +274,59 @@ kubectl create secret generic external-dns-gcp-sa --from-file=credentials.json -
 
 #### Nginx Ingress
 
-```sh
-helm install nginx-ingress stable/nginx-ingress \
-  -f nginx-values.yaml \
-  -n bootstrap
-```
+!!! important
+    We assume Cluster One will be the cluster hosting Operations Center.
 
-!!! example "nginx-values.yaml"
+    This means Cluster One needs to expose the port `50000` via the LoadBalancer.
+    Nginx can do this automatically, if we add a `tcp` configuration in the `values.yaml`.
+
+    Cluster Two should _not_ get this configuration as it will throw errors and polute your Nginx Ingress Controller logs.
+    So be mindful that there are two different files and two different commands.
+
+=== "Add Helm Repo"
+    ```sh
+    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    ```
+=== "Update Helm repositories
+    ```sh
+    helm repo update
+    ```
+=== "Helm Install Cluster One"
+    ```sh
+    helm install ingress ingress-nginx/ingress-nginx -f ingress-values-c1.yaml
+    ```
+=== "Helm Install Cluster Two"
+    ```sh
+    helm install ingress ingress-nginx/ingress-nginx -f ingress-values-c2.yaml
+    ```
+
+!!! example "ingress-values-c1.yaml"
 
     ```yaml
     service:
-      omitClusterIP: true
+        omitClusterIP: true
     controller:
+      tcp:
+        configMapNamespace: default
+      autoscaling:
+        enabled: true
+        minReplicas: 3
+        maxReplicas: 7
+      publishService:
+        enabled: true
+      metrics:
+        enabled: true
+    tcp: 
+      50000: "cloudbees-ci/cjoc:50000"
+    ```
+!!! example "ingress-values-c2.yaml"
+
+    ```yaml
+    service:
+        omitClusterIP: true
+    controller:
+      tcp:
+        configMapNamespace: default
       autoscaling:
         enabled: true
         minReplicas: 3
@@ -403,7 +444,14 @@ kubectl apply -f cluster-issuer.yaml
       --version 3.14.0+ebfb4625ad50
     ```
 
-### 5. Configure External Access
+### 5. Manually Configure External Access
+
+!!! caution
+    This configuration is only required if you do not use the Nginx Ingress Helm Chart.
+
+    If you do, this is already configured for you [in the Nginx Ingress paragraph earlier](/cloudbees/multi-cluster-gke/#nginx-ingress).
+
+    If you're curious how to configure this _manually_, read on!
 
 To allow Master to connect back to Operations Center from another cluster, two ports must be open, `443` (or `80` if no TLS) and `50000` (if you've kept the default).
 
