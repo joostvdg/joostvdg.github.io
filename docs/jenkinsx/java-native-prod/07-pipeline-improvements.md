@@ -99,7 +99,7 @@ Here's an example Helm values for hosting SonarQube in Kubernetes via the [Oteem
 At the time of writing - May 2020 - Jenkins X doesn't support reading secrets from Vault into the Pipeline. To have secrets in the pipeline we create a Kubernetes secret.
 
 ```sh
-kubectl create secret generic my-sonar-token -n jx \
+kubectl create secret generic quarkus-fruits-sonar -n jx \
   --from-literal=SONAR_API_TOKEN='mytoken' \
   --from-literal=SONAR_HOST_URL='myurl'
 ```
@@ -110,13 +110,16 @@ If you don't like this, there are ways of having [HashiCorp Vault integrated int
 
 We are now going to use the Kubernetes secret we created earlier. As the Sonar CLI automatically picks up some environments variables - such as the `SONAR_API_TOKEN` in our secret - we inject the secret as environment variables.
 
-We do this via the `envFrom` construction:
+We do this via the `envFrom` construction.
 
 ```yaml
 envFrom:
   - secretRef:
-      name: my-sonar-token
+      name: quarkus-fruits-sonar
 ```
+
+To create room for additional secrets, we add this on top as part of the root `containerOptions`.
+The root being `pipelineConfig`. Our `jenkins-x.yml`'s first few lines should now look like this.
 
 !!! example "jenkins-x.yml"
 
@@ -128,7 +131,7 @@ envFrom:
       containerOptions:
         envFrom:
           - secretRef:
-              name: my-sonar-token
+              name: quarkus-fruits-sonar
     ```
 
 ### Create Sonar Analysis Build Step
@@ -144,17 +147,13 @@ We can add any Kubernetes container configuration to our stage's container, via 
 
 !!! example "jenkins-x.yml"
 
-    ```yaml hl_lines="21"
+    ```yaml hl_lines="17"
     pipelineConfig:
       pipelines:
         overrides:
           - name: mvn-deploy
             pipeline: release
             stage: build
-            containerOptions:
-              envFrom:
-                - secretRef:
-                    name: my-sonar-token
             step:
               name: sonar
               command: mvn
@@ -170,17 +169,38 @@ We can add any Kubernetes container configuration to our stage's container, via 
 
 For more syntax details, see the [Jenkins X Pipeline page](https://jenkins-x.io/docs/reference/pipeline-syntax-reference/#containerOptions).
 
+!!! info
+
+    When you use [sonarcloud.io](https://sonarcloud.io) you have to add additional parameters.
+
+    You have to add `sonar.login`, `sonar.organization`, and `sonar.projectKey` to the maven arguments. It is up to you to take an approach you prefer. Add them to the Kubernetes secret `quarkus-fruits-sonar` we created earlier, or hard code them into the pipeline.
+
+    ```yaml
+    args:
+      - compile
+      - org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar
+      - -Dsonar.host.url=$SONAR_HOST_URL
+      - -Dsonar.projectKey=$SONAR_PROJECT_KEY
+      - -Dsonar.organization=$SONAR_ORG
+      - -Dsonar.login=$SONAR_API_TOKEN
+      - -e
+      - --show-version
+      - -DskipTests=true
+    ```
+
 ## Dependency Vulnerability Scan with OSS Index
 
 While SonarQube - and many other tools - can help us identify issues in _our_ code, we should also validate the code we import via Maven dependencies.
 
 Luckily, there are a lot of options now, such as [Snyk](https://github.com/snyk/snyk-maven-plugin), or [Sonatype's OSS Index](https://sonatype.github.io/ossindex-maven/maven-plugin/), [GitHub has it even embedded in their repositories now](https://help.github.com/en/github/managing-security-vulnerabilities/about-security-alerts-for-vulnerable-dependencies).
 
-I've always been a fan of Sonatype, I'm molded by the Jenkins+Sonar+Nexus triumvirate, so in this guide we include Sonatype's OSS Index scanning. But feel free to find a solution you prefer.
+I've always been a fan of Sonatype, I'm molded by the Jenkins+Sonar+Nexus triumvirate, so in this guide we include [Sonatype's OSS Index scanning](https://ossindex.sonatype.org/user/signin). But feel free to find a solution you prefer.
 
 This is a similar process as with SonarQube:
 
-* create Kubernetes secret
+* register application with OSS Index
+* create a API token
+* create Kubernetes secret with API token
 * add secret to our pipeline
 * add build step
 
@@ -191,7 +211,7 @@ At the time of writing - May 2020 - Jenkins X doesn't support reading secrets fr
 The OSS Index scanner automatically uses the environment variable XXX, so we use that as our secret Key.
 
 ```sh
-kubectl create secret generic my-oss-index-token -n jx \
+kubectl create secret generic quarkus-fruits-ossindex -n jx \
   --from-literal=OSS_INDEX_TOKEN='mytoken'
 ```
 
@@ -202,38 +222,37 @@ Again, we inject the secret as environment variable via the `envFrom` constructi
 ```yaml
 envFrom:
   - secretRef:
-      name: my-oss-index-token
+      name: quarkus-fruits-ossindex
 ```
 
 !!! example "jenkins-x.yml"
 
     Which means the `jenkins-x.yml` will look like this.
 
-    ```yml
+    ```yml hl_lines="7 8"
     buildPack:  maven-java11
     pipelineConfig:
       containerOptions:
         envFrom:
           - secretRef:
-              name: my-sonar-token
+              name: quarkus-fruits-sonar
           - secretRef:
-              name: my-oss-index-token
+              name: quarkus-fruits-ossindex
     ```
 
 ### Add Pipeline Step
 
-In this case, we're going to run this build step after our `sonar` analysis. 
-So the name we match on, is set to `sonar` and type to `after`.
+In this case, we're going to run this build step after our `sonar` analysis.
+The name we match on, is `sonar` and type to `after`.
+
+The build step order in the `jenkins-x.yml` does _not_ matter.
+However, I recommend to put the snippet below right after the sonar build step from the previous paragraph.
 
 !!! example "jenkins-x.yml"
 
     ```yaml
       - name: sonar
         stage: build
-        containerOptions:
-          envFrom:
-            - secretRef:
-                name: sonatype-oss-index
         step:
           name: sonatype-ossindex
           command: mvn 
@@ -248,19 +267,25 @@ So the name we match on, is set to `sonar` and type to `after`.
         type: after
     ```
 
-### Analysis Error
+### Fail On Analysis Error
 
-There's currently a vulnerability related to `org.apache.thrift:libthrift`, which is part of `quarkus-smallrey-opentracing`.
-Replacing `libthrift` with a version that is not vulnerable causes errors.
+At the time of writing (June 2020), there is a vulnerability related to `org.apache.thrift:libthrift`, which is part of `quarkus-smallrey-opentracing`. While we're not using this library yet, we will add it later in this guide.
+A version of `libthrift` is not vulnerable is - at this time - not compatible with our other libraries.
 
 So, we can:
 
 1. not use open tracing -> non negiotiable
-1. implement open tracing with another library -> risk, might not be Native Image compatible
-1. ignore this particular vulnerability -> risk, high chance we forget this
-1. not fail the build -> risk, only acceptable if people are actively pursuing a clean build (meaning, no warnings)
+2. implement open tracing with another library -> risk, might not be Native Image compatible
+3. ignore this particular vulnerability -> risk, high chance we forget this
+4. not fail the build -> risk, only acceptable if people are actively pursuing a clean build (meaning, no warnings)
 
 In the example I've gone for option #4, but I recommend you make your own choice.
+
+## Container Image Scanning
+
+There are a lot of other potential improvements to our pipeline, such as security scanning, load testing, and container image scanning. I feel that adding such a step would focus to much on the tool and not a lot on improving our Jenkins X Pipeline. So this is an exercise left to the reader.
+
+There might be a specific guide to validating Container Images in Jenkins X in the future, but this will be a standalone guide. It warrants more attention than I want to give it in this guide.
 
 ## Next Steps
 
