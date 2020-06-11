@@ -17,6 +17,10 @@ If you remember, we've set our URL to `jdbc:mysql://127.0.0.1:3306/fruit`, and o
 
 Before we configure these secrets, lets manage our database and it schema in a way that fits Jenkins X.
 
+## Code Start
+
+If you do not have a working version after the previous chapter, you can find the complete working code in the [branch 04-jx-import-finish](https://github.com/joostvdg/quarkus-fruits/tree/04-jx-import-finish).
+
 ## Manage Database Via Flyway
 
 One part of CI/CD that is often forgotten, is managing your Database (schema) updates. There are several options available, such as [Liquibase](https://www.liquibase.org/) and [Flyway](https://flywaydb.org/).

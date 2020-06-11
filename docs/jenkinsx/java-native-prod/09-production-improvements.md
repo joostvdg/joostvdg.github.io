@@ -12,6 +12,10 @@ There are again, more than a dozen things we can do to keep tabs on our applicat
 1. Monitoring Metrics with Prometheus & Grafana
 1. Tracing with OpenTracing & Jaeger
 
+## Code Start
+
+If you do not have a working version after the previous chapter, you can find the complete working code in the [branch 08-previews](https://github.com/joostvdg/quarkus-fruits/tree/08-previews).
+
 ## Logging
 
 There are a many ways you can deal with Logging. You can make use of the [ELK Stack](https://www.elastic.co/elastic-stack) (ElasticSearch, Logstash and Kibana), [Grafana's Loki](https://grafana.com/oss/loki/), or Public Cloud services such as [Google's Operations](https://cloud.google.com/products/operations) (formerly Stackdriver) or [AWS's CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html).
@@ -87,7 +91,7 @@ As Sentry can automatically detect which environment the application is running 
 We create a Kubernetes secret in our Chart's template folder.
 This way we can mount the secret as an environment variable 
 
-The Sentry SDK automatically picks up the environment variable `SENTRY_DSN`, so we don't have to configure anything else to get it to work. The SDK is OK with not having the configuration as well, so for local tests or our builds we're fine without it.
+The Sentry SDK automatically picks up the environment variable `SENTRY_DSN`, so we don't have to configure anything 7else to get it to work. The SDK is OK with not having the configuration as well, so for local tests or our builds we're fine without it.
 
 !!! example "charts/Your-Application-Name/templates/sentry-dsn-secret.yaml"
 
@@ -178,11 +182,11 @@ I recommend you go through the options if this will be a (near)permanent install
 
 === "Helm v3"
     ```sh
-    helm install prometheus stable/prometheus
+    helm install prometheus stable/prometheus  --namespace ${NAMESPACE}
     ```
 === "Helm v2"
     ```sh
-    helm install --name prometheus stable/prometheus
+    helm install --name prometheus stable/prometheus  --namespace ${NAMESPACE}
     ```
 
 #### Grafana
@@ -238,11 +242,11 @@ I also included how you can configure dashboards out of the box. One of doing so
 
 === "Helm v3"
     ```sh
-    helm install grafana stable/grafana -f grafana-values.yaml
+    helm install grafana stable/grafana -f grafana-values.yaml  --namespace ${NAMESPACE}
     ```
 === "Helm v2"
     ```sh
-    helm install --name grafana stable/grafana -f grafana-values.yaml
+    helm install --name grafana stable/grafana -f grafana-values.yaml  --namespace ${NAMESPACE}
     ```
 
 #### Prometheus & Grafana in Jenkins X Environment
@@ -291,7 +295,11 @@ We add two annotations, we add `prometheus.io/port: "8080"` to tell Prometheus o
     {{- end }}
         spec:
     ```
- 
+
+!!! important
+    Be sure to move the line `{{- if .Values.podAnnotations }}` so that `annotations:` is always set.
+
+
 ### Add Metrics Annotations to our Code
 
 When you add the metrics dependency, some metrics are exposed by default. These might not say much about your application, so it is advisable to investigate what information you want to get and how to configure that.
@@ -306,6 +314,45 @@ For example, on the `findAll()` method, for the `/fruits` endpoint, we can add a
 Look at [FruitResource.java](https://github.com/joostvdg/jx-quarkus-demo-01/blob/master/src/main/java/com/github/joostvdg/jx/quarkus/fruits/FruitResource.java) for all the metrics I've added as examples.
 
 For information on these, I recommend taking another look at [the Quarkus Metrics guide](https://quarkus.io/guides/microprofile-metrics).
+
+### Configure Grafana
+
+If you used this guide's examples for installing Prometheus and Grafana, you have to configure at least a datasource.
+
+We do this by logging into Grafana, and opening the Data Sources screen: left hand side, `Configuration` -> `Data Sources`.
+
+Click `Add data source`, and select `Prometheus` as the type of data source.
+The only field you have to change, is `URL`. Set the value below, and hit `Save & Test`.
+
+```sh
+http://prometheus-server:80
+```
+
+Now we can go to the `Dashboards` screen and create a dashboard.
+I leave it up to you to create one to your liking, visit [grafana.com/tutorials](https://grafana.com/tutorials/) to learn more.
+
+If you want to be lazy, use the dashboard JSON below.
+Hover over the `Dashboards` menu, and select `Manage`.
+
+Click on `Import`, and paste the `JSON` in the `Import via panel json` field and hit `Load`.
+
+Visit [grafana.com/grafana/dashboards](https://grafana.com/grafana/dashboards?orderBy=name&direction=asc) for more pre-designed dashboards.
+
+!!! info
+
+    If you've used the Helm install above to install Grafana, you can retrieve its password with the command below.
+
+    ```sh
+    kubectl get secret --namespace ${NAMESPACE} grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+    ```
+
+### Empty Dashboard
+
+If you have an empty dashboard, it could be because your application has a different name.
+
+If this is the case, go to the `dashboard settings` - top right, gear icon - -> `Variables` (left menu) -> `app`, and hit `Update` at the bottom. 
+
+In the section `Preview of values`, the name of your application should now be visible.
 
 ### Dashboard JSON
 
@@ -331,13 +378,33 @@ This is an example Grafana dashboard for the this application. You likely have t
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": 27,
-      "iteration": 1589793457816,
+      "id": 3,
+      "iteration": 1591881137283,
       "links": [],
       "panels": [
         {
           "cacheTimeout": null,
           "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {},
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
           "gridPos": {
             "h": 3,
             "w": 7,
@@ -348,34 +415,17 @@ This is an example Grafana dashboard for the this application. You likely have t
           "links": [],
           "options": {
             "colorMode": "value",
-            "fieldOptions": {
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
               "calcs": [
                 "mean"
               ],
-              "defaults": {
-                "mappings": [],
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": [],
               "values": false
-            },
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto"
+            }
           },
-          "pluginVersion": "6.7.3",
+          "pluginVersion": "7.0.1",
           "targets": [
             {
               "expr": "sum(base_thread_count{app=\"$app\"}) by (app)",
@@ -402,6 +452,12 @@ This is an example Grafana dashboard for the this application. You likely have t
           ],
           "datasource": null,
           "decimals": 1,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
           "format": "s",
           "gauge": {
             "maxValue": 100,
@@ -452,7 +508,7 @@ This is an example Grafana dashboard for the this application. You likely have t
             "ymax": null,
             "ymin": null
           },
-          "tableColumn": "",
+          "tableColumn": "jx-quarkus-fruits ",
           "targets": [
             {
               "expr": "sum(base_jvm_uptime_seconds{app=\"$app\"}) by (app)",
@@ -486,6 +542,12 @@ This is an example Grafana dashboard for the this application. You likely have t
             "#d44a3a"
           ],
           "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -537,10 +599,10 @@ This is an example Grafana dashboard for the this application. You likely have t
             "ymax": null,
             "ymin": null
           },
-          "tableColumn": "",
+          "tableColumn": "{app=\"jx-quarkus-fruits\"}",
           "targets": [
             {
-              "expr": "sum(application_com_github_joostvdg_jx_quarkus_fruits_FruitResource_fruit_get_all_count_total{ app=\"$app\"}) by (app)",
+              "expr": "sum(application_com_github_joostvdg_demo_jx_quarkusfruits_FruitResource_fruit_get_all_count_total{ app=\"$app\"}) by (app)",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
@@ -567,6 +629,12 @@ This is an example Grafana dashboard for the this application. You likely have t
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -655,6 +723,12 @@ This is an example Grafana dashboard for the this application. You likely have t
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
           "fill": 2,
           "fillGradient": 6,
           "gridPos": {
@@ -744,6 +818,12 @@ This is an example Grafana dashboard for the this application. You likely have t
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
           "fill": 2,
           "fillGradient": 6,
           "gridPos": {
@@ -832,6 +912,12 @@ This is an example Grafana dashboard for the this application. You likely have t
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
           "fill": 2,
           "fillGradient": 5,
           "gridPos": {
@@ -920,6 +1006,12 @@ This is an example Grafana dashboard for the this application. You likely have t
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
           "fill": 3,
           "fillGradient": 6,
           "gridPos": {
@@ -955,7 +1047,7 @@ This is an example Grafana dashboard for the this application. You likely have t
           "steppedLine": true,
           "targets": [
             {
-              "expr": "sum(rate(application_com_github_joostvdg_jx_quarkus_fruits_FruitResource_fruit_get_all_count_total{app=\"$app\"}[5m])) by (app)",
+              "expr": "sum(rate(application_com_github_joostvdg_demo_jx_quarkusfruits_FruitResource_fruit_get_all_count_total{app=\"$app\"}[5m])) by (app)",
               "interval": "",
               "legendFormat": "{{app}}",
               "refId": "A"
@@ -1004,7 +1096,7 @@ This is an example Grafana dashboard for the this application. You likely have t
         }
       ],
       "refresh": "5m",
-      "schemaVersion": 22,
+      "schemaVersion": 25,
       "style": "dark",
       "tags": [],
       "templating": {
@@ -1012,22 +1104,22 @@ This is an example Grafana dashboard for the this application. You likely have t
           {
             "allValue": null,
             "current": {
-              "text": "jx-jx-quarkus-demo-01",
-              "value": "jx-jx-quarkus-demo-01"
+              "selected": false,
+              "text": "jx-quarkus-fruits",
+              "value": "jx-quarkus-fruits"
             },
             "datasource": "Prometheus",
             "definition": "label_values(base_memory_usedHeap_bytes, app)",
             "hide": 0,
             "includeAll": false,
-            "index": -1,
             "label": "App",
             "multi": false,
             "name": "app",
             "options": [
               {
                 "selected": true,
-                "text": "jx-jx-quarkus-demo-01",
-                "value": "jx-jx-quarkus-demo-01"
+                "text": "jx-quarkus-fruits",
+                "value": "jx-quarkus-fruits"
               }
             ],
             "query": "label_values(base_memory_usedHeap_bytes, app)",
@@ -1044,14 +1136,14 @@ This is an example Grafana dashboard for the this application. You likely have t
           {
             "allValue": null,
             "current": {
-              "text": "jx-quarkus-demo-01",
-              "value": "jx-quarkus-demo-01"
+              "selected": false,
+              "text": "POD",
+              "value": "POD"
             },
             "datasource": "Prometheus",
             "definition": "label_values(container_memory_usage_bytes, container_name)\n",
             "hide": 0,
             "includeAll": false,
-            "index": -1,
             "label": "Container",
             "multi": false,
             "name": "container",
@@ -1070,12 +1162,11 @@ This is an example Grafana dashboard for the this application. You likely have t
         ]
       },
       "time": {
-        "from": "now-3h",
+        "from": "now-5m",
         "to": "now"
       },
       "timepicker": {
         "refresh_intervals": [
-          "5s",
           "10s",
           "30s",
           "1m",
@@ -1090,10 +1181,7 @@ This is an example Grafana dashboard for the this application. You likely have t
       "timezone": "",
       "title": "JX Quarkus Demo",
       "uid": "6ne5tiRGk",
-      "variables": {
-        "list": []
-      },
-      "version": 6
+      "version": 3
     }
     ```
 
@@ -1126,8 +1214,20 @@ helm repo update
 ```
 
 ```sh
-helm install jaeger jaegertracing/jaeger
+helm install jaeger jaegertracing/jaeger \
+  --namespace ${NAMESPACE} \
+  -f jaeger-values.yaml
 ```
+
+!!! example "jaeger-values.yaml"
+
+    ```yaml
+    query:
+      ingress:
+        enabled: true
+        hosts:
+          - chart-example.local
+    ```
 
 ### Set Logger
 
@@ -1203,17 +1303,46 @@ I've made two of the values a variable controllable via environment varibles.
 
 As I've set two variables in the Application Properties file that come from environment variables, we also have to set a default value in our Chart's `values.yml`.
 
+* **JAEGER_COLLECTOR_ENDPOINT**: The endpoint where we send our jaeger metrics too
+* **JAEGER_SAMPLER_RATE**: Sample all requests. Set sampler-param to somewhere between 0 and 1, e.g. 0.50, if you do not wish to sample all requests.
+
 Another change is the `GOOGLE_SQL_CONN` variable. In order for the tracing to work for the JDBC calls, we have to add `tracing` into the JDBC URL.
 
 !!! example "charts/Name-Of-Your-Application/values.yaml"
 
-    ```yaml hl_lines="2"
+    ```yaml hl_lines="3"
     env:
+      GOOGLE_SQL_USER: vault:quarkus-fruits:GOOGLE_SQL_USER
       GOOGLE_SQL_CONN: jdbc:tracing:mysql://127.0.0.1:3306/fruits
-      JAEGER_COLLECTOR_ENDPOINT: http://jx-jaeger-collector.monitoring:14268/api/traces
-      # Sample all requests. Set sampler-param to somewhere between 0 and 1, e.g. 0.50, if you do not wish to sample all requests.
+      JAEGER_COLLECTOR_ENDPOINT: http://jaeger-collector.jaeger:14268/api/traces
       JAEGER_SAMPLER_RATE: 1
     ```
+
+!!! caution
+    I've installed Jaeger via the Helm chart in the Namespace `jaeger`.
+    So the _Service_ name is `jaeger-collector.jaeger`, change this to reflect your installation.
+
+    To be sure, you can always verify the service name via `kubectl`.
+
+    ```sh
+    kubectl get svc -n $NAMESPACE
+    ```
+
+### See It In Action
+
+I you have the Jaeger Query UI running with an Ingress, you can access the interface.
+
+Make several calls to the application, and you should see it come up under the `Service` tab in the UI.
+
+Select the service and you see the traces, including the database calls made to the CloudSQL Proxy container!
+
+## Code Snapshots
+
+There's a branch for the status of the code after:
+
+* adding Sentry for logging, in the [branch 09-sentry](https://github.com/joostvdg/quarkus-fruits/tree/09-sentry).
+* adding Monitoring with Prometheus, in the branch [09-monitoring](https://github.com/joostvdg/quarkus-fruits/tree/09-monitoring)
+* adding Jaeger with OpenTracing, in the branch [09-tracing](https://github.com/joostvdg/quarkus-fruits/tree/09-tracing)
 
 ## Next Steps
 
