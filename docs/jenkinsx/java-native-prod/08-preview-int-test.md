@@ -10,9 +10,22 @@ The first part of the title is ***Previews***. The name comes from the Jenkins X
 
 > Jenkins X allows users to test and validate changes to code in a specialized fourth tier called a **preview environment**, which is a temporary tier where quick testing, feedback and limited availability demos for a wider user base can be done before changes are merged to master for production deployment. This gives developers the ability to receive faster feedback for their changes. - [CloudBees Jenkins X Distribution Guide](https://docs.cloudbees.com/docs/cloudbees-jenkins-x-distribution/latest/developer-guide/preview-environments)
 
-The plan for this part of the guide, is to run a PostMan test suite everytime we create or update a PullRequest (PR) on its related Preview Environment.
+The plan for this part of the guide, is to run a PostMan test suite every time we create or update a PullRequest (PR) on its related Preview Environment.
 
-## PostMan Test Suit
+!!! important
+    
+    While committing frequently is important, please hold of until the end please.
+
+    The idea is to create a PullRequest, rather than a commit to `master`.
+
+## Code Snapshots
+
+There's a branch for the status of the code after:
+
+* adding Sonar analysis, in the [branch 07-sonar](https://github.com/joostvdg/quarkus-fruits/tree/07-sonar).
+* adding OSS Index analysis, in the branch [07-ossindex](https://github.com/joostvdg/quarkus-fruits/tree/07-ossindex)
+
+## PostMan Test Suite
 
 [Postman](https://learning.postman.com/docs/postman/launching-postman/introduction/) is a good and commonly used [rest] API testing tool.
 It has a CLI alternative, which also ships as a [Docker image](https://hub.docker.com/r/postman/newman), called [Newman](https://github.com/postmanlabs/newman).
@@ -194,7 +207,7 @@ Which will something like this:
           - run
           - postman-suite-01.json
           - --global-var
-          - "baseUrl=http://quarkus-fruits.jx-joostvdg-quarkus-fruits-pr-${PULL_NUMBER}.example.com"
+          - "baseUrl=http://REPO_NAME.jx-REPO_OWNER-REPO_NAME-pr-${PULL_NUMBER}.DEV_DOMAIN"
           - --verbose
       type: after
     ```
@@ -202,12 +215,34 @@ Which will something like this:
 !!! important
     Make sure you replace the URL with the actual URL of your application.
 
-    The baseURL highlighted in the above example, `http://quarkus-fruits.jx-joostvdg-quarkus-fruits-pr-${PULL_NUMBER}.example.com`, depends on your domain, application name and repository owner.
+    The baseURL highlighted in the above example, `http://REPO_NAME.jx-REPO_OWNER-REPO_NAME-pr-${PULL_NUMBER}.DEV_DOMAIN`, depends on your domain, application name and repository owner.
+
+    The value `${PULL_NUMBER}` is managed by Jenkins X, leave that in. The values `REPO_NAME`, `REPO_OWNER`, and `DEV_DOMAIN` depend on you. If you've forked, or otherwise reused my `quarkus-fruits` application, the `REPO_NAME` will be `quarkus-fruits`.
 
     Adjust the configuration accordingly!
 
 As each PR will have a unique URL based on the PR number, we set the global variable - from Newman perspective - `baseUrl` to `$PULL_NUMBER`.
 Which is a [Pipeline environment variable](https://jenkins-x.io/docs/guides/using-jx/pipelines/envvars/) provided by the Jenkins X Pipeline.
+
+### Ensure Sorted List Is Returned
+
+The test I've written with PostMan is a bit silly. 
+It evaluates each element of the returned list, expecting a fixed order.
+
+As our code returns a List, we can sort it via a comparator.
+With Java's Lambda support, this becomes a quite readable single line.
+
+!!! example "FruitResource.java"
+
+    ```java hl_lines="5"
+    public List<Fruit> findAll() {
+        var it = fruitRepository.findAll();
+        List<Fruit> fruits = new ArrayList<Fruit>();
+        it.forEach(fruits::add);
+        fruits.sort(Comparator.comparing(Fruit::getId));
+        return fruits;
+    }
+    ```
 
 ### MySQL Database as Preview Dependency
 
@@ -262,7 +297,6 @@ We make sure `quarkus.datasource.jdbc.url` is now a variable, so we can set a di
     quarkus.log.category."org.hibernate".level=INFO
     ```
 
-
 ### Update Helm Chart
 
 We have to make a few related changes.
@@ -272,6 +306,13 @@ We have to make a few related changes.
 1. **Preview Chart Values**: to configure the MySQL dependency
 
 #### Deployment
+
+A common way to enbale of disable segments in your Helm Charts, is by adding a `x.enabled` property, where `x` is the feature to be toggled.
+
+We do the same, and as we want to toggle the CloudSQL Proxy container, we add the Go templating equavalent if a `if x then ..`.
+Which is `{{ if eq }} ... {{ end }}`, as you can see below.
+
+The toggle now ensures we add the CloudSQL Proxy container if `cloudsql.enabled` is `true`.
 
 !!! example "templates/deployment.yaml"
     
@@ -293,7 +334,7 @@ We have to make a few related changes.
 #### Chart Values
 
 In `charts/Name-of-Your-Application/values.yaml` we set default values for the CloudSQL configuration.
-Namely the `GOOGLE_SQL_CONN` to connect to the CloudSQL proxy container, and `cloudsql.enabled=true` to ensure we run the CloudSQL proxy container.
+Namely the `GOOGLE_SQL_CONN` to connect to the CloudSQL proxy container, and `cloudsql.enabled=true` for the toggle we created in the previous paragraph.
 
 !!! example "values.yaml"
 
@@ -318,7 +359,7 @@ We ensure our Helm Chart is configured so our application will connect to the Pr
 !!! example "charts/preview/values.yaml"
 
     ```yaml
-    mysql:
+    mysql: 
       mysqlUser: fruitsadmin
       mysqlPassword: JFjec3c7MgFH6cZyKaVNaC2F
       mysqlRootPassword: 4dDDPE5nj3dVPxDYsPgCzu9B
@@ -334,28 +375,157 @@ We ensure our Helm Chart is configured so our application will connect to the Pr
         sql_password: "4dDDPE5nj3dVPxDYsPgCzu9B"
       env:
         GOOGLE_SQL_USER: root
-        GOOGLE_SQL_CONN: jdbc:mysql://mysql:3306/fruits
+        GOOGLE_SQL_CONN: jdbc:mysql://preview-mysql:3306/fruits
     ```
 
-### Ensure Sorted List Is Returned
+## Creating The PullRequest
 
-The test I've written with PostMan is a bit silly. 
-It evaluates each element of the returned list, expecting a fixed order.
+### Verify All Is Good
 
-As our code returns a List, we can sort it via a comparator.
-With Java's Lambda support, this becomes a quite readable single line.
+Before committing, ensure all the changes are correct.
 
-!!! example "FruitResource.java"
-
-    ```java hl_lines="5"
-    public List<Fruit> findAll() {
-        var it = fruitRepository.findAll();
-        List<Fruit> fruits = new ArrayList<Fruit>();
-        it.forEach(fruits::add);
-        fruits.sort(Comparator.comparing(Fruit::getId));
-        return fruits;
-    }
+=== "Helm Lint Preview"
+    ```sh
+    helm lint charts/preview
     ```
+=== "Helm Lint Chart"
+    ```sh
+    helm lint charts/quarkus-fruits
+    ```
+=== "Validate JX Pipeline"
+    ```sh
+    jx step syntax effective
+    ```
+=== "Maven Test"
+    ```sh
+    mvn test
+    ```
+
+### Create The Git Branch & Commit
+
+The files that have changed are the following (confirm with `git status`):
+
+```sh
+╰─❯ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   charts/preview/requirements.yaml
+	modified:   charts/preview/values.yaml
+	modified:   charts/quarkus-fruits/values.yaml
+	modified:   charts/quarkus-fruits/templates/deployment.yaml
+	modified:   jenkins-x.yml
+	modified:   src/main/java/com/github/joostvdg/demo/jx/quarkusfruits/FruitResource.java
+	modified:   src/main/resources/application.properties
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	postman-suite-01.json
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Create a new git branch by typing the following:
+
+```sh
+git checkout -b pr-test
+```
+
+Add all the modified files and the untrackeded `postman-suite-01.json`, commit and verify the PR build.
+
+```sh
+git add .
+git commit -m "creating PR tests"
+```
+
+Push the changes:
+
+```sh
+git push --set-upstream origin pr-test
+```
+
+### Create The PullRequest
+
+You don't need to follow the link GitHub gave you when you pushed, you can also create the PR via Jenkins X's CLI.
+
+```sh
+jx create pullrequest \
+    --title "Adding PR Tests" \
+    --body "This is the text that describes the PR" \
+    --batch-mode
+```
+
+### Watch Activity
+
+To see the new PR build going, you can watch the activity log or the build log.
+
+```sh
+jx get activity -f quarkus-fruits -w
+```
+
+```sh
+jx get build log quarkus-fruits
+```
+
+!!! note
+
+    Remember, the PostMan tests will only fire _after_ the Preview Environment is created.
+
+    Be patient and wait for the build to succeed, the preview environment to be created, and our application to be up and running in this environment. Only then will our amazing test run.
+
+#### Activity Result
+
+```sh
+  from build pack                                                7m49s    7m42s Succeeded
+    Credential Initializer P6j4d                                 7m49s       0s Succeeded
+    Working Dir Initializer Wk5gt                                7m49s       0s Succeeded
+    Place Tools                                                  7m49s       2s Succeeded
+    Git Source Joostvdg Quarkus Fruits Pr 2 Pr 28rkj 2njtr       7m47s       8s Succeeded https://github.com/joostvdg/quarkus-fruits.git
+    Git Merge                                                    7m39s       2s Succeeded
+    Build Set Version                                            7m37s      11s Succeeded
+    Build Mvn Deploy                                             7m26s    5m44s Succeeded
+    Build Skaffold Version                                       1m42s       0s Succeeded
+    Build Container Build                                        1m42s      29s Succeeded
+    Postbuild Post Build                                         1m13s       1s Succeeded
+    Promote Make Preview                                         1m12s      30s Succeeded
+    Promote Jx Preview                                             42s      33s Succeeded
+    Promote Postman Tests                                           9s       2s Succeeded
+  Preview                                                          13s           https://github.com/joostvdg/quarkus-fruits/pull/2
+    Preview Application                                            13s           http://quarkus-fruits.jx-joostvdg-quarkus-fruits-pr-2
+```
+
+#### Log Result
+
+```sh
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                 4 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                 4 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                 0 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                13 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 313ms                                       │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 3.13KB (approx)                            │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 30ms [min: 10ms, max: 55ms, s.d.: 20ms]  │
+├─────────────────────────────────────────────────────────────────┤
+│ average DNS lookup time: 9ms [min: 9ms, max: 9ms, s.d.: 0µs]    │
+├─────────────────────────────────────────────────────────────────┤
+│ average first byte time: 22ms [min: 6ms, max: 42ms, s.d.: 15ms] │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ## Next Steps
 

@@ -35,6 +35,10 @@ On top of that, we distribute our application as a Helm Chart + Container Image.
 
 Wether a Native Image performs better for your application depends on your application and its usage. The Native Image is no silver bullet. So it is still on you to do load and performance tests to ensure you're not degrading your performance for no reason!
 
+## Code Start
+
+If you do not have a working version after the previous chapter, you can find the complete working code in the [branch 05-db-and-secrets](https://github.com/joostvdg/quarkus-fruits/tree/05-db-and-secrets).
+
 ## How
 
 One of the reasons for using Quarkus is the built-in support for [building a native executable](https://quarkus.io/guides/building-native-image). 

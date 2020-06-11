@@ -12,6 +12,10 @@ There are a dozen additional checks I'd like to add to the pipeline to increase 
 1. Dependency Vulnerability Scan with OSS Index
 1. [Integration Test with PostMan](/jenkinsx/java-native-prod/08-preview-int-test/) (next page)
 
+## Code Start
+
+If you do not have a working version after the previous chapter, you can find the complete working code in the [branch 06-native-image](https://github.com/joostvdg/quarkus-fruits/tree/06-native-image).
+
 ## Static Code Analysis with SonarQube
 
 For me, [SonarQube](https://www.sonarqube.org/) has been a tool I've almost always used to help me guard the quality of whatever I am writing. While it might not be your cup of tea, I do recommend you to follow along to understand _how_ you can integrate such tools into a Jenkins X Pipeline.
@@ -286,6 +290,13 @@ In the example I've gone for option #4, but I recommend you make your own choice
 There are a lot of other potential improvements to our pipeline, such as security scanning, load testing, and container image scanning. I feel that adding such a step would focus to much on the tool and not a lot on improving our Jenkins X Pipeline. So this is an exercise left to the reader.
 
 There might be a specific guide to validating Container Images in Jenkins X in the future, but this will be a standalone guide. It warrants more attention than I want to give it in this guide.
+
+## Code Snapshots
+
+There's a branch for the status of the code after:
+
+* adding Sonar analysis, in the [branch 07-sonar](https://github.com/joostvdg/quarkus-fruits/tree/07-sonar).
+* adding OSS Index analysis, in the branch [07-ossindex](https://github.com/joostvdg/quarkus-fruits/tree/07-ossindex)
 
 ## Next Steps
 

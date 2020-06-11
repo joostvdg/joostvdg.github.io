@@ -25,6 +25,10 @@ Jenkins X is built on top of four pillars:
 1. **Preview Environments**: when you make a PR, wouldn't it be awesome if you would get a temporary deployment so you can test if the PR not only works, but works as we want it? That's what preview environments are. 
 1. **Build Packs**: not be confused with other Build Packs, these are Jenkins X's build packs and they ensure that you don't have to write any of the above mentioned workflows yourself. You can off course, or extend them where needed. The idea is that you get a full CI/CD Developer Experience with batteries included, but easily replaced.
 
+## Code Start
+
+If you do not have a working version after the previous chapter, you can find the complete working code in the [branch 03-quarkus](https://github.com/joostvdg/quarkus-fruits/tree/03-quarkus).
+
 ## Import
 
 Oke, so now we're kinda getting to the point want to start running our new Quarkus application on this shiny new Jenkins X thingy. While Jenkins X has [quickstarts](https://jenkins-x.io/docs/getting-started/first-project/create-quickstart/) (see the list [here](https://github.com/jenkins-x-quickstarts)) to get you up and running fast, we already have an application.
