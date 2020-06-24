@@ -13,7 +13,7 @@ hero: Introduction - 1/10
     * managed by Jenkins X (_to a degree_)
 * **Google Cloud SQL**(MySQL): our data storage
 * **HashiCorp Vault**: secrets storage
-* **Quarkus**: our Java framework
+* **Quarkus**: A Kubernetes Native Java stack tailored for OpenJDK HotSpot and GraalVM.
     * Spring Data JPA for ORM
     * Spring Web for the REST API
 * **Flyway**: to manage our Database schema (introduced in [Previews & Integration Tests](/jenkinsx/java-native-prod/08-preview-int-test/))
