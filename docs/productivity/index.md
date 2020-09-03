@@ -60,6 +60,10 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 
 > Build system. All code in Google's repository builds with a customized version of the Bazel build system,5 requiring that builds be **hermetic**; that is, all inputs must be explicitly declared and stored in source control so the builds are easily distributed and parallelized.
 
+## Clear The Bucket Before Fixing The Leak
+
+> Concurrent with FindBugs experimentation, the C++ workflow at Google was improving with the addition of new checks to the Clang compiler. The Clang team implemented new compiler checks, along with suggested fixes, then used ClangMR38 to run the updated compiler in a distributed way over the entire Google codebase, refine checks, and programmatically fix all existing instances of a problem in the codebase. Once the codebase was cleansed of an issue, the Clang team enabled the new diagnostic as a compiler error (not a warning, which the Clang team found Google developers ignored) to break the build, a report difficult to disregard. The Clang team was very successful improving the codebase through this strategy.
+
 ## Further reading
 
 ### Others
