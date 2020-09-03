@@ -144,6 +144,8 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 * [Mik Kersten - End of Manufacturing Line Analogy](https://www.tasktop.com/blog/end-manufacturing-line-analogy/)
 * [Mik Kersten - Mining the ground thruth of Enterprise Toolchains](https://www.tasktop.com/blog/mining-the-ground-truth-of-enterprise-toolchains/)
 * [Framework for putting Mental Models to practice](https://commoncog.com/blog/a-framework-for-putting-mental-models-to-practice/)
+* [Lessons from Building Static Analysis Tools at Google](https://cacm.acm.org/magazines/2018/4/226371-lessons-from-building-static-analysis-tools-at-google/fulltext)
+* [GitHub - Shifting Security Left](https://github.blog/2020-08-13-secure-at-every-step-a-guide-to-devsecops-shifting-left-and-gitops/)
 
 ### Books
 
