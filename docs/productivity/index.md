@@ -58,11 +58,21 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 
 ## Hermetic Builds
 
-> Build system. All code in Google's repository builds with a customized version of the Bazel build system,5 requiring that builds be **hermetic**; that is, all inputs must be explicitly declared and stored in source control so the builds are easily distributed and parallelized.
+> Build system. All code in Google's repository builds with a customized version of the Bazel build system,5 requiring that builds be **hermetic**; that is, all inputs must be explicitly declared and stored in source control so the builds are easily distributed and parallelized. - [Lessons From Building Static Code Analysis Tools At Google](https://cacm.acm.org/magazines/2018/4/226371-lessons-from-building-static-analysis-tools-at-google/fulltext)
 
-## Clear The Bucket Before Fixing The Leak
+## How To Get Developers To Adopt Something
 
-> Concurrent with FindBugs experimentation, the C++ workflow at Google was improving with the addition of new checks to the Clang compiler. The Clang team implemented new compiler checks, along with suggested fixes, then used ClangMR38 to run the updated compiler in a distributed way over the entire Google codebase, refine checks, and programmatically fix all existing instances of a problem in the codebase. Once the codebase was cleansed of an issue, the Clang team enabled the new diagnostic as a compiler error (not a warning, which the Clang team found Google developers ignored) to break the build, a report difficult to disregard. The Clang team was very successful improving the codebase through this strategy.
+### Clear The Bucket Before Fixing The Leak
+
+> Concurrent with FindBugs experimentation, the C++ workflow at Google was improving with the addition of new checks to the Clang compiler. The Clang team implemented new compiler checks, along with suggested fixes, then used ClangMR38 to run the updated compiler in a distributed way over the entire Google codebase, refine checks, and programmatically fix all existing instances of a problem in the codebase. Once the codebase was cleansed of an issue, the Clang team enabled the new diagnostic as a compiler error (not a warning, which the Clang team found Google developers ignored) to break the build, a report difficult to disregard. The Clang team was very successful improving the codebase through this strategy. - [Lessons From Building Static Code Analysis Tools At Google](https://cacm.acm.org/magazines/2018/4/226371-lessons-from-building-static-analysis-tools-at-google/fulltext)
+
+### Make It Part Of Their Daily Work
+
+> Most developers will not go out of their way to use static analysis tools. Following in the footsteps of many commercial tools, Google's initial implementation of FindBugs relied on engineers choosing to visit a central dashboard to see the issues found in their projects, though few of them actually made such a visit. Finding bugs in checked-in code (that may already be deployed and running without user-visible problems) is too late. To ensure that most or all engineers see static-analysis warnings, analysis tools must be integrated into the workflow and enabled by default for everyone. Instead of providing bug dashboards, projects like Error Prone extend the compiler with additional checks, and surface analysis results in code review. - [Lessons From Building Static Code Analysis Tools At Google](https://cacm.acm.org/magazines/2018/4/226371-lessons-from-building-static-analysis-tools-at-google/fulltext)
+
+### Make It Usefull For Them
+
+> Developer happiness is key. In our experience and in the literature, many attempts to integrate static analysis into a software-development organization fail. At Google, there is typically no mandate from management that engineers use static analysis tools. Engineers working on static analysis must demonstrate impact through hard data. For a static analysis project to succeed, developers must feel they benefit from and enjoy using it. - [Lessons From Building Static Code Analysis Tools At Google](https://cacm.acm.org/magazines/2018/4/226371-lessons-from-building-static-analysis-tools-at-google/fulltext)
 
 ## Further reading
 
