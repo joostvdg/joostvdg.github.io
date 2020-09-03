@@ -56,6 +56,10 @@ http://rstb.royalsocietypublishing.org/content/373/1753/20170239
 * https://www.infoq.com/articles/agile-agile-blah-blah/
 * https://www.infoq.com/articles/death-agile-beyond
 
+## Hermetic Builds
+
+> Build system. All code in Google's repository builds with a customized version of the Bazel build system,5 requiring that builds be **hermetic**; that is, all inputs must be explicitly declared and stored in source control so the builds are easily distributed and parallelized.
+
 ## Further reading
 
 ### Others
