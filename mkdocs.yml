@@ -51,7 +51,7 @@ nav:
   #   - What Is SDM: sdm/what-is-sdm.md
   #   - SDM Platform Anatomy: sdm/platform-anatomy.md
   - CloudBees:
-    - CloudBees Previews: cloudbees/cb-previews.md
+    # - CloudBees Previews: cloudbees/cb-previews.md
     - CloudBees CasC: cloudbees/cbci-casc.md
     - Single Sign On - AzureAD: cloudbees/sso-azure-ad.md
     - CloudBees Automate Teams: cloudbees/teams-automation.md
