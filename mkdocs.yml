@@ -199,7 +199,7 @@ theme:
         icon: material/toggle-switch
         name: Switch to light mode
   font:
-    text: 'Noto Serif'
+    text: 'Roboto'
     code: 'JetBrains Mono'
 
 plugins:
@@ -221,6 +221,7 @@ extra:
 
 # Extensions
 markdown_extensions:
+  - abbr
   - footnotes
   - admonition
   - codehilite:
