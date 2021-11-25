@@ -2,7 +2,7 @@
 site_name: J's Software Development Pages
 site_url: https://joostvdg.github.io
 # Copyright
-copyright: 'Copyright &copy; 2020 Joost van der Griendt'
+copyright: 'Copyright &copy; 2021 Joost van der Griendt'
 repo_name: 'joostvdg/joostvdg.github.io'
 repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
 
@@ -51,10 +51,12 @@ nav:
   #   - What Is SDM: sdm/what-is-sdm.md
   #   - SDM Platform Anatomy: sdm/platform-anatomy.md
   - CloudBees:
+    - CloudBees Previews: cloudbees/cb-previews.md
+    - CloudBees CasC: cloudbees/cbci-casc.md
     - Single Sign On - AzureAD: cloudbees/sso-azure-ad.md
     - CloudBees Automate Teams: cloudbees/teams-automation.md
-    - CloudBees Core on GKE: cloudbees/cbc-gke-helm.md
-    - CloudBees Core on EKS: cloudbees/cbc-eks.md
+    - CloudBees CI on GKE: cloudbees/cbc-gke-helm.md
+    - CloudBees CI on EKS: cloudbees/cbc-eks.md
     - Team Master Namespace: cloudbees/cbc-team-namespace.md
     - Multi-Cluster GKE: cloudbees/multi-cluster-gke.md
     - Multi-Cluster EKS: cloudbees/multi-cluster-eks.md
@@ -173,18 +175,32 @@ nav:
 # Configuration
 theme:
   features:
-    - tabs
-    - instant
+    - navigation.tabs
+    - navigation.instant
+    - navigation.tabs.sticky
+    - content.code.annotate
   name: 'material'
   language: 'en'
-  # icon:
-  #   logo: material/cloud
+  icon:
+    logo: material/cloud
   palette:
-    primary: 'orange'
-    accent: 'indigo'
+    # - primary: 'orange'
+    # - accent: 'indigo'
+    - scheme: default
+      primary: 'orange'
+      accent: 'indigo'
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate # 
+      primary: 'deep orange'
+      accent: 'teal'
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
   font:
-    text: 'Lato'
-    code: 'Cutive Mono'
+    text: 'Noto Serif'
+    code: 'JetBrains Mono'
 
 plugins:
   - git-revision-date-localized:
@@ -224,7 +240,8 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true 
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
