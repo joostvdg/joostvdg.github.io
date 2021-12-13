@@ -16,8 +16,15 @@ What we will do is leverage CloudBees CI's(CBCI) Configuration as Code (CasC) to
 * A running Kubernetes cluster
 * [Helm](https://helm.sh/)
 * [Helmfile](https://github.com/roboll/helmfile)
+* [Helm diff plugin](https://github.com/databus23/helm-diff)
 * [Kubectl](https://kubernetes.io/docs/tasks/tools/) with access to the Kubernetes cluster
 * CloudBees CI license
+
+#### Install Helm diff
+
+```sh
+helm plugin install https://github.com/databus23/helm-diff
+```
 
 ### Steps to take
 
