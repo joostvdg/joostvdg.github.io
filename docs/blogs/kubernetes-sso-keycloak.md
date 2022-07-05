@@ -628,48 +628,73 @@ I recommend using HTTPie[^28] rather than cUrl, as it is easier to use for these
 !!! warning
     The Bearer Token is only valid for a short period of time. If you wait too long, you will get `401 unauthorized`.
 
-The default REALM is `master`.
+The default REALM is `master`, and `URL` is the base URL of Keycloak.
 
-```bash tab="httpie"
-http --form POST "${KEYCLOAK_URL}/auth/realms/${REALM}/protocol/openid-connect/token" username="keycloak" password="${PASS}" client_id="admin-cli" grant_type="password"
-```
+=== "httpie"
 
-```bash tab="curl"
-curl ${KEYCLOAK_URL}/auth/realms/${REALM}/protocol/openid-connect/token -u keycloak:${PASS}
-```
+    ``` bash
+    #include <stdio.h>
+
+    http --form POST \
+     "${URL}/auth/realms/${REALM}/protocol/openid-connect/token" \
+      username="keycloak"  \
+      password="${PASS}"   \
+      client_id="admin-cli"\
+      grant_type="password"
+    ```
+
+=== "curl"
+
+    ``` bash
+    curl ${URL}/auth/realms/${REALM}/protocol/openid-connect/token -u keycloak:${PASS}
+    ```
 
 ##### Get Users
 
-```bash tab="httpie"
-http "${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users" "Authorization: Bearer $TOKEN"
-```
+=== "httpie"
 
-```bash tab="httpie - get user"
-http "${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users/${userId}" "Authorization: Bearer $TOKEN"
-```
+    ``` bash
+    http "${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users" \
+      "Authorization: Bearer $TOKEN"
+    ```
 
-```bash tab="curl"
-curl -v ${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users -H "Authorization: Bearer $TOKEN" | jq
-```
+=== "httpie - get user"
+
+    ``` bash
+    http "${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users/${userId}" \
+      "Authorization: Bearer $TOKEN"
+    ```
+
+=== "curl"
+
+    ``` bash
+    curl -v ${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users \
+      -H "Authorization: Bearer $TOKEN" | jq
+    ```
 
 ##### Create User
 
-```bash tab="httpie"
-http POST "${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users" \
-    "Authorization: Bearer $TOKEN" \
-    credentials:="[{\"value\" : \"mypass\", \"type\": \"password\" }]" \
-    email="user@example.com" \
-    firstName="hannibal" \
-    lastName="lecter" \
-    username="hlecter" \
-    groups:='["Robots"]' \
-    emailVerified:=true \
-    enabled:=true
-```
+=== "httpie"
 
-```bash tab="curl"
-curl -v ${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users -H "Authorization: Bearer $TOKEN" | jq
-```
+    ``` bash
+    http POST "${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users" \
+        "Authorization: Bearer $TOKEN" \
+        credentials:="[{\"value\" : \"mypass\", \"type\": \"password\" }]" \
+        email="user@example.com" \
+        firstName="hannibal" \
+        lastName="lecter" \
+        username="hlecter" \
+        groups:='["Robots"]' \
+        emailVerified:=true \
+        enabled:=true
+    ```
+
+=== "curl"
+
+    ``` bash
+    curl -v ${KEYCLOAK_URL}/auth/admin/realms/${REALM}/users \
+      -H "Authorization: Bearer $TOKEN" | jq
+    ```
 
 ### Verify
 
@@ -760,7 +785,7 @@ In order to avoid the having to store the Client ID and Client Secret, we're goi
 
 There's more ways to create these, but this is to keep it simple.
 
-```bash
+``` bash title="create generic kubernetes secret"
 kubectl create secret generic oic-auth \
   --from-literal=clientID="${CLIENT_ID}" \
   --from-literal=clientSecret="${CLIENT_SECRET}" \
