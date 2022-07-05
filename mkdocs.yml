@@ -179,7 +179,7 @@ theme:
     - navigation.instant
     - navigation.tabs.sticky
     - content.code.annotate
-  name: 'material'
+  name: material
   language: 'en'
   icon:
     logo: material/cloud
