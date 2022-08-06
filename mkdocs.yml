@@ -2,7 +2,7 @@
 site_name: J's Software Development Pages
 site_url: https://joostvdg.github.io
 # Copyright
-copyright: 'Copyright &copy; 2021 Joost van der Griendt'
+copyright: 'Copyright &copy; 2022 Joost van der Griendt'
 repo_name: 'joostvdg/joostvdg.github.io'
 repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
 
@@ -50,6 +50,8 @@ nav:
   # - SDM:
   #   - What Is SDM: sdm/what-is-sdm.md
   #   - SDM Platform Anatomy: sdm/platform-anatomy.md
+  - Jenkins On Kubernetes: jenkins/jenkins-on-kubernetes.md
+  - TAP & Jenkins: tanzu/jenkins-tap.md
   - CloudBees:
     # - CloudBees Previews: cloudbees/cb-previews.md
     - CloudBees CasC: cloudbees/cbci-casc.md
@@ -82,32 +84,8 @@ nav:
     - Docker Alternatives: jenkins-pipeline-examples/docker-alternatives.md
     - Maven Declarative: jenkins-pipeline-examples/maven-declarative.md
     - Docker Declarative: jenkins-pipeline-examples/docker-declarative.md
-- Jenkins X: 
-  - Build Packs: jenkinsx/build-packs.md
-  - Jenkins X Pipelines: jenkinsx/jx-pipelines.md
-  - Java Native Image Prod: 
-    - Intro: jenkinsx/java-native-prod/01-intro.md
-    - Cloud SQL: jenkinsx/java-native-prod/02-cloud-sql.md
-    - Quarkus: jenkinsx/java-native-prod/03-quarkus.md
-    - Import Into Jenkins X: jenkinsx/java-native-prod/04-jx-import.md
-    - Database Connection And Secrets: jenkinsx/java-native-prod/05-jx-secrets.md
-    - Native Image: jenkinsx/java-native-prod/06-native-image.md
-    - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
-    - Previews & Integration Tests: jenkinsx/java-native-prod/08-preview-int-test.md
-    - Production Improvements: jenkinsx/java-native-prod/09-production-improvements.md
-    - Promote To Production: jenkinsx/java-native-prod/10-promote-prod.md
-  - Create Builder Image: jenkinsx/builder-image.md
-  - JX Boot GKE: jenkinsx/jxboot.md
-  - JX Boot AKS: jenkinsx/jxboot-aks.md
-  - JX Boot & CloudBees Core: jenkinsx/aks-boot-core.md
-  - OpenShift 3.11: jenkinsx/rhos-311-minimal.md
-  - OpenShift 3.11 - Restricted: jenkinsx/rhos-311-restricted.md
-  - Lighthouse & Bitbucket: jenkinsx/lighthouse-bitbucket.md
-  - HelloWorld: jenkinsx/hello-world.md
-  - Maven: jenkinsx/maven.md
-  - Hybrid: jenkinsx/hybrid.md
-  - Example For Console Reel: jenkinsx/kubernetes-days.md
-- Containers:
+
+- Kubernetes & Docker:
   - OpenShift:
     - OpenShift 3.11 GCP(minimal): openshift/rhos311-gcp-minimal.md
     - OpenShift 3.11 GCP(medium): openshift/rhos311-gcp-medium.md
@@ -140,6 +118,36 @@ nav:
     - Swarm (mode) (TBD): docker/swarm.md
   - Linux:
     - SystemD: linux/systemd.md
+- VMware Tanzu:
+  - Tanzu: tanzu/index.md
+  - TAP on TKGs: tanzu/tap-on-tkgs.md
+  - TAP on TKGm on AWS: tanzu/tap-on-tkgm-on-aws.md 
+  - TAP Jenkins: tanzu/jenkins-tap.md
+- Jenkins X: 
+  - Build Packs: jenkinsx/build-packs.md
+  - Jenkins X Pipelines: jenkinsx/jx-pipelines.md
+  - Java Native Image Prod: 
+    - Intro: jenkinsx/java-native-prod/01-intro.md
+    - Cloud SQL: jenkinsx/java-native-prod/02-cloud-sql.md
+    - Quarkus: jenkinsx/java-native-prod/03-quarkus.md
+    - Import Into Jenkins X: jenkinsx/java-native-prod/04-jx-import.md
+    - Database Connection And Secrets: jenkinsx/java-native-prod/05-jx-secrets.md
+    - Native Image: jenkinsx/java-native-prod/06-native-image.md
+    - Pipeline Improvements: jenkinsx/java-native-prod/07-pipeline-improvements.md
+    - Previews & Integration Tests: jenkinsx/java-native-prod/08-preview-int-test.md
+    - Production Improvements: jenkinsx/java-native-prod/09-production-improvements.md
+    - Promote To Production: jenkinsx/java-native-prod/10-promote-prod.md
+  - Create Builder Image: jenkinsx/builder-image.md
+  - JX Boot GKE: jenkinsx/jxboot.md
+  - JX Boot AKS: jenkinsx/jxboot-aks.md
+  - JX Boot & CloudBees Core: jenkinsx/aks-boot-core.md
+  - OpenShift 3.11: jenkinsx/rhos-311-minimal.md
+  - OpenShift 3.11 - Restricted: jenkinsx/rhos-311-restricted.md
+  - Lighthouse & Bitbucket: jenkinsx/lighthouse-bitbucket.md
+  - HelloWorld: jenkinsx/hello-world.md
+  - Maven: jenkinsx/maven.md
+  - Hybrid: jenkinsx/hybrid.md
+  - Example For Console Reel: jenkinsx/kubernetes-days.md    
 - Software Eng.:
   - Automation:
     - Pulumi: cloud/automation-pulumi.md
