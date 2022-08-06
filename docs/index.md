@@ -13,7 +13,7 @@ My full name is *Joost van der Griendt*, which unfortunately cannot be pronounce
 
 In order to facilitate non-Dutch speakers, you can refer to me as J (Jay).
 
-I've worked as a Java developer in the past, but currently I'm employed as a Consultant at [CloudBees](www.CloudBees.com).
+I've worked as a Java developer in the past, but currently I'm employed as a Solutions Architect for Platform Services at (VMware) [Tanzu Labs](https://tanzu.vmware.com/labs), previously I worked as a Consultant at [CloudBees](www.CloudBees.com).
 My day-to-day work involves helping clients with CI/CD, Kubernetes and [Software Development Management](https://go.cloudbees.com/docs/lexicon/software-delivery-management.html). Or, in simple words, how to make it easy and less painful to get software to customers/clients that they want to pay for at scale.
 
 In my spare time I keep my development skills active by developing in [Go](https://github.com/joostvdg?utf8=%E2%9C%93&tab=repositories&q=&type=&language=go) and [Java](https://github.com/joostvdg?utf8=%E2%9C%93&tab=repositories&q=&type=&language=java) mostly. But I'm also a big fan of automating the creation and management of CI/CD (self-service) platforms.
