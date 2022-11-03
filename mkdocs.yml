@@ -211,6 +211,7 @@ theme:
     code: 'JetBrains Mono'
 
 plugins:
+  - tags
   - git-revision-date-localized:
       type: iso_datetime
   - search
