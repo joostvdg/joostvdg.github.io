@@ -237,6 +237,7 @@ markdown_extensions:
       linenums: true
       guess_lang: true
   - meta
+  - tables
   - toc:
       permalink: true
   - pymdownx.arithmatex
