@@ -132,7 +132,9 @@ Save the following as `cfssl.json`:
 
 ### Create CA
 
-Create a JSON config file for your CA: `ca.json`
+Create a JSON config file for your CA: `ca.json`.
+
+This file contains the values of your CA.
 
 ```json title="ca.json"
 {
@@ -145,13 +147,26 @@ Create a JSON config file for your CA: `ca.json`
     {
       "C": "NL",
       "L": "Utrecht",
-      "O": "Kearos Tanzu",
-      "OU": "Kearos Tanzu Root CA",
-      "ST": "The Netherlands"
+      "O": "Kearos",
+      "OU": "Kearos Tanzu",
+      "ST": "Utrecht"
     }
   ]
 }
 ```
+
+!!! info "Field names meaning"
+
+    If you are wondering what those names, such as `C`, `L`, mean, here's a table:
+
+    | Abbreviation | Description          |
+    | :----------- | :--------------------|
+    | **CN**       |  CommonName          |
+    | **OU**       |  OrganizationalUnit  |
+    | **O**        |  Organization        |        
+    | **L**        |  Locality            |
+    | **S**        |  StateOrProvinceName |   
+    | **C**        |  CountryName or CountryCode         |       
 
 And then generate the `ca.pem` and `ca-key.pem` files:
 
@@ -180,13 +195,15 @@ Create the following file: `base-service-cert.json`
             "L": "Utrecht",
             "O": "Kearos Tanzu",
             "OU": "Kearos Tanzu Hosts",
-            "ST": "The Netherlands"
+            "ST": "Utrecht"
         }
     ]
 }
 ```
 
 ## Install Shared Services Cluster Pre-requisites
+
+We need to setup permissions, install an Ingress Controller, and install our self-hosted Container Registry.
 
 ### PodSecurityPolicies
 
@@ -281,15 +298,22 @@ kubectl get pods -n ${KAPP_CONTROLLER_NAMESPACE} | grep kapp-controller
 
 ### Package Repository
 
-```sh
-tanzu package repository list -A
-```
+At the time of writing, November 2022, the latest supported TKG version is 1.6.
+So we use the 1.6 package repository.
 
 ```sh
 export PKG_REPO_NAME=tanzu-standard
 export PKG_REPO_URL=projects.registry.vmware.com/tkg/packages/standard/repo:v1.6.0
 export PKG_REPO_NAMESPACE=tanzu-package-repo-global
 ```
+
+!!! info
+    The namespace `tanzu-package-repo-global` is a special namespace.
+
+    If you install the Kapp Controller as we did, that namespace is considered the _packaging global_ namespace.
+    This mean that any package made available there, via a Package Repository, can have an instance installed in any namespace.
+
+    Otherwise, you can only create a package instance in the namespace the package is installed in.
 
 ```sh
 tanzu package repository add ${PKG_REPO_NAME} \
@@ -310,9 +334,13 @@ This should yield the following:
 Added package repository 'tanzu-standard' in namespace 'tanzu-package-repo-global'
 ```
 
+Verify the package repository is healthy.
+
 ```sh
 tanzu package repository get ${PKG_REPO_NAME} --namespace ${PKG_REPO_NAMESPACE}
 ```
+
+We can now view all the available packages.
 
 ```sh
 tanzu package available list
@@ -338,14 +366,75 @@ tanzu package available list
 
 ### Certmanager & Contour Packages
 
+We need an Ingress Controller.
+The Ingress Controller of choice for VMware is [Contour](https://projectcontour.io/).
+
+While not strictly necessary, VMware always recommends installing [Certmanager](https://cert-manager.io/docs/) before Contour.
+
+We don't specify anything specific for these two packakages, sticking to the [VMware suggested values](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.6/vmware-tanzu-kubernetes-grid-16/GUID-packages-ingress-contour.html).
+
 ```sh
 cd scripts && sh 10-cluster-add-contour-package.sh tap-s1
 ```
 
-## Harbor and prepare TAP images
+??? example "10-cluster-add-contour-package.sh"
 
+    ```sh title="10-cluster-add-contour-package.sh"
+    #!/bin/bash
+    CLUSTER_NAME=$1
+    INFRA=vsphere
+    PACKAGES_NAMESPACE="tanzu-packages"
+
+    echo "Creating namespace ${PACKAGES_NAMESPACE} for holding package installations"
+    kubectl create namespace ${PACKAGES_NAMESPACE}
+
+    ./install-package-with-latest-version.sh $CLUSTER_NAME cert-manager
+    kubectl get po,svc -n cert-manager
+
+    ./install-package-with-latest-version.sh $CLUSTER_NAME contour "${INFRA}-values/contour.yaml"
+    kubectl get po,svc,ing --namespace tanzu-system-ingress
+    ```
+
+??? example "install-package-with-latest-version.sh"
+
+    ```sh title="install-package-with-latest-version.sh"
+    #!/bin/bash
+    CLUSTER_NAME=$1
+    PACKAGE_NAME=$2
+    VALUES_FILE=$3
+    PACKAGES_NAMESPACE="tanzu-packages"
+
+    echo "Retrieving latest version of ${PACKAGE_NAME}.tanzu.vmware.com package"
+    PACKAGE_VERSION=$(tanzu package \
+        available list ${PACKAGE_NAME}.tanzu.vmware.com -A \
+        --output json | jq --raw-output 'sort_by(.version)|reverse|.[0].version')
+
+    echo "Installing package ${PACKAGE_NAME} version ${PACKAGE_VERSION} into namespace ${PACKAGES_NAMESPACE}"
+    INSTALL_COMMAND="tanzu package install ${PACKAGE_NAME}  \
+        --package-name ${PACKAGE_NAME}.tanzu.vmware.com \
+        --namespace ${PACKAGES_NAMESPACE} \
+        --version ${PACKAGE_VERSION} "
+
+    if [ -n "$3" ]; then
+        echo "Found a values file, appending to command"
+        INSTALL_COMMAND="${INSTALL_COMMAND} --values-file ${VALUES_FILE}"
+    fi
+    eval $INSTALL_COMMAND
+    ```
+
+## Install Harbor and prepare TAP images
+
+We use [Harbor](https://goharbor.io/) as our Container Registry of choice.
+
+Once installed, we relocate the OCI images and bundles related to TAP and Tanzu Build Service (TBS) to Harbor.
 
 ### Prepare Harbor Certificate
+
+The first thing we will do, is generate a certificate for Harbor.
+For this, we need to know all the names it should be known as, for both internal and external traffic.
+
+In this scenario, I'm using [sslip.io](https://sslip.io/) to fake a full FQN domain name.
+It will resolve `<anything>.<valid IP address>.sslip.io` to the valid IP addres.
 
 ```sh
 export LB_IP=$(kubectl get svc -n tanzu-system-ingress envoy -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
@@ -356,9 +445,7 @@ echo "HARBOR_HOSTNAME=${HARBOR_HOSTNAME}"
 echo "NOTARY_HOSTNAME=${NOTARY_HOSTNAME}"
 ```
 
-```sh
-cd ssl
-```
+We use the `cfssl` utility to generate the Harbor certificate, signing it with the CA we created earlier.
 
 ```sh
 cfssl gencert -ca ssl/ca.pem -ca-key ssl/ca-key.pem \
@@ -369,6 +456,9 @@ cfssl gencert -ca ssl/ca.pem -ca-key ssl/ca-key.pem \
    ssl/base-service-cert.json   | cfssljson -bare harbor
 ```
 
+I like to separate my files, so I move them to the `ssl` folder, but feel free to skip this.
+Just remember that if you do, change the location of the files in the environment variables below.
+
 ```sh
 mv harbor.csr  ssl/harbor.csr
 mv harbor-key.pem ssl/harbor-key.pem
@@ -377,19 +467,26 @@ mv harbor.pem ssl/harbor.pem
 
 ### Configure Harbor
 
+We need to set the storage class for several volumes.
+
 ```sh
 kubectl get storageclass
 ```
+
+In my case, the storage class is what is defined below.
+I also load up the certificate values into environment variables.
 
 ```sh
 export STORAGE_CLASS="vc01cl01-t0compute"
 export CLUSTER_NAME=tap-s1
 export HARBOR_NAMESPACE=tanzu-system-registry
-export HARBOR_ADMIN_PASS='VMware123!'
+export HARBOR_ADMIN_PASS=''
 export TLS_CERT=$(cat ssl/harbor.pem)
 export TLS_KEY=$(cat ssl/harbor-key.pem)
 export CA_CERT=$(cat ssl/ca.pem)
 ```
+
+This way we can leverage **ytt** to use our values template to generate the values file we will use.
 
 ```sh
 ytt -f ytt/harbor.ytt.yml \
@@ -403,13 +500,118 @@ ytt -f ytt/harbor.ytt.yml \
   > "vsphere-values/${CLUSTER_NAME}-harbor.yml"
 ```
 
+??? example "Harbor Values Template"
+
+    There are a couple of more secret values in here.
+    They need to be defined, but won't be used in this guide.
+
+    Feel free to change them.
+
+    ```yaml title="ytt/harbor.ytt.yml"
+    #@ load("@ytt:data", "data")
+    ---
+    namespace: #@ data.values.namespace
+    hostname: #@ data.values.hostname
+    port:
+      https: 443
+    logLevel: info
+    tlsCertificate:
+      tls.crt: #@ data.values.tlsCert
+      tls.key: #@ data.values.tlsKey
+      ca.crt: #@ data.values.caCert
+    enableContourHttpProxy: true
+    harborAdminPassword: #@ data.values.adminPassword
+    secretKey: j0Kn0UlfSGzMTBx6
+    database:
+      password: 4Oj0848rTIvzJiMc
+    core:
+      replicas: 1
+      secret: vFib2c87qg1FFZqI
+      xsrfKey: sGn5nIgBQKdwx89tZLO5pTJAqbCwVRU8
+    jobservice:
+      replicas: 1
+      secret: vFib2c87qg1FFZqI
+    registry:
+      replicas: 1
+      secret: vFib2c87qg1FFZqI
+    notary:
+      enabled: true
+    trivy:
+      enabled: true
+      replicas: 1
+      gitHubToken: ""
+      skipUpdate: true
+    persistence:
+      persistentVolumeClaim:
+        registry:
+          storageClass: #@ data.values.storaceClass
+          accessMode: ReadWriteOnce
+          size: 100Gi
+        jobservice:
+          storageClass: #@ data.values.storaceClass
+          accessMode: ReadWriteOnce
+          size: 1Gi
+        database:
+          storageClass: #@ data.values.storaceClass
+          accessMode: ReadWriteOnce
+          size: 1Gi
+        redis:
+          storageClass: #@ data.values.storaceClass
+          accessMode: ReadWriteOnce
+          size: 1Gi
+        trivy:
+          storageClass: #@ data.values.storaceClass
+          accessMode: ReadWriteOnce
+          size: 5Gi
+      imageChartStorage:
+        disableredirect: false
+        type: filesystem
+        filesystem:
+          rootdirectory: /storage
+    pspNames: vmware-system-privileged
+    metrics:
+      enabled: false
+      core:
+        path: /metrics
+        port: 8001
+      registry:
+        path: /metrics
+        port: 8001
+      jobservice:
+        path: /metrics
+        port: 8001
+      exporter:
+        path: /metrics
+        port: 8001
+    network:
+      ipFamilies: ["IPv4", "IPv6"]
+    ```
+
 ### Install Harbor
+
+Now that we have the values file, we can install Harbor.
 
 ```sh
 sh 20-cluster-add-harbor-package.sh tap-s1
 ```
 
+??? example "20-cluster-add-harbor-package.sh"
+
+    ```sh title="20-cluster-add-harbor-package.sh"
+    #!/bin/bash
+    CLUSTER_NAME=$1
+    INFRA=vsphere
+    HARBOR_VALUES_CLUSTER="${INFRA}-values/${CLUSTER_NAME}-harbor.yml"
+    PACKAGES_NAMESPACE="tanzu-packages"
+
+    ./install-package-with-latest-version.sh $CLUSTER_NAME harbor "${HARBOR_VALUES_CLUSTER}"
+    kubectl --namespace tanzu-system-registry get po,svc
+    ```
+
 ### Create Harbor Projects
+
+To store images for TAP and for our applications, we need projects in Harbor to exist.
+We make them all public, to avoid having to create image pull secret, but feel free to do otherwise.
 
 Create the following Harbor Projects:
 
@@ -425,9 +627,8 @@ http -a admin:${HARBOR_ADMIN_PASS} POST "https://${HARBOR_HOSTNAME}/api/v2.0/pro
 
 ## Copy TAP Images To Harbor
 
-* configure local Docker to accept Harbor's CA
+* [configure local Docker client](https://docs.docker.com/engine/security/certificates/) to accept Harbor's CA
 * use Carvel's `imgpkg` to copy TAP images from Tanzu Network to Harbor
-* do we also need to copy TBS's images?
 
 ```sh
 export TAP_VERSION="1.3.0"
@@ -743,3 +944,4 @@ But unsure if that would not hit [the current known issue](https://docs.vmware.c
 * [TBS - Offline Installation](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-tbs-offline-install-deps.html)
 * [TBS Dependencies - Airgapped](https://docs.vmware.com/en/Tanzu-Build-Service/1.6/vmware-tanzu-build-service/GUID-installing-no-kapp.html#installation-to-air-gapped-environment)
 * [Known Issue TAP 1.3.0 Cosign - TUF Key Invalid](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-scst-policy-known-issues.html?hWord=N4IghgNiBcIC4FcBmB9AtgSwE5YPZZAF8g)
+* [Docker - Trust Registry Custom Certificate/CA](https://docs.docker.com/engine/security/certificates/)
