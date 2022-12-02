@@ -50,6 +50,62 @@ Here are the pre-requisites for all the commands:
 * http (or Curl)
 * Carvel tools (mostly `ytt`)
 
+## TKGs Considerations
+
+!!! warning
+
+    There are several requirements to your TKGs workload clusters.
+    
+    1. **Trust CA**: In order to trust the certificate of Harbor for using images from there, 
+    your worker nodes need to trust it.
+
+    2. **Memory & CPU** TAP is resource intensive, reserve at least 12 CPU and 10GB of RAM for a full TAP install. About half for Run or Build profiles.
+
+    3. **Storage** Tanzu Build Service will store its images on the nodes. These worker nodes need at leat 70GB of storage available.
+
+    ??? example "Cluster Definition"
+
+        ```yaml title="tap-s1.yml" linenums="1" hl_lines="20-24 34-38"
+        apiVersion: run.tanzu.vmware.com/v1alpha2
+        kind: TanzuKubernetesCluster
+        metadata:
+          name: tap-s1
+          namespace: tap
+        spec:
+          topology:
+            controlPlane:
+              replicas: 1
+              vmClass: best-effort-large
+              storageClass: vc01cl01-t0compute 
+              tkr:
+                reference:
+                  name: v1.22.9---vmware.1-tkg.1.cc71bc8
+            nodePools:
+            - name: worker-pool-1
+              replicas: 1
+              vmClass: best-effort-4xlarge
+              storageClass: vc01cl01-t0compute
+              volumes:
+                - name: containerd
+                  mountPath: /var/lib/containerd
+                  capacity:
+                    storage: 90Gi 
+              tkr:
+                reference:
+                  name: v1.22.9---vmware.1-tkg.1.cc71bc8
+          settings:
+            storage:
+              defaultClass: vc01cl01-t0compute
+            network:
+              cni:
+                name: antrea    
+              trust: 
+                additionalTrustedCAs: 
+                  - name: KearosCA
+                    data: |
+                      LS0tLS1CRUdJTiBDRVJUSUZJQ0...
+        ```
+
 ## Certificate Authority
 
 In Addition, we need to have the Certificate Authority.
@@ -672,7 +728,7 @@ imgpkg copy -b registry.tanzu.vmware.com/build-service/package-repo:$TBS_VERSION
 
 ### Copy TBS Dependencies
 
-!!! important
+!!! warning
     This did not work for me!
 
 ```sh
@@ -733,7 +789,7 @@ kbld -f /tmp/descriptor-bundle/.imgpkg/images.yml \
 kp import --show-changes -f kbld-output.yml --registry-ca-cert-path ssl/ca.pem
 ```
 
-!!! important
+!!! danger
     This looks at the current cluster for KPack configuration, which will override what's inside of `kbld`'s output.
 
     I assume this is the variable managed by `buildservice.kp_default_repository` in TAP's configuration.
@@ -855,7 +911,7 @@ echo "DOMAIN_NAME=${DOMAIN_NAME}"
 ./tap-developer-namespace.sh
 ```
 
-!!! important
+!!! failure
     As of November 1st, we have to exclude the package `policy.apps.tanzu.vmware.com`, due to a breaking bug.
     Currently the  only remedy is [to disable it](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-scst-policy-known-issues.html?hWord=N4IghgNiBcIC4FcBmB9AtgSwE5YPZZAF8g).
 
@@ -912,7 +968,7 @@ PROXY_URL=$(kubectl get httpproxy -n ${DEVELOPER_NAMESPACE} -l contour.networkin
 http $PROXY_URL
 ```
 
-!!! important "App Update"
+!!! info "App Update"
 
     The Bundle of the application will always have the same tag.
     The latest build will get this tag, and this means only the latest bundle will only ever have this tag.
