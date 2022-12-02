@@ -123,6 +123,8 @@ nav:
   - TAP on TKGs: tanzu/tap-on-tkgs.md
   - TAP on TKGm on AWS: tanzu/tap-on-tkgm-on-aws.md 
   - TAP Jenkins: tanzu/jenkins-tap.md
+  - TKG Grafana with LDAP: tanzu/tkg-grafana.md
+  - Dependencies: tanzu/dependencies.md
 - Jenkins X: 
   - Build Packs: jenkinsx/build-packs.md
   - Jenkins X Pipelines: jenkinsx/jx-pipelines.md
