@@ -320,6 +320,41 @@ data:
 kubectl apply -f grafana-ldap-configmap.yml
 ```
 
+### LDAP/AD Config
+
+??? example "Group configuration when using LDAP/AD"
+
+    ```toml
+    [[servers]]
+    host = “34.220.248.176”
+    port = 389
+    use_ssl = false
+    start_tls = false
+    ssl_skip_verify = false
+    bind_dn = “grafana@fullauto.local”
+    bind_password = ‘adasdads@’
+    search_filter = “(sAMAccountName=%s)”
+    search_base_dns = [“dc=fullauto,dc=local”]
+    [servers.attributes]
+    name = “givenName”
+    surname = “sn”
+    username = “sAMAccountName”
+    member_of = “memberOf”
+    email =  “mail”
+    [[servers.group_mappings]]
+    group_dn = “CN=grafana-admin,CN=Users,DC=fullauto,DC=LOCAL”
+    org_role = “Admin”
+    [[servers.group_mappings]]
+    group_dn = “CN=grafana-editor,CN=Users,DC=fullauto,DC=LOCAL”
+    org_role = “Editor”
+    [[servers.group_mappings]]
+    group_dn = “CN=grafana-viewer,CN=Users,DC=fullauto,DC=LOCAL”
+    org_role = “Viewer”
+    [[servers.group_mappings]]
+    group_dn = “*”
+    org_role = “Viewer”
+    ```
+
 ## Grafana LDAP Overlay
 
 Because the Grafana package does not support the LDAP values, we patch the Grafana installation using a YTT Overlay.
