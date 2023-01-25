@@ -189,6 +189,7 @@ theme:
     - navigation.instant
     - navigation.tabs.sticky
     - content.code.annotate
+    - toc.follow
   name: material
   language: 'en'
   icon:
@@ -242,6 +243,7 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
+      toc_depth: 3
   - pymdownx.arithmatex
   - pymdownx.betterem:
       smart_enable: all

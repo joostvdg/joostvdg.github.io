@@ -3,6 +3,7 @@ tags:
   - TKG
   - Vsphere
   - TAP
+  - 1.3
   - TANZU
 ---
 
@@ -26,6 +27,9 @@ This guide is about installing and using TAP on TGKs, with the following additio
     * Workload Cluster, `tap-w1` for a TAP Run profile
 
 The scripts and other configuration files can found in my [Tanzu Example](https://github.com/joostvdg/tanzu-example/tree/main/tap) repository.
+
+!!! Warning
+    This guide is tested with TAP `1.3.x`, not everything applies for `1.4.0+`.
 
 ## Steps
 
@@ -288,7 +292,7 @@ The Kapp Controller comes with its on requirements on permissions, so we begin w
 kubectl apply -f tanzu-system-kapp-ctrl-restricted.yaml
 ```
 
-### Kapp Controller Pod Security Policy
+#### Kapp Controller Pod Security Policy
 
 ```yaml title="tanzu-system-kapp-ctrl-restricted.yaml"
 apiVersion: policy/v1beta1
@@ -327,7 +331,7 @@ spec:
   readOnlyRootFilesystem: false
 ```
 
-### Install Kapp Controller
+#### Install Kapp Controller
 
 We have to add a [Kapp Controller Configuration](https://carvel.dev/kapp-controller/docs/v0.42.0/controller-config/),
 so the Kapp Controller accepts our Custom CA.
@@ -352,7 +356,7 @@ kubectl apply -f kapp-controller.yml
 kubectl get pods -n ${KAPP_CONTROLLER_NAMESPACE} | grep kapp-controller
 ```
 
-### Package Repository
+#### Package Repository
 
 At the time of writing, November 2022, the latest supported TKG version is 1.6.
 So we use the 1.6 package repository.
@@ -521,7 +525,7 @@ mv harbor-key.pem ssl/harbor-key.pem
 mv harbor.pem ssl/harbor.pem
 ```
 
-### Configure Harbor
+### Configure Harbor Values
 
 We need to set the storage class for several volumes.
 
@@ -664,7 +668,7 @@ sh 20-cluster-add-harbor-package.sh tap-s1
     kubectl --namespace tanzu-system-registry get po,svc
     ```
 
-### Create Harbor Projects
+#### Create Harbor Projects
 
 To store images for TAP and for our applications, we need projects in Harbor to exist.
 We make them all public, to avoid having to create image pull secret, but feel free to do otherwise.
@@ -746,7 +750,7 @@ tanzu package repository add tbs-full-deps-repository \
 tanzu package install full-tbs-deps -p full-tbs-deps.tanzu.vmware.com -v ${TBS_VERSION} -n tap-install
 ```
 
-### TBS Airgapped - 1
+#### TBS Airgapped - 1
 
 !!! important
     This solution worked, but only when doing both the image uploads as the `kbld` and `kpack` steps!
@@ -797,7 +801,7 @@ kp import --show-changes -f kbld-output.yml --registry-ca-cert-path ssl/ca.pem
     It ends up in a **ConfigMap** named `kp-config` in the namespace `kpack` as `default.repository`.
     Change this if the output of the `--show-changes` gives the wrong URL.
 
-### TBS Airgapped - 2
+#### TBS Airgapped - 2
 
 ```sh
 imgpkg copy -b registry.tanzu.vmware.com/build-service/bundle:${TBS_VERSION}\
@@ -824,7 +828,9 @@ docker push harbor.10.220.2.199.sslip.io/tap-apps/tap-trp-gcp:0.1.0
 kubectl run tmp-shell-3 --rm -i --tty --image harbor.10.220.2.199.sslip.io/tap-apps/tap-trp-gcp:0.1.0 -- /bin/bash
 ```
 
-## Install TAP Run Profile
+## TAP Build Cluster
+
+### Install TAP Build Profile
 
 
 ```sh
@@ -849,13 +855,101 @@ export CA_CERT=$(cat ssl/ca.pem)
 ./tap-build-install.sh
 ```
 
-```sh
-./tap-developer-namespace.sh
-```
+### Setup Developer Namespace (Build)
+
+To make a namespace usable for TAP, we need the following:
+
+* the namespace needs to exist
+* we need the `registry-credentials` secret for reading/writing to and from the OCI registry
+* [rbac permissions](https://github.com/joostvdg/tanzu-example/blob/main/tap/scripts/dev-namespace-rbac.yml) for the namespace's default **Service Account**
+
+!!! Example "Setup Develop Namespace Script"
+    This script resides in the [tap/scripts](https://github.com/joostvdg/tanzu-example/blob/main/tap/scripts/tap-developer-namespace.sh) folder.
+
+    ```sh
+    ./tap-developer-namespace.sh
+    ```
+
+### Test Workload
+
+We first set the name of the developer namespace you have setup for TAP.
 
 ```sh
-./tap-workload-demo.sh
+DEVELOPER_NAMESPACE=${DEVELOPER_NAMESPACE:-"default"}
 ```
+
+We can then either use the CLI or the `Workload` CR to create our test workload.
+
+=== "Tanzu CLI"
+    ```sh
+    tanzu apps workload create smoke-app \
+      --git-repo https://github.com/sample-accelerators/tanzu-java-web-app.git \
+      --git-branch main \
+      --type web \
+      --label app.kubernetes.io/part-of=smoke-app \
+      --annotation autoscaling.knative.dev/minScale=1 \
+      --yes \
+      -n "$DEVELOPER_NAMESPACE"
+    ```
+=== "Kubernetes Manifest"
+    ```sh
+    echo "apiVersion: carto.run/v1alpha1
+    kind: Workload
+    metadata:
+      labels:
+        app.kubernetes.io/part-of: smoke-app
+        apps.tanzu.vmware.com/workload-type: web
+      name: smoke-app
+      namespace: ${DEVELOPER_NAMESPACE}
+    spec:
+      params:
+      - name: annotations
+        value:
+          autoscaling.knative.dev/minScale: \"1\"
+      source:
+        git:
+          ref:
+            branch: main
+          url: https://github.com/sample-accelerators/tanzu-java-web-app.git
+    " > workload.yml
+    ```
+
+    ```sh
+    kubectl apply -f workload.yml
+    ```
+
+Use `kubectl wait` to wait for the app to be ready.
+
+```sh
+kubectl wait --for=condition=Ready Workload smoke-app --timeout=10m -n "$DEVELOPER_NAMESPACE"
+```
+
+To see the logs:
+
+```sh
+tanzu apps workload tail smoke-app
+```
+
+To get the status:
+
+```sh
+tanzu apps workload get smoke-app
+```
+
+And then we can delete our test workload if want to.
+
+```sh
+tanzu apps workload delete smoke-app -y -n "$DEVELOPER_NAMESPACE"
+```
+
+!!! Example "Test TAP Workload Script"
+    This script resides in the [tap/scripts](https://github.com/joostvdg/tanzu-example/blob/main/tap/scripts/tap-developer-namespace.sh) folder.
+
+    It does all the steps outlined in this paragraph, including the wait and cleanup.
+
+    ```sh
+    ./tap-workload-demo.sh
+    ```
 
 ## Tap Run Cluster
 
@@ -876,8 +970,6 @@ kubectl create clusterrolebinding default-tkg-admin-privileged-binding --cluster
 
 ### TAP Run Profile Install
 
-* https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-multicluster-reference-tap-values-run-sample.html
-
 ```sh
 export INSTALL_REGISTRY_HOSTNAME=
 export INSTALL_REGISTRY_USERNAME=
@@ -893,23 +985,47 @@ export DEVELOPER_NAMESPACE="default"
 export CA_CERT=$(cat ssl/ca.pem)
 ```
 
-```sh
-./tap-run-install.sh
-```
+The script below will install TAP with and its direct requirements (e.g., secret).
 
-```sh
-export LB_IP=$(kubectl get svc -n tanzu-system-ingress envoy -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
-export DOMAIN_NAME="${LB_IP}.sslip.io"
-echo "DOMAIN_NAME=${DOMAIN_NAME}"
-```
+What we need are the following:
 
-```sh
-./tap-run-install.sh
-```
+* Cluster Essentials:
+  * Kapp Controller
+  * SecretGen Controller
+* `tap-install` namespace
+* credentials for the OCI registry we pull TAP images from
+* credentials for the OCI registry we pull build images from (images build in the Build cluster)
+* package repository containing the TAP packages
 
-```sh
-./tap-developer-namespace.sh
-```
+!!! Example "TAP Install Script"
+    This script resides in the [tap/scripts](https://github.com/joostvdg/tanzu-example/blob/main/tap/scripts/tap-run-install.sh) folder.
+
+    It Creates the necessary namespaces, secrets and installs Kapp Controller, SecretGen Controller and lastly; TAP.
+
+    ```sh
+    export LB_IP=$(kubectl get svc -n tanzu-system-ingress envoy -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+    export DOMAIN_NAME="${LB_IP}.sslip.io"
+    echo "DOMAIN_NAME=${DOMAIN_NAME}"
+    ```
+
+    ```sh
+    ./tap-run-install.sh
+    ```
+
+### Setup Developer Namespace (RUN)
+
+To make a namespace usable for TAP, we need the following:
+
+* the namespace needs to exist
+* we need the `registry-credentials` secret for reading/writing to and from the OCI registry
+* [rbac permissions](https://github.com/joostvdg/tanzu-example/blob/main/tap/scripts/dev-namespace-rbac.yml) for the namespace's default **Service Account**
+
+!!! Example "TAP Install Script"
+    This script resides in the [tap/scripts](https://github.com/joostvdg/tanzu-example/blob/main/tap/scripts/tap-developer-namespace.sh) folder.
+
+    ```sh
+    ./tap-developer-namespace.sh
+    ```
 
 !!! failure
     As of November 1st, we have to exclude the package `policy.apps.tanzu.vmware.com`, due to a breaking bug.
