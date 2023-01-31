@@ -121,7 +121,7 @@ nav:
 - VMware Tanzu:
   - Tanzu: tanzu/index.md
   - TAP on TKGs: tanzu/tap-on-tkgs.md
-  - TAP on TKGm on AWS: tanzu/tap-on-tkgm-on-aws.md 
+  - Harbor with custom CA: tanzu/harbor-ca.md
   - TAP Jenkins: tanzu/jenkins-tap.md
   - TKG Grafana with LDAP: tanzu/tkg-grafana.md
   - Dependencies: tanzu/dependencies.md
