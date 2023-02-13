@@ -224,7 +224,7 @@ plugins:
 extra:
   analytics:
     provider: google
-    property: G-GZ9MK3JYBG
+    property: G-353607268
   disqus: 'joostvdg-github-io'
   social:
     - icon: fontawesome/brands/github-alt
