@@ -222,6 +222,9 @@ plugins:
       minify_html: true
 
 extra:
+  analytics:
+    provider: google
+    property: G-GZ9MK3JYBG
   disqus: 'joostvdg-github-io'
   social:
     - icon: fontawesome/brands/github-alt
@@ -261,6 +264,3 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
 
-google_analytics:
-  - 'UA-145385967-1'
-  - 'auto'
