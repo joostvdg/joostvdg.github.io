@@ -2,7 +2,7 @@
 site_name: J's Software Development Pages
 site_url: https://joostvdg.github.io
 # Copyright
-copyright: 'Copyright &copy; 2022 Joost van der Griendt'
+copyright: 'Copyright &copy; 2023 Joost van der Griendt'
 repo_name: 'joostvdg/joostvdg.github.io'
 repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
 
@@ -120,9 +120,21 @@ nav:
     - SystemD: linux/systemd.md
 - VMware Tanzu:
   - Tanzu: tanzu/index.md
-  - TAP on TKGs: tanzu/tap-on-tkgs.md
+  - TAP on TKGs:
+    - TAP 1.3.x:
+      - tanzu/tkgs/tap13-overview.md
+      - tanzu/tkgs/tap13/build-basic.md
+      - tanzu/tkgs/tap13/build-scanning-testing.md
+      - tanzu/tkgs/tap13/run.md
+      - tanzu/tkgs/tap13/view.md
+  - TAP DevSecOps: 
+    - tanzu/grype-airgapped.md
+  - TAP Misc:
+    - tanzu/tap/fluxcd-ssh.md
+    - tanzu/tap/gitea.md
+  - Setup Custom CA: tanzu/custom-ca.md
   - Harbor with custom CA: tanzu/harbor-ca.md
-  - TAP Jenkins: tanzu/jenkins-tap.md
+  - Minio with custom CA: tanzu/minio-ca.md
   - TKG Grafana with LDAP: tanzu/tkg-grafana.md
   - Dependencies: tanzu/dependencies.md
 - Jenkins X: 
@@ -189,6 +201,7 @@ theme:
     - navigation.instant
     - navigation.tabs.sticky
     - content.code.annotate
+    - content.code.copy
     - toc.follow
   name: material
   language: 'en'
@@ -239,9 +252,6 @@ markdown_extensions:
   - abbr
   - footnotes
   - admonition
-  - codehilite:
-      linenums: true
-      guess_lang: true
   - meta
   - tables
   - toc:
@@ -253,11 +263,20 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.details
   - pymdownx.critic
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
+  - pymdownx.snippets
   - pymdownx.magiclink
   - pymdownx.mark
   - pymdownx.smartsymbols
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true 
   - pymdownx.tasklist:
