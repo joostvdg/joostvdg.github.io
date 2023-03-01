@@ -7,11 +7,10 @@ tags:
   - TANZU
 ---
 
-title: TAP on TKGs
+title: TAP 1.3.x on TKGs
 description: Tanzu Application Platform on vSphere with Tanzu
 
 # TAP on TKGs
-
 
 !!! Success "Update January 2023"
     This guide has been updated January 31st, to reflect TAP **1.3.4**.
@@ -48,7 +47,7 @@ The scripts and other configuration files can found in my [Tanzu Example](https:
 * Install TAP View profile
 * Use TAP GUI to create and register new Workloads
 
-## Machine Pre-requisites
+## Install Machine Pre-requisites
 
 We have pre-requisites for the cluster, and we have pre-requisites for the machine which runs the commands.
 Here are the pre-requisites for all the commands:
@@ -250,13 +249,11 @@ imgpkg copy --registry-verify-certs=false \
  --to-repo ${HARBOR_HOSTNAME}/tap/tap-packages
 ```
 
-
 ### Copy TBS Images To Harbor
 
 * https://docs.vmware.com/en/Tanzu-Build-Service/1.7/vmware-tanzu-build-service/GUID-installing.html
 * https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-tbs-offline-install-deps.html
 
-#### Determine TBS Version
 
 ```sh
 tanzu package available list buildservice.tanzu.vmware.com --namespace tap-install
@@ -267,7 +264,6 @@ TAP `1.3.4` ships with TBS `1.7.4`:
 ```sh
 TBS_VERSION=1.7.4
 ```
-#### Copy TBS Images 
 
 !!!! Warning
     The TBS Full Dependency tar file is approximately 10GB of data.
@@ -284,7 +280,153 @@ imgpkg copy --tar tbs-full-deps-${TBS_VERSION}.tar \
   --to-repo=$HARBOR_HOSTNAME/buildservice/tbs-full-deps
 ```
 
-#### Install TBS Repository
+## Satisfy Pre-requisites
+
+A TAP installation has some pre-requisites, which are expected to exist in the cluster.
+
+* **Cluster Essentials**: this means the **Kapp** and **SecretGen** controllers
+* **Namespace**: the namespace to install TAP in, `tap-install` is the convention
+* **Registry Secrets**: the secrets to the registry used for installing packages from, and the registry to push build images to
+* **TAP Package Repository**: to install the TAP package, the TAP Package Repository needs to exist in the cluster
+
+When installing a Build, Iterate, or Full profile in an internetes restricted environment, we also need:
+
+* **Tanzu Build Service Dependencies**: TBS assumes it can download all of its dependencies durring the install, if it can't, the installation fails
+
+The scripts below are called in order via the profile's install script.
+We cover them so you know what is in them, and why.
+
+The scripts themselves are available [in GitHub](https://github.com/joostvdg/tanzu-example/tree/main/tap/1.3.4/scripts).
+
+### Cluster Essentials
+
+!!! Warning "Not Required when using TMC"
+    When using **Tanzu Mission Controll** to create your clusters, TMC installs the Cluster Essentials for you.
+
+A basic script to install the **Kapp** and **SecretGen** controllers.
+
+For vSphere with Tanzu, TKGs, you need a specific version of the Kapp configuration.
+
+We assume you are using a Custom CA, so this script also creates a ConfigMap to configure Kapp to trust the CA certificate.
+
+```sh title="install-cluster-essentials.sh"
+#!/usr/bin/env bash
+set -euo pipefail
+KAPP_CONTROLLER_NAMESPACE=${KAPP_CONTROLLER_NAMESPACE:-"tkg-system"}
+SECRET_GEN_VERSION=${SECRET_GEN_VERSION:-"v0.9.1"}
+PLATFORM=${PLATFORM:="tkgs"}
+TKGS="tkgs"
+
+echo "> Installing Kapp Controller"
+if [[ $PLATFORM eq $TGKS ]]
+then
+  # This is a TKGs version
+  ytt -f ytt/kapp-controller.ytt.yml \
+    -v namespace="$KAPP_CONTROLLER_NAMESPACE" \
+    -v caCert="${CA_CERT}" \
+    > "kapp-controller.yml"
+  kubectl apply -f kapp-controller.yml
+else
+  # Non TKGs
+  kubectl apply -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml
+  echo "Configure Custom Cert for Kapp Controller"
+  ytt -f ytt/kapp-controller-config.ytt.yml \
+    -v namespace=kapp-controller \
+    -v caCert="${CA_CERT}" \
+    > "kapp-controller-config.yml"
+  kubectl apply -f kapp-controller-config.yml --namespace kapp-controller
+fi
+
+echo "> Installing SecretGen Controller with version ${SECRET_GEN_VERSION}"
+kapp deploy -y -a sg -f https://github.com/vmware-tanzu/carvel-secretgen-controller/releases/download/"$SECRET_GEN_VERSION"/release.yml%
+```
+
+### Secrets & Package Repo
+
+The convention is to install TAP and its packages in the namespace `tap-install`.
+
+With this script we create the namespace, the two registry secrets (install and build), and install the TAP Package Repository.
+
+We use the `tanzu secret registry` command to create the registry secrets.
+This uses the **SecretGen** controller we install via the Cluster Essentials.
+
+The reason for this, is that it allows you to create the secret once, and have it available in all the namespace that need it.
+When you need to update these secrets, you don't have to hunt for them, you use the same `tanzu secret registry` command.
+
+!!! Danger
+    Be aware the Build secret is also `--export-to-all-namespaces` in this scenario.
+
+    For a POC or single team installation that is fine.
+
+    When you want to fine grained permissions to allow each development team to only upload images to their respective repository, you have to change this!
+
+```sh title="install-tap-fundamentals.sh"
+#!/usr/bin/env bash
+set -euo pipefail
+
+TAP_VERSION=${TAP_VERSION:-"1.3.4"}
+TAP_INSTALL_NAMESPACE="tap-install"
+DOMAIN_NAME=${DOMAIN_NAME:-"127.0.0.1.nip.io"}
+INSTALL_REGISTRY_SECRET="tap-registry"
+BUILD_REGISTRY_SECRET="registry-credentials"
+
+echo "> Creating tap-install namespace: $TAP_INSTALL_NAMESPACE"
+kubectl create ns $TAP_INSTALL_NAMESPACE || true
+
+INSTALL_REGISTRY_HOSTNAME=${INSTALL_REGISTRY_HOSTNAME:-"registry.tanzu.vmware.com"}
+INSTALL_REGISTRY_USERNAME=${INSTALL_REGISTRY_USERNAME:-""}
+INSTALL_REGISTRY_PASSWORD=${INSTALL_REGISTRY_PASSWORD:-""}
+INSTALL_REGISTRY_REPO=${INSTALL_REGISTRY_REPO:-"tap/tap-packages"}
+
+echo "> Creating ${INSTALL_REGISTRY_SECRET} secret"
+tanzu secret registry add ${INSTALL_REGISTRY_SECRET} \
+    --server    $INSTALL_REGISTRY_HOSTNAME \
+    --username  $INSTALL_REGISTRY_USERNAME \
+    --password  $INSTALL_REGISTRY_PASSWORD \
+    --namespace ${TAP_INSTALL_NAMESPACE} \
+    --export-to-all-namespaces \
+    --yes
+
+BUILD_REGISTRY=${BUILD_REGISTRY:-"dev.registry.tanzu.vmware.com"}
+BUILD_REGISTRY_REPO=${BUILD_REGISTRY_REPO:-""}
+BUILD_REGISTRY_USER=${BUILD_REGISTRY_USER:-""}
+BUILD_REGISTRY_PASS=${BUILD_REGISTRY_PASS:-""}
+
+echo "> Creating ${BUILD_REGISTRY_SECRET} secret"
+tanzu secret registry add ${BUILD_REGISTRY_SECRET} \
+    --server    $BUILD_REGISTRY \
+    --username  $BUILD_REGISTRY_USER \
+    --password  $BUILD_REGISTRY_PASS \
+    --namespace ${TAP_INSTALL_NAMESPACE} \
+    --export-to-all-namespaces \
+    --yes
+
+PACKAGE_REPOSITORY="$INSTALL_REGISTRY_HOSTNAME"/$INSTALL_REGISTRY_REPO:"$TAP_VERSION"
+echo "> Install TAP Package Repository: ${PACKAGE_REPOSITORY}"
+tanzu package repository add tanzu-tap-repository --url "$PACKAGE_REPOSITORY" --namespace ${TAP_INSTALL_NAMESPACE} || true
+kubectl wait --for=condition=ReconcileSucceeded PackageRepository tanzu-tap-repository -n ${TAP_INSTALL_NAMESPACE} --timeout=15m
+```
+
+### TBS Dependencies
+
+!!! Info "Build, Iterate, Full Profiles only"
+    When installing other profiles, such as View and Run, you do not need Tanzu Build Service or its dependencies.
+
+When in an internetes restricted environment, we need to install the TBS dependencies by ourselves.
+
+This way we can leverage relocated images that come from a local source we can use, such as Harbor.
+
+The commands below assume you've already relocated the images to an accessible Harbor instance.
+
+```sh
+HARBOR_HOSTNAME=
+TBS_VERSION=
+```
+
+!!! Info
+    TAP `1.3.4` ships with Tanzu Build Service (TBS) version `1.7.4`.
+
+Install the package repository, pointing to the manifests in Harbor.
 
 ```sh
 tanzu package repository add tbs-full-deps-repository \
@@ -292,11 +434,13 @@ tanzu package repository add tbs-full-deps-repository \
   --namespace tap-install
 ```
 
+Verify the packages are available.
+
 ```sh
 tanzu package repository list --namespace tap-install
 ```
 
-#### Install TBS Packages
+We can then install the all the dependencies.
 
 ```sh
 tanzu package install full-tbs-deps \
@@ -305,42 +449,22 @@ tanzu package install full-tbs-deps \
   -n tap-install
 ```
 
-## TAP Build Cluster
+## Install TAP Profiles
 
-### Install Basic Supply Chain
+The suggested order is as follows:
 
-The basic profile uses the basic supply chain.
+* [View](/tanzu/tkgs/tap13/view)
+* [Build - Basic Supply Chain](/tanzu/tkgs/tap13/build-basic/)
+* [Build - Scanning & Testing](/tanzu/tkgs/tap13/build-scanning-testing/)
+* [Run](/tanzu/tkgs/tap13/run/)
 
-This means it does not install Grype and the Metadata store, and other scanning related tools.
+With the addition that if you install for the first time, you first in stall the Basic Supply Chain with the Build profile.
 
-```sh
-export INSTALL_TAP_FUNDAMENTALS="true" # creates namespace and secrets
-export INSTALL_REGISTRY_HOSTNAME=${HARBOR_HOSTNAME}
-export INSTALL_REGISTRY_USERNAME=admin
-export INSTALL_REGISTRY_PASSWORD=''
+Once you prove the Build profile works, you update it to the Scanning & Testing supply chain.
 
-export BUILD_REGISTRY=${HARBOR_HOSTNAME}
-export BUILD_REGISTRY_REPO=tap-apps
-export BUILD_REGISTRY_USER=admin
-export BUILD_REGISTRY_PASS=''
+You can also wait with that update, until you've completed the complete View, Build, and Run setup.
 
-export TAP_VERSION=1.3.4
-export TBS_REPO=buildservice/tbs-full-deps
-
-export DOMAIN_NAME=""
-export DEVELOPER_NAMESPACE="default"
-export CA_CERT=$(cat ssl/ca.pem)
-
-export INSTALL_CLUSTER_ESSENTIALS="false" # installs Kapp Controller & SecretGen Controller
-```
-
-We set `INSTALL_CLUSTER_ESSENTIALS` to false, as TMC installs those for us.
-
-```sh
-./tap-build-install-basic.sh
-```
-
-### Setup Developer Namespace (Build)
+## Setup Developer Namespace
 
 To make a namespace usable for TAP, we need the following:
 
@@ -348,164 +472,49 @@ To make a namespace usable for TAP, we need the following:
 * we need the `registry-credentials` secret for reading/writing to and from the OCI registry
 * [rbac permissions](https://github.com/joostvdg/tanzu-example/blob/main/tap/scripts/dev-namespace-rbac.yml) for the namespace's default **Service Account**
 
-!!! Example "Setup Develop Namespace Script"
-    This script resides in the [tap/1.3.4/scripts](https://github.com/joostvdg/tanzu-example/tree/main/tap/1.3.4/scripts) folder.
-
-    ```sh
-    ./tap-developer-namespace.sh
-    ```
-
-### Test Workload
-
-We first set the name of the developer namespace you have setup for TAP.
+This script resides in the [tap/1.3.4/scripts](https://github.com/joostvdg/tanzu-example/tree/main/tap/1.3.4/scripts) folder.
 
 ```sh
-DEVELOPER_NAMESPACE=${DEVELOPER_NAMESPACE:-"default"}
+./tap-developer-namespace.sh
 ```
 
-We can then either use the CLI or the `Workload` CR to create our test workload.
-
-=== "Tanzu CLI"
-    ```sh
-    tanzu apps workload create smoke-app \
-      --git-repo https://github.com/sample-accelerators/tanzu-java-web-app.git \
-      --git-branch main \
-      --type web \
-      --label app.kubernetes.io/part-of=smoke-app \
-      --annotation autoscaling.knative.dev/minScale=1 \
-      --yes \
-      -n "$DEVELOPER_NAMESPACE"
-    ```
-=== "Kubernetes Manifest"
-    ```sh
-    echo "apiVersion: carto.run/v1alpha1
-    kind: Workload
-    metadata:
-      labels:
-        app.kubernetes.io/part-of: smoke-app
-        apps.tanzu.vmware.com/workload-type: web
-      name: smoke-app
-      namespace: ${DEVELOPER_NAMESPACE}
-    spec:
-      params:
-      - name: annotations
-        value:
-          autoscaling.knative.dev/minScale: \"1\"
-      source:
-        git:
-          ref:
-            branch: main
-          url: https://github.com/sample-accelerators/tanzu-java-web-app.git
-    " > workload.yml
-    ```
+??? Example "Create Developer Namespace Script"
 
     ```sh
-    kubectl apply -f workload.yml
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    DEVELOPER_NAMESPACE=${DEVELOPER_NAMESPACE:-"default"}
+    BUILD_REGISTRY=${BUILD_REGISTRY:-""}
+    BUILD_REGISTRY_USER=${BUILD_REGISTRY_USER:-""}
+    BUILD_REGISTRY_PASS=${BUILD_REGISTRY_PASS:-""}
+
+    echo "> Creating Dev namspace $DEVELOPER_NAMESPACE"
+    kubectl create ns ${DEVELOPER_NAMESPACE} || true
+
+    echo "> Creating Dev namespace registry secret"
+    tanzu secret registry add registry-credentials  \
+      --server    $BUILD_REGISTRY \
+      --username  $BUILD_REGISTRY_USER \
+      --password  $BUILD_REGISTRY_PASS \
+      --namespace ${DEVELOPER_NAMESPACE} \
+      --yes
+
+    echo "> Configuring RBAC for developer namespace"
+    kubectl apply -f dev-namespace-rbac.yml -n $DEVELOPER_NAMESPACE
     ```
 
-Use `kubectl wait` to wait for the app to be ready.
-
-```sh
-kubectl wait --for=condition=Ready Workload smoke-app --timeout=10m -n "$DEVELOPER_NAMESPACE"
-```
-
-To see the logs:
-
-```sh
-tanzu apps workload tail smoke-app
-```
-
-To get the status:
-
-```sh
-tanzu apps workload get smoke-app
-```
-
-And then we can delete our test workload if want to.
-
-```sh
-tanzu apps workload delete smoke-app -y -n "$DEVELOPER_NAMESPACE"
-```
-
-!!! Example "Test TAP Workload Script"
-    This script resides in the [tap/scripts](https://github.com/joostvdg/tanzu-example/blob/main/tap/scripts) folder.
-
-    It does all the steps outlined in this paragraph, including the wait and cleanup.
+    You can also run this as follows, to setup a different namespace than `default`.
 
     ```sh
-    ./tap-workload-demo.sh
+    DEVELOPER_NAMESPACE="some-other-namespace" ./tap-build-install-basic.sh
     ```
-
-## Tap Run Cluster
-
-### TAP Run Profile Install
-
-```sh
-export INSTALL_TAP_FUNDAMENTALS="true" # creates namespace and secrets
-export INSTALL_REGISTRY_HOSTNAME=${HARBOR_HOSTNAME}
-export INSTALL_REGISTRY_USERNAME=admin
-export INSTALL_REGISTRY_PASSWORD=''
-
-export BUILD_REGISTRY=${HARBOR_HOSTNAME}
-export BUILD_REGISTRY_REPO=tap-apps
-export BUILD_REGISTRY_USER=admin
-export BUILD_REGISTRY_PASS=''
-
-export TAP_VERSION=1.3.4
-export TBS_REPO=buildservice/tbs-full-deps
-
-export DOMAIN_NAME=""
-export VIEW_DOMAIN_NAME=""
-export DEVELOPER_NAMESPACE="default"
-export CA_CERT=$(cat ssl/ca.pem)
-export INSTALL_CLUSTER_ESSENTIALS="false" # installs Kapp Controller & SecretGen Controller
-```
-
-We set `INSTALL_CLUSTER_ESSENTIALS` to false, as TMC installs those for us.
-
-The script below will install TAP with and its direct requirements (e.g., secret).
-
-What we need are the following:
-
-* Cluster Essentials:
-  * Kapp Controller
-  * SecretGen Controller
-* `tap-install` namespace
-* credentials for the OCI registry we pull TAP images from
-* credentials for the OCI registry we pull build images from (images build in the Build cluster)
-* package repository containing the TAP packages
-
-!!! Example "TAP Install Script"
-    This script resides in the [tap/1.3.4/scripts](https://github.com/joostvdg/tanzu-example/tree/main/tap/1.3.4/scripts) folder.
-
-    ```sh
-    ./tap-run-install.sh
-    ```
-
-### Setup Developer Namespace (RUN)
-
-To make a namespace usable for TAP, we need the following:
-
-* the namespace needs to exist
-* we need the `registry-credentials` secret for reading/writing to and from the OCI registry
-* [rbac permissions](https://github.com/joostvdg/tanzu-example/blob/main/tap/scripts/dev-namespace-rbac.yml) for the namespace's default **Service Account**
-
-!!! Example "TAP Install Script"
-    This script resides in the [tap/1.3.4/scripts](https://github.com/joostvdg/tanzu-example/tree/main/tap/1.3.4/scripts) folder.
-
-    ```sh
-    ./tap-developer-namespace.sh
-    ```
-
-!!! failure
-    As of November 1st, we have to exclude the package `policy.apps.tanzu.vmware.com`, due to a breaking bug.
-    Currently the  only remedy is [to disable it](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-scst-policy-known-issues.html?hWord=N4IghgNiBcIC4FcBmB9AtgSwE5YPZZAF8g).
 
 ## Cross-cluster Test
 
 * https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-multicluster-getting-started.html#start-the-workload-on-the-build-profile-cluster-1
 
-### Get Deliverable From Build Cluster
+### Get Deliverable
 
 1. verify Deliverable content for your workload exists in the **Build** cluster
     ```sh
@@ -524,7 +533,7 @@ To make a namespace usable for TAP, we need the following:
     kubectl get deliverables --namespace ${DEVELOPER_NAMESPACE}
     ```
 
-### Verify Application is accessible
+### Verify Application
 
 ```sh
 kubectl get httpproxy -n ${DEVELOPER_NAMESPACE} -l contour.networking.knative.dev/parent=tap-hello-world -ojsonpath="{.items.*.spec.virtualhost}"
@@ -546,193 +555,6 @@ http $PROXY_URL
     TAP will automatically detect the updated bundle (tag) and update the deployment.
 
     So the copying of the Deliverable, is a one time step.
-
-
-
-## View Cluster
-
-### Create Service Accounts
-
-* https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-tap-gui-cluster-view-setup.html
-
-* create: `tap-gui-viewer-service-account-rbac.yaml`
-
-```yaml
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: tap-gui
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  namespace: tap-gui
-  name: tap-gui-viewer
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: tap-gui-read-k8s
-subjects:
-- kind: ServiceAccount
-  namespace: tap-gui
-  name: tap-gui-viewer
-roleRef:
-  kind: ClusterRole
-  name: k8s-reader
-  apiGroup: rbac.authorization.k8s.io
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: k8s-reader
-rules:
-- apiGroups: ['']
-  resources: ['pods', 'pods/log', 'services', 'configmaps', 'limitranges']
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['metrics.k8s.io']
-  resources: ['pods']
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['apps']
-  resources: ['deployments', 'replicasets', 'statefulsets', 'daemonsets']
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['autoscaling']
-  resources: ['horizontalpodautoscalers']
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['networking.k8s.io']
-  resources: ['ingresses']
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['networking.internal.knative.dev']
-  resources: ['serverlessservices']
-  verbs: ['get', 'watch', 'list']
-- apiGroups: [ 'autoscaling.internal.knative.dev' ]
-  resources: [ 'podautoscalers' ]
-  verbs: [ 'get', 'watch', 'list' ]
-- apiGroups: ['serving.knative.dev']
-  resources:
-  - configurations
-  - revisions
-  - routes
-  - services
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['carto.run']
-  resources:
-  - clusterconfigtemplates
-  - clusterdeliveries
-  - clusterdeploymenttemplates
-  - clusterimagetemplates
-  - clusterruntemplates
-  - clustersourcetemplates
-  - clustersupplychains
-  - clustertemplates
-  - deliverables
-  - runnables
-  - workloads
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['source.toolkit.fluxcd.io']
-  resources:
-  - gitrepositories
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['source.apps.tanzu.vmware.com']
-  resources:
-  - imagerepositories
-  - mavenartifacts
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['conventions.apps.tanzu.vmware.com']
-  resources:
-  - podintents
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['kpack.io']
-  resources:
-  - images
-  - builds
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['scanning.apps.tanzu.vmware.com']
-  resources:
-  - sourcescans
-  - imagescans
-  - scanpolicies
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['tekton.dev']
-  resources:
-  - taskruns
-  - pipelineruns
-  verbs: ['get', 'watch', 'list']
-- apiGroups: ['kappctrl.k14s.io']
-  resources:
-  - apps
-  verbs: ['get', 'watch', 'list']
-- apiGroups: [ 'batch' ]
-  resources: [ 'jobs', 'cronjobs' ]
-  verbs: [ 'get', 'watch', 'list' ]
-- apiGroups: ['conventions.carto.run']
-  resources:
-  - podintents
-  verbs: ['get', 'watch', 'list']
-```
-
-And apply it to the Run and Build clusters.
-
-```sh
-kubectl create -f tap-gui-viewer-service-account-rbac.yaml
-```
-
-```sh
-CLUSTER_URL=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
-
-CLUSTER_TOKEN=$(kubectl -n tap-gui get secret $(kubectl -n tap-gui get sa tap-gui-viewer -o=json \
-| jq -r '.secrets[0].name') -o=json \
-| jq -r '.data["token"]' \
-| base64 --decode)
-
-echo CLUSTER_URL: $CLUSTER_URL
-echo CLUSTER_TOKEN: $CLUSTER_TOKEN
-```
-
-Run this for each cluster, and fill it in in the next step.
-
-### Install Variables
-
-```sh
-export INSTALL_TAP_FUNDAMENTALS="true" # creates namespace and secrets
-export INSTALL_REGISTRY_HOSTNAME=${HARBOR_HOSTNAME}
-export INSTALL_REGISTRY_USERNAME=admin
-export INSTALL_REGISTRY_PASSWORD=''
-
-export BUILD_REGISTRY=${HARBOR_HOSTNAME}
-export BUILD_REGISTRY_REPO=tap-apps
-export BUILD_REGISTRY_USER=admin
-export BUILD_REGISTRY_PASS=''
-
-export TAP_VERSION=1.3.4
-export DOMAIN_NAME=""
-export CA_CERT=$(cat ssl/ca.pem)
-
-export BUILD_CLUSTER_URL=https://1.2.3.4:6443
-export BUILD_CLUSTER_NAME=my-build-cluster
-export BUILD_CLUSTER_TOKEN=''
-
-export RUN_CLUSTER_URL=https://5.6.7.8:6443
-export RUN_CLUSTER_NAME=my-run-cluster
-export RUN_CLUSTER_TOKEN=
-
-export INSTALL_CLUSTER_ESSENTIALS="false" # installs Kapp Controller & SecretGen Controller
-```
-
-We set `INSTALL_CLUSTER_ESSENTIALS` to false, as TMC installs those for us.
-
-### Run Install Script
-
-```sh
-./tap-view-install.sh
-```
-
-## Sigstore Stack Airgapped
-
-It looks like you would need to setup the Sigstore stack yourself in a reachable place.
-
-There is some guidance on [how to do so](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-scst-policy-install-sigstore-stack.html?hWord=N4IghgNiBcIC4FcBmB9AtgSwE5YPZZAF8g).
-But unsure if that would not hit [the current known issue](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-scst-policy-known-issues.html?hWord=N4IghgNiBcIC4FcBmB9AtgSwE5YPZZAF8g).
 
 ## Links
 
