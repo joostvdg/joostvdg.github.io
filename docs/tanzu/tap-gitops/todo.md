@@ -1,12 +1,15 @@
 # TODO
 
-* verify ordering: TAP Install + Kustomize Controller + Kustomization
-    * can we leverage the KAPP annotations?
-    * https://carvel.dev/kapp-controller/docs/v0.48.x/packaging-gitops/#gitops-scenario
 * verify separating packages vs. applications
     * packages with TAP/FluxCD
     * applications with ArgoCD
-* use Docker in Docker alternative from ITQ guy
+* write about Supply Chain extensions
+    * Tekton Pipelines with Tasks
+    * Tekton Tasks + Workspace + overwriting the OOTB Supply Chain
+    * Change folder structure for GitOps repository
+    * Test Containers + DinD
+    * use Docker in Docker alternative from ITQ guy
+
 
 
 ## Notes - TAP GitOps 1.7
