@@ -120,6 +120,11 @@ nav:
     - SystemD: linux/systemd.md
 - VMware Tanzu:
   - Tanzu: tanzu/index.md
+  - TAP GitOps: 
+    - Intro: tanzu/tap-gitops/index.md
+    - Services: tanzu/tap-gitops/services.md
+    - TAP GitOps Prep: tanzu/tap-gitops/tap-gitops-prep.md
+    - TAP Build: tanzu/tap-gitops/tap-build.md
   - TAP on TKGs:
     - TAP 1.3.x:
       - tanzu/tkgs/tap13-overview.md
