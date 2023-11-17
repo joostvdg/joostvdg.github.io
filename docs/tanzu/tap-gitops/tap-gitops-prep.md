@@ -46,7 +46,7 @@ Then, select the appropriate release from the dropdown, for example `Release 1.5
 
 ![Tanzu Network - TAP Release](../../images/tap-gitops/tanzu-network-download-gitops-ri.png)
 
-One of the items in the list, is the `Tanzu GitOps Reference Implementation`, download this tarbal and extract it to a useful folder[^5].
+One of the items in the list, is the `Tanzu GitOps Reference Implementation`, download this archive and extract it to a useful folder[^5].
 You need these for configuring your installation folder for bootstrapping.
 
 !!! Info "Hint for downloading"
@@ -171,6 +171,7 @@ Beyond the sensitive values file that we encrypt, there are a few more steps we 
     * and the _additional source_
 1. Share Secrets (Optional)
     * extending the _Additional Kubernetes resources_
+1. FluxCD resources (optional)
 
 Let's look at each.
 
@@ -191,8 +192,8 @@ All the installation files, schema files, and your values are given to YTT to pr
 
 For the values that go into the non-sensitive values file, you have two main sources of information.
 
-1. the [TAP installation documentation](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.5/tap/multicluster-installing-multicluster.html), having an example for each profile[^10]
-1. you can request the values schema from the package, when made available via a package repository
+1. The [TAP installation documentation](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.5/tap/multicluster-installing-multicluster.html), having an example for each profile[^10]
+1. You can request the values schema from the package, when made available via a package repository
 
 The second is a bit difficult to do if you are using the GitOps installation, as you are creating the profile before the package repository is installed.
 
@@ -283,9 +284,9 @@ There are likely other Kubernetes resources you want to apply to the cluster, th
 
 I recommend seperating these into three categories:
 
-1. resources that are required for each TAP workload
-1. resources that need to exist only once, and are strongly tied to TAP
-1. resources that need to exist only once, and are loosely tied to TAP
+1. Resources that are required for each TAP workload
+1. Resources that need to exist only once, and are ***strongly*** tied to TAP
+1. Resources that need to exist only once, and are ***loosely*** tied to TAP
 
 The first category are resources you want to cover with the Namespace Provisioner, addressed in the next section.
 
@@ -294,7 +295,7 @@ The second and third, are more complicated.
 You might be wondering what the complications are. Let's take a look:
 
 * TAP is synchronized with KAPP Controller, this is not a full-featured GitOps solution
-    * the main problem is its lack of ordering and ability to convey dependencies
+    * the main problem is its limited options for ordering and ability to convey dependencies
 * TAP includes the base installation of FluxCD, but not its Kustomize or Helm controllers
 * Some of the resources require secrets in the cluster
 * Some of the resources use CRDs that are lazily installed during the TAP install
@@ -323,28 +324,7 @@ In this, we create the most basic schema file we can:
 custom:
 ```
 
-Next, we want add the Flux Controllers, for Kustomizations[^16] and for Helm[^14] charts.
-
-Let's create another subfolder, called `flux-controllers`, and in there we paste the release files of those Controllers[^15][^17].
-
-For safety, we comment out the Namespace in these files.
-
-!!! Danger "Namespaces and KAPP Packages"
-
-    When KAPP Controller installs a Package, it add ownership labels on each resource created via that Package.
-
-    If the Package creates a Namespace, it owns it, and other Packages are not allowed to create or update it.
-    When a Package attempts to do so, the KAPP Controller blocks the action and returns an error.
-
-    In the current scenario, we create the configuration for the Flux Controllers before Flux is installed via the TAP Install.
-
-    In order for the TAP Package to own the `flux-system` Namespace, the Tanzu Sync Package **most not** create it.
-
-    The best course of action here, is the _manually_ create the Namespace prior to running the Tanzu Sync deploy:
-
-    ```sh
-    kubectl create namespace flux-system
-    ```
+Before we make use of this schema, let's first examine the Namespace Provisioner.
 
 ### Namespace Provisioner
 
@@ -369,8 +349,8 @@ namespace_provisioner:
 
 The Namespace Provisioner splits its configuration into two:
 
-1. the main sources, which is how the provisioner creates the namespace
-1. additional sources, which are, as the name implies, _additional_ Kubernetes resources it applies to each namespace it creates
+1. The main sources, which is how the provisioner creates the namespace
+1. Additional sources, which are, as the name implies, _additional_ Kubernetes resources it applies to each namespace it creates
 
 !!! Danger "TAP 1.5 secrets issue"
 
@@ -490,7 +470,7 @@ The `namespaces` file contains more details.
 
 ### Share Secrets
 
-Combining the Namespace Provisioner configuration and the additional resources configuration, we can address adding additional secrets.
+Combining the Namespace Provisioner configuration and the additional resources configuration (the custom Schema we added), we can address adding additional secrets.
 
 The way to do this, is as follows:
 
@@ -554,9 +534,6 @@ cluster-config/
 │   ├── custom
 │   │   ├── 00-custom-schema.yaml
 │   │   └── 01-shared.yaml
-│   ├── flux-controllers
-│   │   ├── flux-helm-controller.yaml
-│   │   └── flux-kustomize-controller.yaml
 │   └── tap-install
 └── values
     ├── non-sensitive-values.yaml
@@ -672,6 +649,139 @@ You can open it to view the file and its explanation.
     spec:
       fromNamespace: shared
     ```
+
+### FluxCD Controllers
+
+Next, we want add the FluxCD Controllers for Kustomizations[^16] and Helm[^14] charts.
+This way we can leverage FluxCD to manage any other resources we want to install into the cluster that are tightly coupled to TAP.
+
+Think of a Tekton Pipeline, or a Cartographer `Workload` resource.
+
+In order to synchronize these Controllers and their respective resources, we use a Carvel `App`.
+Making use of the same Git synchronization as the Tanzu Sync does, we can even re-use its secret.
+
+You might be wondering why we cannot add these directly, like we did with the secrets.
+Unfortunately, for `Kustomization`'s to work, we need a (Flux) _Source_. For example, a `GitRepository`.
+
+The CRD of this CR is installed by the FluxCD Source Controller, which in turn is installed by TAP.
+This means we need to wait until the CRD exists before we can create the Source.
+
+Which means we need to guarantee the Tanzu Sync is not the one synchronizing these resources, as it will block installing TAP if it finds a resource that the Kubernetes cluster doesn't support (i.e., a CR, of which the CRD does not exist).
+
+First, we create the `App` CR, which _can_ exist in the `cluster-config/config` tree.
+This way, the Tanzu Sync App creates this as a separate synchronizer.
+It does its reconcillation loop until the required CRDs exist and eventually reconcile successfully.
+
+As a start, we copy the Tanzu Sync `App`, located at `tanzu-sync/app/config/.tanzu-managed/sync.yaml`.
+Assuming we put the Flux configuration files in the same Git repository, you can re-use the Git configuration (located at `tanzu-sync/app/values/tanzu-sync.yaml`).
+
+The reduce the complexity, we remove the `valuesFrom` section from the `template`, and add the values directly.
+
+We keep the `paths` section, and keep the path as `config`. Meaning, when we add the FluxCD resources, such as the Controllers, `GitRepository` and so on, we put them in a sub-folder called `config` which is a convention of Carvel Apps.
+
+```yaml title="platforms/clusters/full-tap-cluster/cluster-config/config/custom/02-flux-inital-content-sync.yaml"
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: flux-initial-content-sync
+  namespace: tanzu-sync
+  annotations:
+    kapp.k14s.io/change-group: tanzu-sync
+    kapp.k14s.io/change-rule.0: "upsert after upserting tanzu-sync-secrets"
+    kapp.k14s.io/change-rule.1: "upsert after upserting install-registry-export"
+    #! if registry credentials are deleted before sync-managed software is removed, uninstall can be slow or fail.
+    kapp.k14s.io/change-rule.2: "delete before deleting tanzu-sync-secrets"
+    kapp.k14s.io/change-rule.3: "delete before deleting install-registry-export"
+spec:
+  serviceAccountName: sync-sa
+  fetch:
+    - git:
+        url: git@github.com:joostvdg/tap-gitops.git
+        ref:  origin/main
+        secretRef:
+          name: sync-git
+        subPath: platforms/clusters/full-tap-cluster/flux
+  template:
+    - ytt:
+        paths: 
+        - config
+  deploy:
+    - kapp: {}
+```
+
+Our folder now looks like this:
+
+```sh
+cluster-config/
+├── config
+│   ├── custom
+│   │   ├── 00-custom-schema.yaml
+│   │   ├── 01-shared.yaml
+│   │   └── 02-flux-sync.yaml
+│   └── tap-install
+└── values
+    ├── non-sensitive-values.yaml
+    ├── tap-install-values.yaml
+    └── tap-sensitive-values.sops.yaml
+```
+
+And our synchronizations are looking like this:
+
+![GitOps Synchronizations](../../images/tap-gitops/gitops-synchronizations.png)
+
+1. We run the deploy script of the TAP GitOps Reference Implementation, which installs the `sync` App into the `tanzu-sync` Namespace
+1. Included in the content that is synchronized to the cluster via the `sync` App, is the TAP `PackageInstall`, and the Flux `App` we just created
+1. The TAP package installs all the other packages we configure with the TAP install values, generally guided by the `profile` we select
+1. One the packages that TAP installs, is the `namespace-provisioner`, and when opting for the GitOps configuration for this package, it installs _another_ package, called `provisioner` in the `tap-namespace-provisioning` Namespace
+1. The last step in this chain, is the `provisioner` App creating the Namespaces you defined in its `desired-namespaces.yaml` config file
+
+I hope the picture and explanation clarify what is going on, and what ***App*** is synchronizing what.
+
+Let's create the configuration folders mentioned in the `App`, we create the following folders:
+
+1. The `flux` folder, as top level folder in parallel to the `cluster-config` and `tanzu-sync` folders
+1. The `config` folder as sub-folder, to house all the files that we synchronize directly to the cluster
+1. In the `config` folder, we create another sub-folder `controllers`, it is here we paste the release files of those Controllers[^15][^17].
+
+For safety, we comment out the Namespace manifest in these files.
+
+!!! Danger "Namespaces and KAPP Packages"
+
+    When KAPP Controller installs a Package, it add ownership labels on each resource created via that Package.
+
+    If the Package creates a Namespace, it owns it, and other Packages are not allowed to create or update it.
+    When a Package attempts to do so, the KAPP Controller blocks the action and returns an error.
+
+    In the current scenario, we create the configuration for the Flux Controllers before Flux is installed via the TAP Install.
+
+    In order for the TAP Package to own the `flux-system` Namespace, the Tanzu Sync Package **most not** create it.
+
+    The best course of action here, is the _manually_ create the Namespace prior to running the Tanzu Sync deploy:
+
+    ```sh
+    kubectl create namespace flux-system
+    ```
+
+Our folder structure now looks like this:
+
+```sh
+.
+├── cluster-config
+│   ├── config
+│   └── values
+├── flux
+│   └── config
+│       ├── controllers
+│       │   ├── helm.yaml
+│       │   └── kustomize.yaml
+│       ├── kustomizations
+│       └── sources
+├── ns-provisioner
+└── tanzu-sync
+```
+
+For clarity, I also included the `kustomizations` and `sources` folders.
+It is there where we create the FluxCD content files later.
 
 ## TAP Install Reconciliation
 

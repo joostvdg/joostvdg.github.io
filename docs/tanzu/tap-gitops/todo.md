@@ -1,22 +1,28 @@
 # TODO
 
-* verify separating packages vs. applications
-    * packages with TAP/FluxCD
-    * applications with ArgoCD
+* Next steps
+    * Applications with ArgoCD
+    * Supply Chain creation
+    * Supply Chain optimization
+    * Customize TAP GUI
+    * Configure Auth for TAP
 * write about Supply Chain extensions
     * Tekton Pipelines with Tasks
     * Tekton Tasks + Workspace + overwriting the OOTB Supply Chain
     * Change folder structure for GitOps repository
     * Test Containers + DinD
     * use Docker in Docker alternative from ITQ guy
-
+* TAP in EKS
+    * Use KMS
+    * Use Workload Identity
+    * Use RDS for Hello World App
 
 
 ## Notes - TAP GitOps 1.7
 
 * https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.7/tap/install-gitops-sops.html
 
-## TKR 1.26 PodSecurity
+## TKR 1.26 Admission Policies
 
 * see issue: https://vmware.slack.com/archives/C02D60T1ZDJ/p1697207282314919
 * create cluster via TMC

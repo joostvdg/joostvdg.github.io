@@ -645,3 +645,304 @@ For leveraging HashiCorp Vault to manage your certificates, I refer you to the o
 [^21]: [FluxCD Bootstrap for GitHub](https://fluxcd.io/flux/installation/bootstrap/github/)
 [^22]: [GitLab - Git Server (and CI/CD platform)](https://about.gitlab.com/install/)
 [^23]: [HashiCorp Vault - Using Vault to manage PKI infra in Kubernetes](https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine)
+```sh
+flux-sources
+├── helm-prereqs
+│   ├── aquasecurity-repo.yaml
+│   ├── bitnami-repo.yaml
+│   ├── gitlab.yaml
+│   ├── hashicorp-repo.yaml
+│   ├── jenkins-repo.yaml
+│   ├── openldap-repo.yaml
+│   ├── sonarqube-repo.yaml
+│   ├── sonatype.yaml
+│   └── tanzu-repo.yaml
+```
+
+Each file looks something like this:
+
+```yaml title="flux-sources/helm-prereqs/tanzu-repo.yaml"
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: tanzu
+  namespace: default
+spec:
+  interval: 5m
+  url: https://vmware-tanzu.github.io/helm-charts
+```
+
+Then, in the `flux-sources/helm` sub-folder, we store all the Helm Chart installations.
+
+I intend to have everything related to that installation in the same file.
+
+As long as I can guarantee I can install it simultaneously, it needs to move to the ***helm-post*** `Kustomization`, to avoid locking the reconciliation loop.
+
+For example, for a service that needs to be exposed to the outside world, we might add a `Certificate` and a `HTTPProxy`:
+
+??? Example "Helm Install Example"
+
+    ```yaml title="flux-sources/helm/nexus.yaml"
+    apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    metadata:
+      name: nexus
+      namespace: nexus
+    spec:
+      interval: 5m
+      timeout: 10m0s
+      chart:
+        spec:
+          chart: nexus-repository-manager
+          version: "55.0.0"
+          sourceRef:
+            kind: HelmRepository
+            name: sonatype
+            namespace: default
+          interval: 5m
+      values:
+        image:
+          repository: harbor.services.my-domain.com/dh-proxy/sonatype/nexus3
+        nexus:
+          resources:
+            requests:
+              cpu: 4
+              memory: 8Gi
+            limits:
+              cpu: 4
+              memory: 8Gi
+        ingress:
+          enabled: false
+    ---
+    apiVersion: projectcontour.io/v1
+    kind: HTTPProxy
+    metadata:
+      name: nexus
+      namespace: nexus
+    spec:
+      ingressClassName: contour
+      virtualhost:
+        fqdn: nexus.services.my-domain
+        tls:
+          secretName: nexus-tls
+      routes:
+      - services:
+        - name: nexus-nexus-repository-manager
+          port: 8081
+    ---
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: gitea-ssh
+      namespace: nexus
+    spec:
+      secretName: nexus-tls
+      issuerRef:
+        name: vault-issuer
+        kind: "ClusterIssuer"
+      commonName: nexus.services.my-domain
+      dnsNames:
+      - nexus.services.my-domain
+    ---
+    ```
+
+### Carvel Apps
+
+I treat Carvel Apps, or K-Apps, as a separate category.
+
+The structure to handle them is very similar to the Helm applications though.
+We use prereqs, primary, and post folders to handle them.
+
+The recommended approach for the Carvel application installations is having a specific ServiceAccount.
+So you start with an RBAC configuration file and then add the sources of the packages: `PackageRepository` resources.
+
+The RBAC file is long, so I'll refer to it. You can find it [here](https://github.com/joostvdg/tap-gitops-example/blob/main/platforms/clusters/services/flux-sources/kapp-prereqs/rbac.yaml) [^1].
+
+#### Package Repository
+
+As I intend to install tools such as Harbor from the Tanzu Kubernetes Grid repository, I add the TKG repository:
+
+```yaml title="platforms/clusters/services/flux-sources/kapp-prereqs/tkg-v2-1-1.yaml"
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  annotations:
+    packaging.carvel.dev/downgradable: "" # because it sorts on the hash...
+  name: standard
+  namespace: tkg-system
+spec:
+  fetch:
+    imgpkgBundle:
+      image: projects.registry.vmware.com/tkg/packages/standard/repo:v2.1.1
+```
+
+Then we can install our desired packages through those.
+
+Unlike the FluxCD CRs related to Helm, FluxCD synchronizes these to the cluster and lets the KAPP Controller handle it from there.
+
+For the KAPP Controller, there are only two relevant namespaces for packages.
+
+1. the namespace a `Package` is made available via a `PackageRepository`
+1. the global package namespace
+
+KAPP Controller defines a namespace as its global namespace.
+Any `Package` made available here through a `PackageRepository` can then be installed in ***any*** namespace.
+
+Otherwise, a `Package` can only be installed in the namespace of the `PackageRepository`.
+
+The flag `packaging-global-namespace` determines the namespace deemed global, which is set to `tkg-system` for TKG 2.x based clusters.
+
+This is why the `PackageRepository` above is installed in _that_ namespace, so we can install the packages anywhere we want.
+
+#### Example Package
+
+To show how to install a Carvel Package, I use the Contour package as an example.
+
+It requires the Cert-manager package to exist, but KAPP Controller will keep reconciling it, so as long as you eventually install the Cert-manager package, it will succeed.
+
+The config file consists of several YAML files:
+
+* The `Role` and `RoleBinding` so the KAPP Controller is allowed to install Contour in the correct namespace (e.g., `tanzu-system-ingress`)
+* A `Secret`, containing the installation Values for the Carvel Package, similar to Helm install values
+* The `PackageInstall`, which instructs KAPP Controller how to install the package
+
+??? Example "Contour Package Example"
+
+    ```yaml title="platforms/clusters/services/flux-sources/kapp/contour.yaml"
+    ---
+    kind: Role
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: kapp-controller-role
+      namespace: tanzu-system-ingress
+    rules:
+    - apiGroups: [""]
+      resources: ["configmaps", "services", "secrets", "pods", "serviceaccounts"]
+      verbs: ["*"]
+    - apiGroups: ["apps"]
+      resources: ["deployments", "replicasets", "daemonsets"]
+      verbs: ["*"]
+    - apiGroups: ["cert-manager.io"]
+      resources: ["*"]
+      verbs: ["*"]
+    ---
+    kind: RoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: kapp-controller-role-binding
+      namespace: tanzu-system-ingress
+    subjects:
+    - kind: ServiceAccount
+      name: kapp-controller-sa
+      namespace: tanzu-packages
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: Role
+      name: kapp-controller-role
+    ---
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: contour-values
+      namespace: tanzu-packages
+    stringData:
+      values.yml: |
+        infrastructure_provider: vsphere
+        namespace: tanzu-system-ingress
+        contour:
+          useProxyProtocol: false
+          replicas: 2
+          pspNames: "vmware-system-restricted"
+          logLevel: info
+        envoy:
+          service:
+            type: LoadBalancer
+            annotations: {}
+            nodePorts:
+              http: null
+              https: null
+            externalTrafficPolicy: Cluster
+            disableWait: false
+          hostPorts:
+            enable: true
+            http: 80
+            https: 443
+          hostNetwork: false
+          terminationGracePeriodSeconds: 300
+          logLevel: info
+          pspNames: null
+        certificates:
+          duration: 8760h
+          renewBefore: 360h
+
+    ---
+    apiVersion: packaging.carvel.dev/v1alpha1
+    kind: PackageInstall
+    metadata:
+      name: contour
+      namespace: tanzu-packages
+    spec:
+      serviceAccountName: kapp-controller-sa
+      packageRef:
+        refName: contour.tanzu.vmware.com
+        versionSelection:
+          constraints: 1.22.3+vmware.1-tkg.1
+      values:
+      - secretRef:
+          name: contour-values
+          key: values.yml
+    ```
+
+## Harbor and Dockerhub Proxy
+
+Docker and DockerHub have been outstanding contributors to the growth of Containerization.
+And both the technology and the service have contributed to productivity gains.
+
+Unfortunately, DockerHub now has strict rate limits, which makes it cumbersome and a bit of a lottery for specific popular images.
+
+I usually register my DockerHub account in my Harbor and create a Proxy repository mapping to that DockerHub registry.
+Then, I override the image repositories within the Helm Chart values to the proxy repository.
+
+For a more in-depth explanation of how to do this, read [this guide](https://tanzu.vmware.com/developer/guides/harbor-as-docker-proxy/) on the Tanzu Developer portal[^10].
+
+As an example, this is the Nexus Helm install values shown earlier:
+
+```yaml
+values:
+  image:
+    repository: harbor.services.my-domain.com/dh-proxy/sonatype/nexus3
+  nexus:
+    ...
+```
+
+Harbor will download the images from DockerHub with an account, reducing the rate limit problem and cache them, reducing the pain further.
+
+## HashiCorp Vault Certificate Management
+
+For leveraging HashiCorp Vault to manage your certificates, I refer you to the official [documentation](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-cert-manager) [^23].
+
+## References
+
+[^1]: [TAP GitOps Example Repo - Services Cluster](https://github.com/joostvdg/tap-gitops/tree/main/platforms/clusters/services)
+[^2]: [FluxCD - Encrypting using SOPS](https://fluxcd.io/flux/guides/mozilla-sops/)
+[^3]: [FluxCD - SOPS using Age Key](https://fluxcd.io/flux/guides/mozilla-sops/#encrypting-secrets-using-age)
+[^4]: [Age - encryption tool](https://github.com/FiloSottile/age)
+[^5]: [FluxCD - Kustomizations](https://fluxcd.io/flux/components/kustomize/kustomizations/)
+[^6]: [Tanzu Cluster Essentials](https://docs.vmware.com/en/Cluster-Essentials-for-VMware-Tanzu/index.html)
+[^7]: [Carvel - KAPP Controller](https://carvel.dev/kapp-controller/)
+[^8]: [Carvel - SecretGen Controller](https://github.com/carvel-dev/secretgen-controller)
+[^9]: [Tanzu Kubernetes Grid 2.1 - Package Repository](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/2.1/using-tkg/workload-packages-ref.html)
+[^10]: [Tanzu Developer Portal - Using Harbor as DockerHub Proxy](https://tanzu.vmware.com/developer/guides/harbor-as-docker-proxy/)
+[^11]: [Harbor - Container/OCI Registry](https://goharbor.io/)
+[^12]: [Sonatype Nexus - Binary Artifact Repository](https://www.sonatype.com/products/sonatype-nexus-repository)
+[^13]: [OpenLDAP](https://www.openldap.org/)
+[^14]: [Keycloak - Open Source Identity and Access Management](https://www.keycloak.org/)
+[^15]: [Prometheus - Open Source timeseries database](https://prometheus.io/)
+[^16]: [Thanos - Open Source, HA Prometheus setup](https://thanos.io/)
+[^17]: [Grafana - Open Source monitoring graphics](https://grafana.com/)
+[^18]: [SonarQube - self-manage static code analysis tool](https://www.sonarsource.com/products/sonarqube/)
+[^19]: [HashiCorp Vault - Secrets management tool](https://www.hashicorp.com/products/vault)
+[^20]: [MinIO - Kubernetes native storage solution](https://min.io/)
+[^21]: [FluxCD Bootstrap for GitHub](https://fluxcd.io/flux/installation/bootstrap/github/)
+[^22]: [GitLab - Git Server (and CI/CD platform)](https://about.gitlab.com/install/)
+[^23]: [HashiCorp Vault - Using Vault to manage PKI infra in Kubernetes](https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine)
