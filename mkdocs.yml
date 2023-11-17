@@ -125,9 +125,17 @@ nav:
     - Services: tanzu/tap-gitops/services.md
     - TAP GitOps Prep: tanzu/tap-gitops/tap-gitops-prep.md
     - TAP Build: tanzu/tap-gitops/tap-build.md
+    - TAP Run: tanzu/tap-gitops/tap-run.md
+    - TAP View: tanzu/tap-gitops/tap-view.md
+    - Next Steps: tanzu/tap-gitops/next-steps.md
+    - TAP Run With ArgoCD: tanzu/tap-gitops/run-with-argocd.md
   - TAP Supply Chain Customization:
     - Overview: tanzu/supplychain/overview.md
     - GitOps Flow: tanzu/supplychain/gitops-flow.md
+  - TAP GUI/Portal:
+    - Intro: tanzu/tap-gui/index.md
+    - GitLab Integration: tanzu/tap-gui/gitlab-integration.md
+    - TechDocs with MinIO: tanzu/tap-gui/techdocs-minio.md
   - TAP on TKGs:
     - TAP 1.3.x:
       - tanzu/tkgs/tap13-overview.md
