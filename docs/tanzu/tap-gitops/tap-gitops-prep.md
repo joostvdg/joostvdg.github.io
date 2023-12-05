@@ -686,12 +686,9 @@ metadata:
   name: flux-initial-content-sync
   namespace: tanzu-sync
   annotations:
-    kapp.k14s.io/change-group: tanzu-sync
-    kapp.k14s.io/change-rule.0: "upsert after upserting tanzu-sync-secrets"
-    kapp.k14s.io/change-rule.1: "upsert after upserting install-registry-export"
-    #! if registry credentials are deleted before sync-managed software is removed, uninstall can be slow or fail.
-    kapp.k14s.io/change-rule.2: "delete before deleting tanzu-sync-secrets"
-    kapp.k14s.io/change-rule.3: "delete before deleting install-registry-export"
+    kapp.k14s.io/change-group: tanzu-sync-flux
+    kapp.k14s.io/change-rule.0: "upsert after upserting tanzu-tanzu-sync"
+    kapp.k14s.io/disable-wait: ""
 spec:
   serviceAccountName: sync-sa
   fetch:
@@ -708,6 +705,16 @@ spec:
   deploy:
     - kapp: {}
 ```
+
+!!! Warning "Disable Wait"
+    We create resources related to the FluixCD CRDs, the CRDs are yet to be installed when the `tanzu-sync` App runs for the first time.
+
+    To avoid having the `tanzu-sync` to error and halt, forgoing the installation of TAP, we instruct to ***not wait*** on our Flux resources _app_. This way, the `tanzu-sync` manages the flux App but doesn't look at its status to reflect its own.
+
+    We do this with the KAPP annotation `kapp.k14s.io/disable-wait: ""`.
+
+    The `flux-initial-content-sync` App fails to reconcile until TAP installs FluxCD and its CRDs.
+    It eventually reaches a successfull state.
 
 Our folder now looks like this:
 
