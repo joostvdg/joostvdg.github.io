@@ -628,7 +628,7 @@ While the main Kubernetes plugin page shows the configuration per cluster, in my
 
 So I recommend using the "global" Kubernetes configuration to add additional `customResources` to list.
 
-!!! Importan
+!!! Important
     Be sure to provide the `tap-gui` **ServiceAccount** the permissions to read these resources.
 
 ```yaml title="tap-install-values.yaml"
