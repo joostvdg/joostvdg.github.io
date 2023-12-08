@@ -667,7 +667,7 @@ Fear not, it is likely because the default mode is _opt in_.
 
 So Software Catalog items by default do not have a Tekton tab, which makes sense as not all items are related to components let alone those that have relevant Tekton pipelines!
 
-The documentation on the Tekton plugin [catalog item configuration](https://janus-idp.io/plugins/tekton/#setting-up-the-tekton-plugin) isn't entirely clear, these are the annotations I had to add[[^7]]:
+The documentation on the Tekton plugin [catalog item configuration](https://janus-idp.io/plugins/tekton/#setting-up-the-tekton-plugin) isn't entirely clear, these are the annotations I had to add[^7]:
 
 ```yaml
 janus-idp.io/tekton-enabled : 'true'
@@ -683,7 +683,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: spring-boot-postgres
-  description: Tanzu Java Web App with Spring Boot 3, using a PostgreSQL database. (1)
+  description: Tanzu Java Web App with Spring Boot 3, using a PostgreSQL database.
   tags:
     - app-accelerator
     - java
