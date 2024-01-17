@@ -2,7 +2,7 @@
 site_name: J's Software Development Pages
 site_url: https://joostvdg.github.io
 # Copyright
-copyright: 'Copyright &copy; 2023 Joost van der Griendt'
+copyright: 'Copyright &copy; 2024 Joost van der Griendt'
 repo_name: 'joostvdg/joostvdg.github.io'
 repo_url: 'https://github.com/joostvdg/joostvdg.github.io'
 
@@ -47,13 +47,9 @@ nav:
   - Create your own k8s resource: blogs/k8s-crd.md
   - DockerCon EU 2018: blogs/dockercon-eu-2018.md
 - Jenkins & CloudBees:
-  # - SDM:
-  #   - What Is SDM: sdm/what-is-sdm.md
-  #   - SDM Platform Anatomy: sdm/platform-anatomy.md
   - Jenkins On Kubernetes: jenkins/jenkins-on-kubernetes.md
   - TAP & Jenkins: tanzu/jenkins-tap.md
   - CloudBees:
-    # - CloudBees Previews: cloudbees/cb-previews.md
     - CloudBees CasC: cloudbees/cbci-casc.md
     - Single Sign On - AzureAD: cloudbees/sso-azure-ad.md
     - CloudBees Automate Teams: cloudbees/teams-automation.md
@@ -154,6 +150,16 @@ nav:
   - Minio with custom CA: tanzu/minio-ca.md
   - TKG Grafana with LDAP: tanzu/tkg-grafana.md
   - Dependencies: tanzu/dependencies.md
+- Platform Engineering/SRE:
+  - Backstage Plugin:
+    - Intro: platform-sre/backstage/plugin/index.md
+    - Backend Plugin: platform-sre/backstage/plugin/backend.md
+    - Frontend Plugin: platform-sre/backstage/plugin/frontend.md
+  - Backstage & Tanzu: 
+    - Intro: platform-sre/backstage/tap/index.md
+    - Wrap Plugins: platform-sre/backstage/tap/wrap-plugins.md
+    - Add Wrapped Plugins: platform-sre/backstage/tap/add-wrap-plugin.md
+    - Tekton Plugin: platform-sre/backstage/tap/tekton.md
 - Jenkins X: 
   - Build Packs: jenkinsx/build-packs.md
   - Jenkins X Pipelines: jenkinsx/jx-pipelines.md
