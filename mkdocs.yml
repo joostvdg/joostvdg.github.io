@@ -125,6 +125,7 @@ nav:
     - TAP View: tanzu/tap-gitops/tap-view.md
     - Next Steps: tanzu/tap-gitops/next-steps.md
     - TAP Run With ArgoCD: tanzu/tap-gitops/run-with-argocd.md
+  - TAP Multi-Env Promotion: tanzu/tap/multi-env-promo.md
   - TAP Supply Chain Customization:
     - Overview: tanzu/supplychain/overview.md
     - GitOps Flow: tanzu/supplychain/gitops-flow.md
