@@ -2,992 +2,987 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://joostvdg.github.io/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/docker-alternatives/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/dockercon-eu-2018/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/gitops-pipeline/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/graceful-shutdown/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/jenkins-pipeline-support-tool/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/jenkins-x/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/k8s-controller/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/k8s-crd/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/k8s-lets-encrypt/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/kubernetes-post-install/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/kubernetes-sso-keycloak/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/sso-azure-ad/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/teams-automation/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/alerts/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/cloudbees/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/dashboard/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/install/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/introduction/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/metrics/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/pipeline/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/blogs/monitor-jenkins-on-k8s/prepare/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/certificates/lets-encrypt-k8s/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloud/automation-pulumi/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/cb-previews/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/cbc-eks/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/cbc-gke-helm/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/cbc-post-install-tips/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/cbc-team-namespace/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/cbci-casc/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/multi-cluster-eks/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/multi-cluster-gke/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/multi-cluster-temp/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/multi-cluster/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/sso-azure-ad/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/cloudbees/teams-automation/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/devops/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/devops/pipeline-model/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/devops/progressive-delivery/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/devops/sdm/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/docker/build-kit/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/docker/graceful-shutdown/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/docker/kubernetes/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/docker/multi-stage-builds/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/docker/swarm/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/java/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/java/concurrency/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/java/ecosystem/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/java/java-modules/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/java/networking/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/java/streams/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/java/spring/boot/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins/java-gradle/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins/jenkins-on-kubernetes/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins/plugins/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-jobs/jenkins-jobs-builder/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-jobs/jobdsl/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/artifactory-integration/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/core-concepts/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/declarative-pipeline/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/github-org/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/global-shared-library/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/groovy-pipeline/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/ide-integration-pipeline-dsl/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/input/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/jenkins-parallel-pipeline/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/job-types/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/kaniko-pipelines/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline/podtemplate-dind/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline-examples/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline-examples/docker-alternatives/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline-examples/docker-declarative/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline-examples/maven-declarative/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkins-pipeline-examples/maven-groovy-dsl/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/aks-boot-core/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/build-packs/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/builder-image/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/buildpack/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/custom-domain/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/hello-world/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/hybrid/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/intro/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/jx-pipelines/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/jxboot-aks/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/jxboot/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/kubernetes-days/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/lighthouse-bitbucket/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/maven/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/multi-cluster/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/rhos-311-minimal/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/rhos-311-restricted/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/serverless/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/workshop/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/01-intro/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/02-cloud-sql/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/03-quarkus/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/04-jx-import/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/05-jx-secrets/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/06-native-image/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/07-pipeline-improvements/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/08-preview-int-test/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/09-production-improvements/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/jenkinsx/java-native-prod/10-promote-prod/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/cka-exam-prep/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/cka-exam/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/dev-platform/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/observability/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/tools/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/cicd/cdp-jenkins-helm/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/distributions/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/distributions/aks-cli/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/distributions/aks-terraform/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/distributions/aks/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/distributions/eks-eksctl/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/distributions/gke-terraform/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/distributions/install-gke/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/certificates/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/controller/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/debug/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/encryption/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/etcd/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/kubeconfigs/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/network/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/remote-access/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/terraform-compute/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/kubernetes/khw-gce/worker/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/linux/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/linux/iptables/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/linux/networking/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/linux/systemd/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/openshift/rhos311-gcp-medium/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/openshift/rhos311-gcp-minimal/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/other/mkdocs/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/other/shell/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/other/vim/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/platform-sre/backstage/plugin/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/platform-sre/backstage/plugin/backend/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/platform-sre/backstage/plugin/frontend/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/platform-sre/backstage/tap/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/platform-sre/backstage/tap/add-wrap-plugin/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/platform-sre/backstage/tap/tekton/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/platform-sre/backstage/tap/wrap-plugins/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/productivity/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/productivity/incidents/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/productivity/intellij/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/productivity/paradigms/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/productivity/remote/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/productivity/studies/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/productivity/team-development/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/productivity/tools/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/API/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/algorithms/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/ddd/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/distributed/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/http-caching/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/important-concepts/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/microservices/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/naming/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/observability/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/swe/others/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/custom-ca/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/dependencies/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/grype-airgapped/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/harbor-ca/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/jenkins-tap/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/minio-ca/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-on-tkgm-on-aws/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-tekton/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tkg-grafana/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/supplychain/gitops-flow/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/supplychain/overview/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap/fluxcd-ssh/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap/gitea/</loc>
-         <lastmod>2024-03-14</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://joostvdg.github.io/tanzu/tap/image-harderning-sc/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap/multi-env-promo/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gitops/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gitops/next-steps/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gitops/run-with-argocd/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gitops/services/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gitops/tap-build/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gitops/tap-gitops-prep/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gitops/tap-run/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gitops/tap-view/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gitops/todo/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gui/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gui/gitlab-integration/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gui/tdp-plugins/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tap-gui/techdocs-minio/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tkgs/tap13-overview/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tkgs/tap13/build-basic/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tkgs/tap13/build-scanning-testing/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tkgs/tap13/run/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://joostvdg.github.io/tanzu/tkgs/tap13/view/</loc>
-         <lastmod>2024-03-14</lastmod>
+         <lastmod>2024-09-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
