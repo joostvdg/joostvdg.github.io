@@ -13,10 +13,13 @@ My full name is *Joost van der Griendt*, which unfortunately cannot be pronounce
 
 In order to facilitate non-Dutch speakers, you can refer to me as J (Jay).
 
-I've worked as a Java developer in the past, but currently I'm employed as a Solutions Architect for Platform Services at (VMware) [Tanzu Labs](https://tanzu.vmware.com/labs), previously I worked as a Consultant at [CloudBees](www.CloudBees.com).
-My day-to-day work involves helping clients with CI/CD, Kubernetes and [Software Development Management](https://go.cloudbees.com/docs/lexicon/software-delivery-management.html). Or, in simple words, how to make it easy and less painful to get software to customers/clients that they want to pay for at scale.
+I've worked in the software development industry since 2006, as Sofware Developer (Java backend/Fullstack), Build Engineer, DevOps Engineer, Solutions Architect, and Product Manager.
+In the end, the only thing that matters is getting the right things done for the right reasons.
 
-In my spare time I keep my development skills active by developing in [Go](https://github.com/joostvdg?utf8=%E2%9C%93&tab=repositories&q=&type=&language=go) and [Java](https://github.com/joostvdg?utf8=%E2%9C%93&tab=repositories&q=&type=&language=java) mostly. But I'm also a big fan of automating the creation and management of CI/CD (self-service) platforms.
+On this side, I write guides, work-in-progress solutions to problems I've encountered in my hobby projects and my work.
+
+For more information about me, check out my [LinkedIn](https://www.linkedin.com/in/joostvdg/) profile.
+I also write more tightly focused articles on my personal blog - [blog.joostvdg.net](https://blog.joostvdg.net/).
 
 I'm a big fan of Open Source Software and when it makes sense, Free & Free software.
 Which is also why this site is completely open, and open source as well.
@@ -36,14 +39,17 @@ Feel free to block the tracker (Google Analytics), most browsers are able to do 
 
 * `CI/CD` (Continuous Integration / Continous Delivery)
     * Jenkins
-    * Jenkins X
-    * CloudBees Products (my current employer as of 2018)
+    * Tekton
 * `Containers` (Docker, Kubernetes, ...)
 * `SWE`: Software Engineering in all its facets (building, maintaining, social aspects, psychology, etc.)
+* GitOps/DevOps for my Homelab
 
-### Other Docs
+### Other Material
 
+* [blog.joostvdg.net](https://blog.joostvdg.net/)
 * [Breakdown of a Spring Boot + ReactJS Application](https://joostvdg.github.io/keep-watching/)
+* [Jenkins X Workshop](https://joostvdg.github.io/jenkinsx-workshop/)
+* [Tanzu Application Platform Workshop](https://joostvdg.github.io/tap-workshops/)
 
 ### Continuous Integration
 
